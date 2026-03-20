@@ -272,10 +272,17 @@
  /* Portrait : centré avec marges latérales */
  .slide.portrait .slide-photo-inner {
  height: 100%;
- aspect-ratio: 3/4;
- max-width: 60%;
+ width: auto;
+ max-width: 100%;
  background: var(--mid);
  display: flex; align-items: center; justify-content: center;
+ }
+ .slide.portrait .slide-photo-inner > img {
+ height: 100%;
+ width: auto;
+ max-width: 100%;
+ object-fit: contain;
+ display: block;
  }
  /* Carré */
  .slide.square .slide-photo-inner {
