@@ -600,6 +600,48 @@
       border: 1px solid rgba(162,210,255,0.3);
       background: rgba(162,210,255,0.08);
     }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(5,5,7,0.97);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+      cursor: zoom-out;
+    }
+    .lightbox.open {
+      opacity: 1; pointer-events: all;
+    }
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      object-fit: contain;
+      display: block;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.8);
+      border-radius: 2px;
+      transform: scale(0.96);
+      transition: transform 0.3s ease;
+    }
+    .lightbox.open img {
+      transform: scale(1);
+    }
+    .lightbox-close {
+      position: absolute; top: 24px; right: 28px;
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer;
+      transition: color 0.2s;
+      background: none; border: none; padding: 8px;
+    }
+    .lightbox-close:hover { color: var(--snow); }
+    .lightbox-caption {
+      position: absolute; bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
 </style>
 </head>
 <body>
@@ -1157,6 +1199,8 @@
  </footer>
 
  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
  // ── GALERIE ──
  const slides = document.querySelectorAll('.slide');
  const total = slides.length;
@@ -1301,6 +1345,51 @@
   
     
 
+  
+    // ── LIGHTBOX ──
+    const lightbox     = document.getElementById('lightbox');
+    const lightboxImg  = document.getElementById('lightboxImg');
+    const lightboxCap  = document.getElementById('lightboxCaption');
+    const lightboxClose= document.getElementById('lightboxClose');
+
+    function openLightbox(src, caption) {
+      lightboxImg.src = src;
+      lightboxCap.textContent = caption;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Clic sur toutes les images des slides (hors diptyque : clic sur chaque côté)
+    document.querySelectorAll('.slide .slide-photo-inner img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const slide = img.closest('.slide');
+        const spot = slide.querySelector('.caption-spot');
+        openLightbox(img.src, spot ? spot.textContent : '');
+      });
+    });
+
+    lightbox.addEventListener('click', closeLightbox);
+    lightboxClose.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+  
+    });
   </script>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕ &nbsp;Fermer</button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
 </body>
 </html>
