@@ -345,7 +345,7 @@
  /* Navigation flèches */
  .gallery-nav {
  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
- display: flex; pointer-events: none; z-index: 3;
+ display: flex; justify-content: space-between; pointer-events: none; z-index: 3;
  }
  .gallery-nav-zone {
  flex: 1; pointer-events: all; cursor: none;
@@ -654,11 +654,9 @@
  <div class="gallery-viewer" id="viewer">
 
   <div class="slide landscape active" data-index="0">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/01-valahnukamol.jpg" alt="Valahnúkamöl"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 2 · Péninsule de Reykjanes</div><div class="caption-spot">Valahnúkamöl</div></div><div class="caption-right"><span class="caption-index">01</span>Paysage</div></div>
-  </div>
+    <div class="slide-photo">
 
-  <div class="slide landscape" data-index="1">
+  <div class="slide landscape active" data-index="1">
     <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/01b-valahnukamol-solo.jpg" alt="Valahnúkamöl — silhouette"></div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 2 · Péninsule de Reykjanes</div><div class="caption-spot">Valahnúkamöl</div></div><div class="caption-right"><span class="caption-index">02</span>Paysage</div></div>
   </div>
@@ -815,8 +813,8 @@
       <div class="gallery-count" id="galleryCount2">01 / 03</div>
     </div>
     <div class="gallery-viewer" id="viewer2">
-      <div class="slide landscape active" data-idx2="0">
-        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/T1-cheval.jpg" alt="Cheval islandais"></div></div>
+      <div class="slide portrait active" data-idx2="0">
+        <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/T1-cheval.jpg" alt="Cheval islandais"></div></div>
         <div class="slide-caption"><div class="caption-left"><div class="caption-day">Côte Sud · En route</div><div class="caption-spot">Cheval islandais</div></div><div class="caption-right"><span class="caption-index">01</span>Territoire</div></div>
       </div>
       <div class="slide diptych" data-idx2="1">
@@ -870,82 +868,92 @@
  <span class="fr">Entre deux mondes — Islande MMXXVI · 47 spots · 3 000+ photos</span>
  </footer>
 
- <script>
- // ── GALERIE ──
- const slides = document.querySelectorAll('.slide');
- const total = slides.length;
- let current = 0;
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
 
- const countEl = document.getElementById('galleryCount');
- const fillEl = document.getElementById('progressFill');
- const stripEl = document.getElementById('thumbsStrip');
+    // ── GALERIE 1 ──
+    var v1=document.getElementById('viewer'),sl1=v1.querySelectorAll('.slide'),tot1=sl1.length,cur1=0;
+    var cnt1=document.getElementById('galleryCount'),fill1=document.getElementById('progressFill'),strip1=document.getElementById('thumbsStrip');
+    sl1.forEach(function(s,i){
+      var img=s.querySelector('img'),th=document.createElement('div');
+      var fmt=s.classList.contains('portrait')?' portrait':s.classList.contains('square')?' square':'';
+      th.className='thumb'+fmt+(i===0?' active':'');
+      if(img){var src=img.getAttribute('src');th.style.backgroundImage='url("'+src+'")';th.style.backgroundSize='cover';th.style.backgroundPosition='center';}
+      th.addEventListener('click',function(){go1(i);}); strip1.appendChild(th);
+    });
+    function go1(idx){
+      sl1[cur1].classList.remove('active');strip1.querySelectorAll('.thumb')[cur1].classList.remove('active');
+      cur1=(idx+tot1)%tot1;
+      sl1[cur1].classList.add('active');strip1.querySelectorAll('.thumb')[cur1].classList.add('active');
+      cnt1.textContent=String(cur1+1).padStart(2,'0')+' / '+String(tot1).padStart(2,'0');
+      fill1.style.width=((cur1+1)/tot1*100)+'%';
+      var th=strip1.querySelectorAll('.thumb')[cur1];
+      strip1.scrollLeft=th.offsetLeft-strip1.offsetWidth/2+th.offsetWidth/2;
+    }
+    document.getElementById('navLeft').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go1(cur1-1);});
+    document.getElementById('navRight').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go1(cur1+1);});
+    document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')go1(cur1+1);if(e.key==='ArrowLeft')go1(cur1-1);});
+    var tx1=0;
+    v1.addEventListener('touchstart',function(e){tx1=e.touches[0].clientX;},{passive:true});
+    v1.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx1;if(Math.abs(dx)>50)go1(dx<0?cur1+1:cur1-1);});
 
- // Construire les thumbnails
- slides.forEach((s, i) => {
- const fmt = s.classList.contains('portrait') ? 'portrait'
- : s.classList.contains('square') ? 'square' : '';
- const th = document.createElement('div');
- th.className = 'thumb' + (fmt ? ' ' + fmt : '') + (i === 0 ? ' active' : '');
- th.textContent = String(i + 1).padStart(2,'0');
- th.addEventListener('click', () => goTo(i));
- stripEl.appendChild(th);
- });
+    // ── GALERIE 2 ──
+    var v2=document.getElementById('viewer2');
+    if(v2){
+      var sl2=v2.querySelectorAll('.slide'),tot2=sl2.length,cur2=0;
+      var cnt2=document.getElementById('galleryCount2'),fill2=document.getElementById('progressFill2'),strip2=document.getElementById('thumbsStrip2');
+      sl2.forEach(function(s,i){
+        var img=s.querySelector('img'),th=document.createElement('div');
+        var fmt=s.classList.contains('portrait')?' portrait':s.classList.contains('square')?' square':'';
+        th.className='thumb'+fmt+(i===0?' active':'');
+        if(img){var src=img.getAttribute('src');th.style.backgroundImage='url("'+src+'")';th.style.backgroundSize='cover';th.style.backgroundPosition='center';}
+        th.addEventListener('click',function(){go2(i);}); strip2.appendChild(th);
+      });
+      function go2(idx){
+        sl2[cur2].classList.remove('active');strip2.querySelectorAll('.thumb')[cur2].classList.remove('active');
+        cur2=(idx+tot2)%tot2;
+        sl2[cur2].classList.add('active');strip2.querySelectorAll('.thumb')[cur2].classList.add('active');
+        cnt2.textContent=String(cur2+1).padStart(2,'0')+' / '+String(tot2).padStart(2,'0');
+        fill2.style.width=((cur2+1)/tot2*100)+'%';
+      }
+      document.getElementById('navLeft2').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go2(cur2-1);});
+      document.getElementById('navRight2').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go2(cur2+1);});
+      var tx2=0;
+      v2.addEventListener('touchstart',function(e){tx2=e.touches[0].clientX;},{passive:true});
+      v2.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx2;if(Math.abs(dx)>50)go2(dx<0?cur2+1:cur2-1);});
+    }
 
- function goTo(idx) {
- slides[current].classList.remove('active');
- document.querySelectorAll('.thumb')[current].classList.remove('active');
- current = (idx + total) % total;
- slides[current].classList.add('active');
- document.querySelectorAll('.thumb')[current].classList.add('active');
- countEl.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
- fillEl.style.width = ((current + 1) / total * 100) + '%';
- // Scroll thumb en vue
- const thumbs = document.querySelectorAll('.thumb');
- thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
- }
+    // ── BACKDROP ──
+    document.querySelectorAll('.slide.portrait,.slide.square').forEach(function(slide){
+      var img=slide.querySelector('img'); if(!img)return;
+      var bd=document.createElement('div'); bd.className='slide-backdrop';
+      function applyBg(){bd.style.backgroundImage='url("'+img.getAttribute('src')+'")';}
+      if(img.complete&&img.naturalWidth>0){applyBg();}else{img.addEventListener('load',applyBg);}
+      slide.insertBefore(bd,slide.firstChild);
+    });
 
- document.getElementById('navLeft').addEventListener('click', () => goTo(current - 1));
- document.getElementById('navRight').addEventListener('click', () => goTo(current + 1));
+    // ── LIGHTBOX ──
+    var lb=document.getElementById('lightbox'),lbImg=document.getElementById('lightboxImg'),lbCap=document.getElementById('lightboxCaption'),lbClose=document.getElementById('lightboxClose');
+    function openLB(src,cap){lbImg.src=src;lbCap.textContent=cap;lb.classList.add('open');document.body.style.overflow='hidden';}
+    function closeLB(){lb.classList.remove('open');document.body.style.overflow='';}
+    document.querySelectorAll('.slide .slide-photo-inner img').forEach(function(img){
+      img.addEventListener('click',function(e){
+        e.stopPropagation();e.stopImmediatePropagation();
+        var slide=img.closest('.slide'),spot=slide?slide.querySelector('.caption-spot'):null;
+        openLB(img.src,spot?spot.textContent:'');
+      },true);
+    });
+    lb.addEventListener('click',closeLB);
+    lbClose.addEventListener('click',closeLB);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();});
 
- // Clavier
- document.addEventListener('keydown', e => {
- if (e.key === 'ArrowRight') goTo(current + 1);
- if (e.key === 'ArrowLeft') goTo(current - 1);
- });
+    // ── TIMELINE ──
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e,i){if(e.isIntersecting)setTimeout(function(){e.target.classList.add('vis');},i*60);});
+    },{threshold:0.05});
+    document.querySelectorAll('.tl-item').forEach(function(el){obs.observe(el);});
 
- // Touch/swipe
- let tx = 0;
- const viewer = document.getElementById('viewer');
- viewer.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
- viewer.addEventListener('touchend', e => {
- const dx = e.changedTouches[0].clientX - tx;
- if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
- });
-
- // Curseur custom
- const cursor = document.getElementById('cursor');
- const cursorDot = document.getElementById('cursorDot');
- const navL = document.getElementById('navLeft');
- const navR = document.getElementById('navRight');
-
- document.addEventListener('mousemove', e => {
- cursor.style.left = e.clientX + 'px';
- cursor.style.top = e.clientY + 'px';
- cursorDot.style.left = e.clientX + 'px';
- cursorDot.style.top = e.clientY + 'px';
- });
- navL.addEventListener('mouseenter', () => cursor.classList.add('on-left'));
- navL.addEventListener('mouseleave', () => cursor.classList.remove('on-left'));
- navR.addEventListener('mouseenter', () => cursor.classList.add('on-right'));
- navR.addEventListener('mouseleave', () => cursor.classList.remove('on-right'));
-
- // ── TIMELINE REVEAL ──
- const obs = new IntersectionObserver(entries => {
- entries.forEach((e, i) => {
- if (e.isIntersecting) setTimeout(() => e.target.classList.add('vis'), i * 60);
- });
- }, { threshold: 0.05 });
- document.querySelectorAll('.tl-item').forEach(el => obs.observe(el));
+  });
  </script>
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
