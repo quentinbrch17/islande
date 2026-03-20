@@ -271,12 +271,10 @@
  }
  /* Portrait : centré avec marges latérales */
  .slide.portrait .slide-photo-inner {
- position: relative;
  height: 100%;
  width: auto;
  aspect-ratio: 3/4;
  flex-shrink: 0;
- background: var(--mid);
  overflow: hidden;
  }
  .slide.portrait .slide-photo-inner > img {
@@ -549,7 +547,7 @@
       transform: scale(1.08);
     }
     .slide.portrait .slide-photo,
-    .slide.square .slide-photo { z-index: 1; position: relative; }
+    .slide.square .slide-photo { z-index: 1; }
 
     .diptych-label {
       font-family: 'Syne', sans-serif; font-size: 8px; font-weight: 700;
