@@ -301,42 +301,6 @@
  background: linear-gradient(160deg, rgba(162,210,255,0.04), transparent 50%, rgba(75,93,22,0.05));
  }
 
-
- /* ── DIPTYQUE ── */
- .slide.diptych .slide-photo {
-   gap: 3px;
- }
- .slide.diptych .slide-photo-inner {
-   height: 100%;
-   aspect-ratio: 2/3;
-   max-width: none;
-   width: calc(50% - 2px);
-   flex-shrink: 0;
-   box-shadow: none;
- }
- .slide.diptych .slide-photo-inner:first-child {
-   box-shadow: 4px 0 40px rgba(0,0,0,0.4);
- }
- .diptych-label {
-   font-family: 'Syne', sans-serif; font-size: 8px; font-weight: 700;
-   letter-spacing: 0.2em; text-transform: uppercase;
-   position: absolute; top: 16px; padding: 5px 10px;
-   border-radius: 100px; z-index: 2;
- }
- .diptych-label.nature {
-   left: 16px; color: var(--moss-l);
-   border: 1px solid rgba(122,148,40,0.3);
-   background: rgba(75,93,22,0.15);
- }
- .diptych-label.human {
-   right: 16px; color: var(--glacier);
-   border: 1px solid rgba(162,210,255,0.3);
-   background: rgba(162,210,255,0.08);
- }
- .diptych-divider {
-   position: absolute; top: 0; bottom: 0; left: 50%;
-   width: 1px; background: rgba(248,249,250,0.06); z-index: 1;
- }
  /* Placeholder visuel */
  .ph-inner {
  position: absolute; inset: 0;
@@ -580,10 +544,11 @@
  <nav>
  <a href="#" class="nav-logo">Q. — Islande MMXXVI</a>
  <ul class="nav-links">
- <li><a href="#galerie">Galerie</a></li>
- <li><a href="#parcours">Parcours</a></li>
- <li><a href="#contact">Contact</a></li>
- </ul>
+      <li><a href="#galerie">Galerie</a></li>
+      <li><a href="#parcours">Parcours</a></li>
+      <li><a href="#habitee">L'île habitée</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
  </nav>
 
  <!-- HERO -->
@@ -597,20 +562,19 @@
  <div class="hero-eyebrow">Projet photographique · Mars 2026</div>
  <h1 class="hero-title">Entre<br><span class="glacier">deux</span><br>mondes</h1>
  <p class="hero-desc">Islande — là où la nature brute et la présence humaine se regardent sans se comprendre. De Valahnúkamöl à Kleifarvatn.</p>
-
  </div>
  <div class="hero-scroll"><div class="scroll-line"></div>Défiler</div>
  </section>
 
  <!-- STATS STRIP -->
- <div class="intro-strip">
- <div class="intro-strip-item"><div class="isn">11</div><div class="isl">Jours</div></div>
- <div class="intro-strip-item"><div class="isn">3 000+</div><div class="isl">Photographies</div></div>
- <div class="intro-strip-item"><div class="isn">47</div><div class="isl">Spots naturels</div></div>
- <div class="intro-strip-item"><div class="isn">2 500 km</div><div class="isl">Kilomètres</div></div>
- </div>
+  <div class="intro-strip">
+    <div class="intro-strip-item"><div class="isn">11</div><div class="isl">Jours</div></div>
+    <div class="intro-strip-item"><div class="isn">3 000+</div><div class="isl">Photographies</div></div>
+    <div class="intro-strip-item"><div class="isn">47</div><div class="isl">Spots naturels</div></div>
+    <div class="intro-strip-item"><div class="isn">2 500 km</div><div class="isl">Kilomètres</div></div>
+  </div>
 
- <!-- PROJET -->
+  <!-- PROJET -->
  <section class="projet">
  <div>
  <h2>Un territoire qui <span>résiste</span></h2>
@@ -658,51 +622,48 @@
  </div>
 
  <div class="slide diptych" data-index="1">
- <div class="slide-photo">
-   <div class="slide-photo-inner">
-     <span class="diptych-label nature">Nature</span>
-     <!-- ── DIPTYQUE Seljalandsfoss — gauche : sans présence humaine ── -->
-     <img src="photos/02a-seljalandsfoss-nature.jpg" alt="Seljalandsfoss — nature">
-   </div>
-   <div class="slide-photo-inner">
-     <span class="diptych-label human">Présence</span>
-     <!-- ── DIPTYQUE Seljalandsfoss — droite : avec touristes/fantômes ── -->
-     <img src="photos/02b-seljalandsfoss-human.jpg" alt="Seljalandsfoss — présence humaine">
-   </div>
-   <div class="diptych-divider"></div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 4 · Côte Sud</div>
- <div class="caption-spot">Seljalandsfoss</div>
- </div>
- <div class="caption-right"><span class="caption-index">02</span>Diptyque</div>
- </div>
- </div>
- <div class="slide diptych" data-index="2">
- <div class="slide-photo">
-   <div class="slide-photo-inner">
-     <span class="diptych-label nature">Nature</span>
-     <!-- ── DIPTYQUE Gljúfrabúi — gauche : cascade seule ── -->
-     <img src="photos/02c-gljufrabui-nature.jpg" alt="Gljúfrabúi — nature">
-   </div>
-   <div class="slide-photo-inner">
-     <span class="diptych-label human">Présence</span>
-     <!-- ── DIPTYQUE Gljúfrabúi — droite : silhouette accroupie ── -->
-     <img src="photos/02d-gljufrabui-human.jpg" alt="Gljúfrabúi — présence humaine">
-   </div>
-   <div class="diptych-divider"></div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 4 · Côte Sud</div>
- <div class="caption-spot">Gljúfrabúi</div>
- </div>
- <div class="caption-right"><span class="caption-index">03</span>Diptyque</div>
- </div>
- </div>
+    <div class="slide-photo">
+      <div class="slide-photo-inner">
+        <span class="diptych-label nature">Nature</span>
+        <img src="photos/02a-seljalandsfoss-nature.jpg" alt="Seljalandsfoss — nature">
+      </div>
+      <div class="slide-photo-inner">
+        <span class="diptych-label human">Présence</span>
+        <img src="photos/02b-seljalandsfoss-human.jpg" alt="Seljalandsfoss — présence">
+      </div>
+      <div class="diptych-divider"></div>
+    </div>
+    <div class="slide-caption">
+      <div class="caption-left">
+        <div class="caption-day">Jour 4 · Côte Sud</div>
+        <div class="caption-spot">Seljalandsfoss</div>
+      </div>
+      <div class="caption-right"><span class="caption-index">02</span>Diptyque</div>
+    </div>
+  </div>
 
- <div class="slide landscape" data-index="3">
+ 
+  <div class="slide diptych" data-index="2">
+    <div class="slide-photo">
+      <div class="slide-photo-inner">
+        <span class="diptych-label nature">Nature</span>
+        <img src="photos/02c-gljufrabui-nature.jpg" alt="Gljúfrabúi — nature">
+      </div>
+      <div class="slide-photo-inner">
+        <span class="diptych-label human">Présence</span>
+        <img src="photos/02d-gljufrabui-human.jpg" alt="Gljúfrabúi — présence">
+      </div>
+      <div class="diptych-divider"></div>
+    </div>
+    <div class="slide-caption">
+      <div class="caption-left">
+        <div class="caption-day">Jour 4 · Côte Sud</div>
+        <div class="caption-spot">Gljúfrabúi</div>
+      </div>
+      <div class="caption-right"><span class="caption-index">03</span>Diptyque</div>
+    </div>
+  </div>
+<div class="slide landscape" data-index="3">
  <div class="slide-photo">
  <div class="slide-photo-inner" style="width:100%;height:100%">
  <!-- ── PHOTO 03 : remplace par ton fichier si besoin ── -->
@@ -1000,7 +961,90 @@
  </section>
 
  <!-- QUOTE -->
- <section class="bq">
+ 
+
+  <!-- ══════════════════════════════════════
+       GALERIE 2 — L'ÎLE HABITÉE
+  ══════════════════════════════════════ -->
+  <section class="gallery-section" id="habitee" style="padding-top:0;">
+    <div class="gallery-header">
+      <div class="gallery-header-left">
+        <div class="sl" style="color:var(--moss-l);">L'île habitée</div>
+        <h2 style="margin-top:12px;">Territoire · <span style="color:var(--glacier);">Présences</span></h2>
+      </div>
+      <div class="gallery-count" id="galleryCount2">01 / 03</div>
+    </div>
+
+    <div class="gallery-viewer" id="viewer2">
+
+      <div class="slide landscape active" data-idx2="0">
+        <div class="slide-photo">
+          <div class="slide-photo-inner" style="width:100%;height:100%">
+            <img src="photos/T1-cheval.jpg" alt="Cheval islandais">
+          </div>
+        </div>
+        <div class="slide-caption">
+          <div class="caption-left">
+            <div class="caption-day">Côte Sud · En route</div>
+            <div class="caption-spot">Cheval islandais</div>
+          </div>
+          <div class="caption-right"><span class="caption-index">01</span>Territoire</div>
+        </div>
+      </div>
+
+      <div class="slide diptych" data-idx2="1">
+        <div class="slide-photo">
+          <div class="slide-photo-inner">
+            <span class="diptych-label nature">Habitant</span>
+            <img src="photos/T2a-ferme.jpg" alt="Ferme islandaise">
+          </div>
+          <div class="slide-photo-inner">
+            <span class="diptych-label human">Touriste</span>
+            <img src="photos/T2b-file-touristes.jpg" alt="File de touristes">
+          </div>
+          <div class="diptych-divider"></div>
+        </div>
+        <div class="slide-caption">
+          <div class="caption-left">
+            <div class="caption-day">Côte Sud · Cercle d'Or</div>
+            <div class="caption-spot">Habiter / Traverser</div>
+          </div>
+          <div class="caption-right"><span class="caption-index">02</span>Diptyque</div>
+        </div>
+      </div>
+
+      <div class="slide landscape" data-idx2="2">
+        <div class="slide-photo">
+          <div class="slide-photo-inner" style="width:100%;height:100%">
+            <img src="photos/T3-parking.jpg" alt="Parking dans la tempête">
+          </div>
+        </div>
+        <div class="slide-caption">
+          <div class="caption-left">
+            <div class="caption-day">Péninsule de Reykjanes</div>
+            <div class="caption-spot">Parking</div>
+          </div>
+          <div class="caption-right"><span class="caption-index">03</span>Territoire</div>
+        </div>
+      </div>
+
+      <div class="gallery-nav">
+        <div class="gallery-nav-zone nav-left" id="navLeft2">
+          <div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div>
+        </div>
+        <div class="gallery-nav-zone nav-right" id="navRight2">
+          <div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-progress">
+      <div class="gallery-progress-fill" id="progressFill2" style="width:33%"></div>
+    </div>
+    <div class="thumbs-strip" id="thumbsStrip2"></div>
+  </section>
+
+<section class="bq">
  <div class="bq-blob"></div>
  <div class="bq-inner">
  <span class="bq-deco">"</span>
