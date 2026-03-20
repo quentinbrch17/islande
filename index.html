@@ -642,6 +642,12 @@
       letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--muted); white-space: nowrap;
     }
+
+    /* Images cliquables au-dessus des nav-zones */
+    .slide .slide-photo-inner img {
+      position: relative;
+      z-index: 10;
+    }
 </style>
 </head>
 <body>
@@ -1363,15 +1369,16 @@
       document.body.style.overflow = '';
     }
 
-    // Clic sur toutes les images des slides (hors diptyque : clic sur chaque côté)
+    // Clic sur toutes les images des slides → lightbox
     document.querySelectorAll('.slide .slide-photo-inner img').forEach(img => {
       img.style.cursor = 'zoom-in';
       img.addEventListener('click', function(e) {
         e.stopPropagation();
+        e.stopImmediatePropagation();
         const slide = img.closest('.slide');
         const spot = slide.querySelector('.caption-spot');
         openLightbox(img.src, spot ? spot.textContent : '');
-      });
+      }, true); // capture phase : avant les nav-zones
     });
 
     lightbox.addEventListener('click', closeLightbox);
