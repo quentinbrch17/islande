@@ -1107,8 +1107,8 @@
  thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
  }
 
- document.getElementById('navLeft').addEventListener('click', () => goTo(current - 1));
- document.getElementById('navRight').addEventListener('click', () => goTo(current + 1));
+ document.getElementById('navLeft').addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo(current - 1); });
+ document.getElementById('navRight').addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo(current + 1); });
 
  // Clavier
  document.addEventListener('keydown', e => {
@@ -1181,8 +1181,8 @@
         strip2.querySelectorAll('.thumb')[cur2].scrollIntoView({ behavior: 'smooth', inline: 'center' });
       }
 
-      document.getElementById('navLeft2').addEventListener('click',  () => goTo2(cur2 - 1));
-      document.getElementById('navRight2').addEventListener('click', () => goTo2(cur2 + 1));
+      document.getElementById('navLeft2').addEventListener('click',  e => { e.preventDefault(); e.stopPropagation(); goTo2(cur2 - 1); });
+      document.getElementById('navRight2').addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo2(cur2 + 1); });
 
       let tx2 = 0;
       viewer2.addEventListener('touchstart', e => { tx2 = e.touches[0].clientX; }, { passive: true });
@@ -1191,6 +1191,24 @@
         if (Math.abs(dx) > 50) goTo2(dx < 0 ? cur2 + 1 : cur2 - 1);
       });
     })();
+
+  
+    // ── BACKDROP BLUR ──
+    document.querySelectorAll('.slide.portrait, .slide.square').forEach(slide => {
+      const img = slide.querySelector('img');
+      if (!img) return;
+      const bd = document.createElement('div');
+      bd.className = 'slide-backdrop';
+      // Utiliser l'image comme fond dès qu'elle est chargée
+      if (img.complete) {
+        bd.style.backgroundImage = 'url(' + img.src + ')';
+      } else {
+        img.addEventListener('load', () => {
+          bd.style.backgroundImage = 'url(' + img.src + ')';
+        });
+      }
+      slide.insertBefore(bd, slide.firstChild);
+    });
 
   </script>
 </body>
