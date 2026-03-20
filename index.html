@@ -354,8 +354,11 @@
  display: flex; pointer-events: none; z-index: 3;
  }
  .gallery-nav-zone {
- flex: 1; pointer-events: all; cursor: pointer;
+ flex: 1; pointer-events: none; cursor: pointer;
  display: flex; align-items: center;
+ }
+ .nav-arrow {
+ pointer-events: all;
  }
  .nav-arrow {
  width: 48px; height: 48px; border-radius: 50%;
@@ -715,7 +718,7 @@
  <div class="sl">Galerie</div>
  <h2><span>47 spots</span> · 11 jours</h2>
  </div>
- <div class="gallery-count" id="galleryCount">01 / 20</div>
+ <div class="gallery-count" id="galleryCount">01 / 22</div>
  </div>
 
  <!-- VIEWER -->
@@ -753,7 +756,38 @@
  </div>
  </div>
 
- <div class="slide diptych" data-index="2">
+
+ <div class="slide landscape" data-index="2">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <img src="photos/01b-valahnukamol-solo.jpg" alt="Valahnúkamöl — silhouette">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 2 · Péninsule de Reykjanes</div>
+ <div class="caption-spot">Valahnúkamöl</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">—</span>Paysage</div>
+ </div>
+ </div>
+
+ <div class="slide landscape" data-index="3">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <img src="photos/01c-valahnukamol-couple.jpg" alt="Valahnúkamöl — couple">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 2 · Péninsule de Reykjanes</div>
+ <div class="caption-spot">Valahnúkamöl</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">—</span>Paysage</div>
+ </div>
+ </div>
+
+ <div class="slide diptych" data-index="4">
     <div class="slide-photo">
       <div class="slide-photo-inner">
         <span class="diptych-label nature">Nature</span>
@@ -775,7 +809,7 @@
   </div>
 
  
-  <div class="slide diptych" data-index="3">
+  <div class="slide diptych" data-index="5">
     <div class="slide-photo">
       <div class="slide-photo-inner">
         <span class="diptych-label nature">Nature</span>
@@ -795,7 +829,7 @@
       <div class="caption-right"><span class="caption-index">03</span>Diptyque</div>
     </div>
   </div>
-<div class="slide landscape" data-index="4">
+<div class="slide landscape" data-index="6">
  <div class="slide-photo">
  <div class="slide-photo-inner" style="width:100%;height:100%">
  <!-- ── PHOTO 03 : remplace par ton fichier si besoin ── -->
@@ -811,7 +845,7 @@
  </div>
  </div>
 
- <div class="slide portrait" data-index="5">
+ <div class="slide portrait" data-index="7">
  <div class="slide-photo">
  <div class="slide-photo-inner">
  <!-- ── PHOTO 04 : remplace par ton fichier si besoin ── -->
@@ -827,7 +861,7 @@
  </div>
  </div>
 
- <div class="slide landscape" data-index="6">
+ <div class="slide landscape" data-index="8">
  <div class="slide-photo">
  <div class="slide-photo-inner" style="width:100%;height:100%">
  <!-- ── PHOTO 05 : remplace par ton fichier si besoin ── -->
@@ -843,7 +877,7 @@
  </div>
  </div>
 
- <div class="slide square" data-index="7">
+ <div class="slide square" data-index="9">
  <div class="slide-photo">
  <div class="slide-photo-inner">
  <!-- ── PHOTO 06 : remplace par ton fichier si besoin ── -->
@@ -859,7 +893,7 @@
  </div>
  </div>
 
- <div class="slide landscape" data-index="8">
+ <div class="slide landscape" data-index="10">
  <div class="slide-photo">
  <div class="slide-photo-inner" style="width:100%;height:100%">
  <!-- ── PHOTO 07 : remplace par ton fichier si besoin ── -->
@@ -875,7 +909,7 @@
  </div>
  </div>
 
- <div class="slide portrait" data-index="9">
+ <div class="slide portrait" data-index="11">
  <div class="slide-photo">
  <div class="slide-photo-inner">
  <!-- ── PHOTO 08 : remplace par ton fichier si besoin ── -->
@@ -891,7 +925,7 @@
  </div>
  </div>
 
- <div class="slide landscape" data-index="10">
+ <div class="slide landscape" data-index="12">
  <div class="slide-photo">
  <div class="slide-photo-inner" style="width:100%;height:100%">
  <!-- ── PHOTO 09 : remplace par ton fichier si besoin ── -->
@@ -907,7 +941,7 @@
  </div>
  </div>
 
- <div class="slide portrait" data-index="11">
+ <div class="slide portrait" data-index="13">
  <div class="slide-photo">
  <div class="slide-photo-inner">
  <!-- ── PHOTO 10 : remplace par ton fichier si besoin ── -->
@@ -923,7 +957,7 @@
  </div>
  </div>
 
- <div class="slide landscape" data-index="12">
+ <div class="slide landscape" data-index="14">
  <div class="slide-photo">
  <div class="slide-photo-inner" style="width:100%;height:100%">
  <!-- ── PHOTO 11 : remplace par ton fichier si besoin ── -->
@@ -939,7 +973,7 @@
  </div>
  </div>
 
- <div class="slide portrait" data-index="13">
+ <div class="slide portrait" data-index="15">
  <div class="slide-photo">
  <div class="slide-photo-inner">
  <!-- ── PHOTO 12 : remplace par ton fichier si besoin ── -->
@@ -955,7 +989,7 @@
  </div>
  </div>
 
- <div class="slide square" data-index="14">
+ <div class="slide square" data-index="16">
  <div class="slide-photo">
  <div class="slide-photo-inner">
  <!-- ── PHOTO 13 : remplace par ton fichier si besoin ── -->
@@ -971,7 +1005,7 @@
  </div>
  </div>
 
- <div class="slide landscape" data-index="15">
+ <div class="slide landscape" data-index="17">
  <div class="slide-photo">
  <div class="slide-photo-inner" style="width:100%;height:100%">
  <!-- ── PHOTO 14 : remplace par ton fichier si besoin ── -->
@@ -987,7 +1021,7 @@
  </div>
  </div>
 
- <div class="slide portrait" data-index="16">
+ <div class="slide portrait" data-index="18">
  <div class="slide-photo">
  <div class="slide-photo-inner">
  <!-- ── PHOTO 15 : remplace par ton fichier si besoin ── -->
@@ -1003,7 +1037,7 @@
  </div>
  </div>
 
- <div class="slide landscape" data-index="17">
+ <div class="slide landscape" data-index="19">
  <div class="slide-photo">
  <div class="slide-photo-inner" style="width:100%;height:100%">
  <!-- ── PHOTO 16 : remplace par ton fichier si besoin ── -->
@@ -1019,7 +1053,7 @@
  </div>
  </div>
 
- <div class="slide landscape" data-index="18">
+ <div class="slide landscape" data-index="20">
  <div class="slide-photo">
  <div class="slide-photo-inner" style="width:100%;height:100%">
  <!-- ── PHOTO 17 : remplace par ton fichier si besoin ── -->
@@ -1035,7 +1069,7 @@
  </div>
  </div>
 
- <div class="slide square" data-index="19">
+ <div class="slide square" data-index="21">
  <div class="slide-photo">
  <div class="slide-photo-inner">
  <!-- ── PHOTO 18 : remplace par ton fichier si besoin ── -->
