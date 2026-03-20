@@ -549,6 +549,41 @@
     .slide.portrait .slide-photo,
     .slide.square .slide-photo { z-index: 1; }
 
+
+    /* ── DIPTYQUE ── */
+    .slide.diptych .slide-photo {
+      gap: 3px;
+    }
+    .slide.diptych .slide-photo-inner {
+      height: 100%;
+      width: calc(50% - 2px);
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+      box-shadow: none;
+    }
+    .slide.diptych .slide-photo-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .diptych-divider {
+      position: absolute; top: 0; bottom: 0; left: 50%;
+      width: 1px; background: rgba(248,249,250,0.06); z-index: 1;
+    }
+    /* Mobile : diptyque en colonne */
+    @media (max-width: 700px) {
+      .slide.diptych .slide-photo {
+        flex-direction: column;
+        gap: 2px;
+      }
+      .slide.diptych .slide-photo-inner {
+        width: 100%;
+        height: calc(50% - 1px);
+      }
+      .diptych-divider { display: none; }
+    }
     .diptych-label {
       font-family: 'Syne', sans-serif; font-size: 8px; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
