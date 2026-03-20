@@ -253,6 +253,7 @@
  display: flex; align-items: center; justify-content: center;
  opacity: 0; transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
  pointer-events: none;
+ isolation: isolate;
  }
  .slide.active { opacity: 1; pointer-events: all; }
  .slide.prev { opacity: 0; }
@@ -261,6 +262,7 @@
  .slide-photo {
  position: absolute; inset: 0;
  display: flex; align-items: center; justify-content: center;
+ z-index: 1;
  }
 
  /* Paysage : plein écran */
