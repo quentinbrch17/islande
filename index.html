@@ -1,1068 +1,1050 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Islande — Entre deux mondes</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Islande — Entre deux mondes</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+ <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+ <style>
+ *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --black:    #111110;
-      --dark:     #1a1a18;
-      --mid:      #242422;
-      --border:   rgba(248,249,250,0.07);
-      --muted:    #6b6b68;
-      --text:     #a8a89e;
-      --light:    #d0d0c8;
-      --snow:     #F8F9FA;
-      --glacier:  #A2D2FF;
-      --moss:     #4B5D16;
-      --moss-l:   #7a9428;
-    }
+ :root {
+ --black: #111110;
+ --dark: #1a1a18;
+ --mid: #242422;
+ --border: rgba(248,249,250,0.07);
+ --muted: #6b6b68;
+ --text: #a8a89e;
+ --light: #d0d0c8;
+ --snow: #F8F9FA;
+ --glacier: #A2D2FF;
+ --moss: #4B5D16;
+ --moss-l: #7a9428;
+ }
 
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--black); color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 17px; line-height: 1.75;
-      overflow-x: hidden;
-    }
+ html { scroll-behavior: smooth; }
+ body {
+ background: var(--black); color: var(--text);
+ font-family: 'DM Sans', sans-serif;
+ font-size: 17px; line-height: 1.75;
+ overflow-x: hidden;
+ }
 
-    /* ─── GRAIN ─── */
-    body::after {
-      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
-    }
+ /* ─── GRAIN ─── */
+ body::after {
+ content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+ background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+ }
 
-    /* ─── NAV ─── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 22px 48px;
-      backdrop-filter: blur(14px);
-      background: rgba(17,17,16,0.7);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s;
-    }
-    .nav-logo {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      text-decoration: none; color: var(--glacier);
-    }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; transition: color 0.25s;
-    }
-    .nav-links a:hover { color: var(--snow); }
+ /* ─── NAV ─── */
+ nav {
+ position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+ display: flex; justify-content: space-between; align-items: center;
+ padding: 22px 48px;
+ backdrop-filter: blur(14px);
+ background: rgba(17,17,16,0.7);
+ border-bottom: 1px solid var(--border);
+ transition: background 0.3s;
+ }
+ .nav-logo {
+ font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px;
+ letter-spacing: 0.08em; text-transform: uppercase;
+ text-decoration: none; color: var(--glacier);
+ }
+ .nav-links { display: flex; gap: 32px; list-style: none; }
+ .nav-links a {
+ font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+ letter-spacing: 0.15em; text-transform: uppercase;
+ color: var(--muted); text-decoration: none; transition: color 0.25s;
+ }
+ .nav-links a:hover { color: var(--snow); }
 
-    /* ─── HERO ─── */
-    .hero {
-      height: 100vh; position: relative;
-      display: flex; flex-direction: column;
-      justify-content: flex-end; padding: 0 48px 72px;
-      overflow: hidden;
-    }
+ /* ─── HERO ─── */
+ .hero {
+ height: 100vh; position: relative;
+ display: flex; flex-direction: column;
+ justify-content: flex-end; padding: 0 48px 72px;
+ overflow: hidden;
+ }
 
-    /* Placeholder image de fond */
-    .hero-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(160deg, #1e2018 0%, #131312 40%, #0f1415 100%);
-    }
-    /* ── COVER : remplacer "photos/00-cover.jpg" par ta photo de couverture ── */
-    .hero-bg img {
-      width: 100%; height: 100%; object-fit: cover; opacity: 0.55;
-    }
-    .hero-ph-label {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
-      border: 1px solid var(--border); padding: 10px 20px; border-radius: 100px;
-    }
+ /* Placeholder image de fond */
+ .hero-bg {
+ position: absolute; inset: 0;
+ background: linear-gradient(160deg, #1e2018 0%, #131312 40%, #0f1415 100%);
+ }
+ /* ── COVER : remplacer "photos/00-cover.jpg" par ta photo de couverture ── */
+ .hero-bg img {
+ width: 100%; height: 100%; object-fit: cover; opacity: 0.55;
+ }
+ .hero-ph-label {
+ position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+ font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
+ letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+ border: 1px solid var(--border); padding: 10px 20px; border-radius: 100px;
+ }
 
-    .hero-vignette {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(to top, rgba(17,17,16,1) 0%, rgba(17,17,16,0.3) 40%, transparent 70%),
-        linear-gradient(to right, rgba(17,17,16,0.5) 0%, transparent 50%);
-    }
+ .hero-vignette {
+ position: absolute; inset: 0;
+ background:
+ linear-gradient(to top, rgba(17,17,16,1) 0%, rgba(17,17,16,0.3) 40%, transparent 70%),
+ linear-gradient(to right, rgba(17,17,16,0.5) 0%, transparent 50%);
+ }
 
-    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+ .hero-content { position: relative; z-index: 2; max-width: 700px; }
 
-    .hero-eyebrow {
-      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
-      letter-spacing: 0.28em; text-transform: uppercase; color: var(--moss-l);
-      margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
-    }
-    .hero-eyebrow::before {
-      content: ''; width: 28px; height: 1px;
-      background: var(--moss-l);
-    }
+ .hero-eyebrow {
+ font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
+ letter-spacing: 0.28em; text-transform: uppercase; color: var(--moss-l);
+ margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+ }
+ .hero-eyebrow::before {
+ content: ''; width: 28px; height: 1px;
+ background: var(--moss-l);
+ }
 
-    .hero-title {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(52px, 8vw, 112px); line-height: 0.88;
-      letter-spacing: -0.03em; color: var(--snow); margin-bottom: 20px;
-    }
-    .hero-title .glacier { color: var(--glacier); }
+ .hero-title {
+ font-family: 'Syne', sans-serif; font-weight: 800;
+ font-size: clamp(52px, 8vw, 112px); line-height: 0.88;
+ letter-spacing: -0.03em; color: var(--snow); margin-bottom: 20px;
+ }
+ .hero-title .glacier { color: var(--glacier); }
 
-    .hero-desc {
-      font-size: clamp(14px, 1.5vw, 17px); font-style: italic; font-weight: 300;
-      color: var(--text); max-width: 460px; margin-bottom: 36px; line-height: 1.7;
-    }
+ .hero-desc {
+ font-size: clamp(14px, 1.5vw, 17px); font-style: italic; font-weight: 300;
+ color: var(--text); max-width: 460px; margin-bottom: 36px; line-height: 1.7;
+ }
 
-    .hero-meta {
-      display: flex; gap: 28px; flex-wrap: wrap;
-    }
-    .hm {
-      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--muted); display: flex; flex-direction: column; gap: 3px;
-    }
-    .hm span { color: var(--light); font-size: 13px; letter-spacing: 0.03em; }
+ .hero-meta {
+ display: flex; gap: 28px; flex-wrap: wrap;
+ }
+ .hm {
+ font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+ letter-spacing: 0.16em; text-transform: uppercase;
+ color: var(--muted); display: flex; flex-direction: column; gap: 3px;
+ }
+ .hm span { color: var(--light); font-size: 13px; letter-spacing: 0.03em; }
 
-    .hero-scroll {
-      position: absolute; bottom: 32px; right: 48px; z-index: 2;
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
-    }
-    .scroll-line {
-      width: 1px; height: 48px;
-      background: linear-gradient(to bottom, var(--glacier), transparent);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 0.3; transform: scaleY(1); }
-      50%      { opacity: 1;   transform: scaleY(1.25); }
-    }
+ .hero-scroll {
+ position: absolute; bottom: 32px; right: 48px; z-index: 2;
+ display: flex; flex-direction: column; align-items: center; gap: 8px;
+ font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
+ letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+ }
+ .scroll-line {
+ width: 1px; height: 48px;
+ background: linear-gradient(to bottom, var(--glacier), transparent);
+ animation: pulse 2s ease-in-out infinite;
+ }
+ @keyframes pulse {
+ 0%,100% { opacity: 0.3; transform: scaleY(1); }
+ 50% { opacity: 1; transform: scaleY(1.25); }
+ }
 
-    /* ─── INTRO STRIP ─── */
-    .intro-strip {
-      display: grid; grid-template-columns: repeat(4,1fr);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .intro-strip-item {
-      padding: 36px 32px;
-      border-right: 1px solid var(--border);
-      display: flex; flex-direction: column; gap: 6px;
-    }
-    .intro-strip-item:last-child { border-right: none; }
-    .isn {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(28px, 3.5vw, 48px); color: var(--snow); line-height: 1;
-    }
-    .isl {
-      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
-    }
+ /* ─── INTRO STRIP ─── */
+ .intro-strip {
+ display: grid; grid-template-columns: repeat(4,1fr);
+ border-top: 1px solid var(--border);
+ border-bottom: 1px solid var(--border);
+ }
+ .intro-strip-item {
+ padding: 36px 32px;
+ border-right: 1px solid var(--border);
+ display: flex; flex-direction: column; gap: 6px;
+ }
+ .intro-strip-item:last-child { border-right: none; }
+ .isn {
+ font-family: 'Syne', sans-serif; font-weight: 800;
+ font-size: clamp(28px, 3.5vw, 48px); color: var(--snow); line-height: 1;
+ }
+ .isl {
+ font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
+ letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+ }
 
-    /* ─── SECTION HEADER ─── */
-    .sh {
-      display: flex; align-items: center; gap: 20px;
-      padding: 0 48px; margin-bottom: 0;
-    }
-    .sl {
-      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
-      letter-spacing: 0.28em; text-transform: uppercase; color: var(--glacier);
-      white-space: nowrap;
-    }
-    .sr { flex: 1; height: 1px; background: var(--border); }
+ /* ─── SECTION HEADER ─── */
+ .sh {
+ display: flex; align-items: center; gap: 20px;
+ padding: 0 48px; margin-bottom: 0;
+ }
+ .sl {
+ font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+ letter-spacing: 0.28em; text-transform: uppercase; color: var(--glacier);
+ white-space: nowrap;
+ }
+ .sr { flex: 1; height: 1px; background: var(--border); }
 
-    /* ─── PROJET TEXT ─── */
-    .projet {
-      padding: 80px 48px; max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
-    }
-    .projet h2 {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(26px, 3vw, 42px); line-height: 1.05;
-      color: var(--snow); margin-bottom: 20px; letter-spacing: -0.02em;
-    }
-    .projet h2 span { color: var(--glacier); }
-    .projet p { font-size: 16px; color: var(--text); line-height: 1.85; margin-bottom: 14px; }
-    .projet-quote {
-      padding: 16px 20px; border-left: 2px solid var(--moss-l);
-      background: rgba(75,93,22,0.07); border-radius: 0 8px 8px 0;
-      font-style: italic; color: var(--light); font-size: 15px;
-      margin-top: 24px;
-    }
-    .projet-right {
-      display: flex; flex-direction: column; gap: 0;
-      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
-    }
-    .region-row {
-      display: flex; align-items: center; gap: 20px;
-      padding: 18px 24px; border-bottom: 1px solid var(--border);
-      transition: background 0.2s;
-    }
-    .region-row:last-child { border-bottom: none; }
-    .region-row:hover { background: rgba(162,210,255,0.03); }
-    .rn {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px;
-      color: var(--glacier); min-width: 52px; line-height: 1;
-    }
-    .ri { display: flex; flex-direction: column; gap: 2px; }
-    .ri-name {
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--light);
-    }
-    .ri-sub {
-      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
-    }
+ /* ─── PROJET TEXT ─── */
+ .projet {
+ padding: 80px 48px; max-width: 1200px; margin: 0 auto;
+ display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+ }
+ .projet h2 {
+ font-family: 'Syne', sans-serif; font-weight: 800;
+ font-size: clamp(26px, 3vw, 42px); line-height: 1.05;
+ color: var(--snow); margin-bottom: 20px; letter-spacing: -0.02em;
+ }
+ .projet h2 span { color: var(--glacier); }
+ .projet p { font-size: 16px; color: var(--text); line-height: 1.85; margin-bottom: 14px; }
+ .projet-quote {
+ padding: 16px 20px; border-left: 2px solid var(--moss-l);
+ background: rgba(75,93,22,0.07); border-radius: 0 8px 8px 0;
+ font-style: italic; color: var(--light); font-size: 15px;
+ margin-top: 24px;
+ }
+ .projet-right {
+ display: flex; flex-direction: column; gap: 0;
+ border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+ }
+ .region-row {
+ display: flex; align-items: center; gap: 20px;
+ padding: 18px 24px; border-bottom: 1px solid var(--border);
+ transition: background 0.2s;
+ }
+ .region-row:last-child { border-bottom: none; }
+ .region-row:hover { background: rgba(162,210,255,0.03); }
+ .rn {
+ font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px;
+ color: var(--glacier); min-width: 52px; line-height: 1;
+ }
+ .ri { display: flex; flex-direction: column; gap: 2px; }
+ .ri-name {
+ font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--light);
+ }
+ .ri-sub {
+ font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
+ letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+ }
 
-    /* ─────────────────────────────────────────
-       GALERIE PLEIN ÉCRAN
-    ───────────────────────────────────────── */
-    .gallery-section {
-      padding: 80px 0 0;
-    }
-    .gallery-header {
-      padding: 0 48px 48px;
-      display: flex; align-items: flex-end; justify-content: space-between;
-    }
-    .gallery-header-left h2 {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(28px, 4vw, 52px); line-height: 1;
-      letter-spacing: -0.02em; color: var(--snow); margin-top: 16px;
-    }
-    .gallery-header-left h2 span { color: var(--glacier); }
-    .gallery-count {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
-      letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
-    }
+ /* ─────────────────────────────────────────
+ GALERIE PLEIN ÉCRAN
+ ───────────────────────────────────────── */
+ .gallery-section {
+ padding: 80px 0 0;
+ }
+ .gallery-header {
+ padding: 0 48px 48px;
+ display: flex; align-items: flex-end; justify-content: space-between;
+ }
+ .gallery-header-left h2 {
+ font-family: 'Syne', sans-serif; font-weight: 800;
+ font-size: clamp(28px, 4vw, 52px); line-height: 1;
+ letter-spacing: -0.02em; color: var(--snow); margin-top: 16px;
+ }
+ .gallery-header-left h2 span { color: var(--glacier); }
+ .gallery-count {
+ font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+ letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+ }
 
-    /* Viewer plein écran */
-    .gallery-viewer {
-      position: relative;
-      width: 100%; height: 90vh;
-      background: var(--dark);
-      overflow: hidden;
-      cursor: none;
-    }
+ /* Viewer plein écran */
+ .gallery-viewer {
+ position: relative;
+ width: 100%; height: 90vh;
+ background: var(--dark);
+ overflow: hidden;
+ cursor: none;
+ }
 
-    /* Slides */
-    .slide {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
-      pointer-events: none;
-    }
-    .slide.active { opacity: 1; pointer-events: all; }
-    .slide.prev { opacity: 0; }
+ /* Slides */
+ .slide {
+ position: absolute; inset: 0;
+ display: flex; align-items: center; justify-content: center;
+ opacity: 0; transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+ pointer-events: none;
+ }
+ .slide.active { opacity: 1; pointer-events: all; }
+ .slide.prev { opacity: 0; }
 
-    /* Photo placeholder — portrait ou paysage selon ratio */
-    .slide-photo {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
+ /* Photo placeholder — portrait ou paysage selon ratio */
+ .slide-photo {
+ position: absolute; inset: 0;
+ display: flex; align-items: center; justify-content: center;
+ }
 
-    /* Paysage : plein écran */
-    .slide.landscape .slide-photo-inner {
-      width: 100%; height: 100%;
-      background: var(--mid);
-      display: flex; align-items: center; justify-content: center;
-    }
-    /* Portrait : centré avec marges latérales */
-    .slide.portrait .slide-photo-inner {
-      height: 100%;
-      aspect-ratio: 2/3;
-      max-width: 60%;
-      background: var(--mid);
-      display: flex; align-items: center; justify-content: center;
-    }
-    /* Carré */
-    .slide.square .slide-photo-inner {
-      height: 85%;
-      aspect-ratio: 1/1;
-      max-width: 70%;
-      background: var(--mid);
-      display: flex; align-items: center; justify-content: center;
-    }
+ /* Paysage : plein écran */
+ .slide.landscape .slide-photo-inner {
+ width: 100%; height: 100%;
+ background: var(--mid);
+ display: flex; align-items: center; justify-content: center;
+ }
+ /* Portrait : centré avec marges latérales */
+ .slide.portrait .slide-photo-inner {
+ height: 100%;
+ aspect-ratio: 2/3;
+ max-width: 60%;
+ background: var(--mid);
+ display: flex; align-items: center; justify-content: center;
+ }
+ /* Carré */
+ .slide.square .slide-photo-inner {
+ height: 85%;
+ aspect-ratio: 1/1;
+ max-width: 70%;
+ background: var(--mid);
+ display: flex; align-items: center; justify-content: center;
+ }
 
-    .slide-photo-inner {
-      position: relative; overflow: hidden;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
-    }
-    /* Images réelles dans les slides */
-    .slide-photo-inner > img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
+ .slide-photo-inner {
+ position: relative; overflow: hidden;
+ box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+ }
+ /* Images réelles dans les slides */
+ .slide-photo-inner > img {
+ width: 100%; height: 100%; object-fit: cover; display: block;
+ }
 
-    /* Overlay interne */
-    .slide-photo-inner::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(160deg, rgba(162,210,255,0.04), transparent 50%, rgba(75,93,22,0.05));
-    }
+ /* Overlay interne */
+ .slide-photo-inner::before {
+ content: ''; position: absolute; inset: 0;
+ background: linear-gradient(160deg, rgba(162,210,255,0.04), transparent 50%, rgba(75,93,22,0.05));
+ }
 
-    /* Placeholder visuel */
-    .ph-inner {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 12px;
-    }
-    .ph-inner svg { opacity: 0.15; }
-    .ph-inner-lbl {
-      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
-      letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
-    }
+ /* Placeholder visuel */
+ .ph-inner {
+ position: absolute; inset: 0;
+ display: flex; flex-direction: column;
+ align-items: center; justify-content: center; gap: 12px;
+ }
+ .ph-inner svg { opacity: 0.15; }
+ .ph-inner-lbl {
+ font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
+ letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+ }
 
-    /* Caption */
-    .slide-caption {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 60px 64px 40px;
-      background: linear-gradient(to top, rgba(17,17,16,0.85) 0%, transparent 100%);
-      display: flex; align-items: flex-end; justify-content: space-between;
-      z-index: 2;
-    }
-    .caption-left { display: flex; flex-direction: column; gap: 6px; }
-    .caption-spot {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(18px, 2.5vw, 28px); color: var(--snow); line-height: 1;
-    }
-    .caption-day {
-      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--glacier);
-    }
-    .caption-note {
-      font-size: 14px; font-style: italic; color: var(--text); max-width: 380px; margin-top: 4px;
-    }
-    .caption-right {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.12em; color: var(--muted); text-align: right;
-    }
-    .caption-index {
-      font-size: 32px; font-weight: 800; color: var(--snow); display: block;
-      line-height: 1;
-    }
+ /* Caption */
+ .slide-caption {
+ position: absolute; bottom: 0; left: 0; right: 0;
+ padding: 60px 64px 40px;
+ background: linear-gradient(to top, rgba(17,17,16,0.85) 0%, transparent 100%);
+ display: flex; align-items: flex-end; justify-content: space-between;
+ z-index: 2;
+ }
+ .caption-left { display: flex; flex-direction: column; gap: 6px; }
+ .caption-spot {
+ font-family: 'Syne', sans-serif; font-weight: 800;
+ font-size: clamp(18px, 2.5vw, 28px); color: var(--snow); line-height: 1;
+ }
+ .caption-day {
+ font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
+ letter-spacing: 0.2em; text-transform: uppercase; color: var(--glacier);
+ }
+ .caption-note {
+ font-size: 14px; font-style: italic; color: var(--text); max-width: 380px; margin-top: 4px;
+ }
+ .caption-right {
+ font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+ letter-spacing: 0.12em; color: var(--muted); text-align: right;
+ }
+ .caption-index {
+ font-size: 32px; font-weight: 800; color: var(--snow); display: block;
+ line-height: 1;
+ }
 
-    /* Navigation flèches */
-    .gallery-nav {
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      display: flex; pointer-events: none; z-index: 3;
-    }
-    .gallery-nav-zone {
-      flex: 1; pointer-events: all; cursor: none;
-      display: flex; align-items: center;
-    }
-    .nav-arrow {
-      width: 48px; height: 48px; border-radius: 50%;
-      border: 1px solid rgba(248,249,250,0.12);
-      background: rgba(17,17,16,0.5); backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s; opacity: 0;
-      margin: 0 28px;
-    }
-    .gallery-nav-zone:hover .nav-arrow { opacity: 1; }
-    .nav-arrow svg { color: var(--snow); }
-    .nav-right { justify-content: flex-end; }
+ /* Navigation flèches */
+ .gallery-nav {
+ position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+ display: flex; pointer-events: none; z-index: 3;
+ }
+ .gallery-nav-zone {
+ flex: 1; pointer-events: all; cursor: none;
+ display: flex; align-items: center;
+ }
+ .nav-arrow {
+ width: 48px; height: 48px; border-radius: 50%;
+ border: 1px solid rgba(248,249,250,0.12);
+ background: rgba(17,17,16,0.5); backdrop-filter: blur(8px);
+ display: flex; align-items: center; justify-content: center;
+ transition: all 0.2s; opacity: 0;
+ margin: 0 28px;
+ }
+ .gallery-nav-zone:hover .nav-arrow { opacity: 1; }
+ .nav-arrow svg { color: var(--snow); }
+ .nav-right { justify-content: flex-end; }
 
-    /* Curseur custom */
-    .cursor {
-      position: fixed; width: 40px; height: 40px;
-      border-radius: 50%; pointer-events: none; z-index: 10000;
-      transform: translate(-50%,-50%);
-      border: 1px solid rgba(162,210,255,0.5);
-      transition: width 0.2s, height 0.2s, opacity 0.2s, background 0.2s;
-      mix-blend-mode: normal;
-    }
-    .cursor.on-left  { width: 56px; height: 56px; background: rgba(162,210,255,0.08); }
-    .cursor.on-right { width: 56px; height: 56px; background: rgba(162,210,255,0.08); }
-    .cursor-dot {
-      position: fixed; width: 5px; height: 5px; border-radius: 50%;
-      background: var(--glacier); pointer-events: none; z-index: 10001;
-      transform: translate(-50%,-50%);
-    }
+ /* Curseur custom */
+ .cursor {
+ position: fixed; width: 40px; height: 40px;
+ border-radius: 50%; pointer-events: none; z-index: 10000;
+ transform: translate(-50%,-50%);
+ border: 1px solid rgba(162,210,255,0.5);
+ transition: width 0.2s, height 0.2s, opacity 0.2s, background 0.2s;
+ mix-blend-mode: normal;
+ }
+ .cursor.on-left { width: 56px; height: 56px; background: rgba(162,210,255,0.08); }
+ .cursor.on-right { width: 56px; height: 56px; background: rgba(162,210,255,0.08); }
+ .cursor-dot {
+ position: fixed; width: 5px; height: 5px; border-radius: 50%;
+ background: var(--glacier); pointer-events: none; z-index: 10001;
+ transform: translate(-50%,-50%);
+ }
 
-    /* Progress bar */
-    .gallery-progress {
-      height: 2px; background: var(--border); position: relative; overflow: hidden;
-    }
-    .gallery-progress-fill {
-      height: 100%; background: linear-gradient(90deg, var(--moss-l), var(--glacier));
-      transition: width 0.6s cubic-bezier(.4,0,.2,1);
-    }
+ /* Progress bar */
+ .gallery-progress {
+ height: 2px; background: var(--border); position: relative; overflow: hidden;
+ }
+ .gallery-progress-fill {
+ height: 100%; background: linear-gradient(90deg, var(--moss-l), var(--glacier));
+ transition: width 0.6s cubic-bezier(.4,0,.2,1);
+ }
 
-    /* Thumbnails strip */
-    .thumbs-strip {
-      padding: 20px 48px; display: flex; gap: 8px; overflow-x: auto;
-      scrollbar-width: none; background: var(--dark);
-      border-bottom: 1px solid var(--border);
-    }
-    .thumbs-strip::-webkit-scrollbar { display: none; }
-    .thumb {
-      width: 72px; height: 48px; flex-shrink: 0;
-      background: var(--mid); border-radius: 3px;
-      border: 1px solid var(--border);
-      cursor: pointer; transition: all 0.2s; opacity: 0.4;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif; font-size: 7px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
-    }
-    .thumb.active { opacity: 1; border-color: var(--glacier); }
-    .thumb:hover  { opacity: 0.8; }
-    /* Thumb portrait */
-    .thumb.portrait { width: 32px; height: 48px; }
-    .thumb.square   { width: 48px; height: 48px; }
+ /* Thumbnails strip */
+ .thumbs-strip {
+ padding: 20px 48px; display: flex; gap: 8px; overflow-x: auto;
+ scrollbar-width: none; background: var(--dark);
+ border-bottom: 1px solid var(--border);
+ }
+ .thumbs-strip::-webkit-scrollbar { display: none; }
+ .thumb {
+ width: 72px; height: 48px; flex-shrink: 0;
+ background: var(--mid); border-radius: 3px;
+ border: 1px solid var(--border);
+ cursor: pointer; transition: all 0.2s; opacity: 0.4;
+ display: flex; align-items: center; justify-content: center;
+ font-family: 'Syne', sans-serif; font-size: 7px; font-weight: 600;
+ letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+ }
+ .thumb.active { opacity: 1; border-color: var(--glacier); }
+ .thumb:hover { opacity: 0.8; }
+ /* Thumb portrait */
+ .thumb.portrait { width: 32px; height: 48px; }
+ .thumb.square { width: 48px; height: 48px; }
 
-    /* ─── TIMELINE ─── */
-    .timeline-section { padding: 96px 48px; max-width: 1200px; margin: 0 auto; }
-    .timeline { display: flex; flex-direction: column; }
-    .tl-item {
-      display: grid; grid-template-columns: 88px 1fr; gap: 0 28px;
-      opacity: 0; transform: translateX(-16px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .tl-item.vis { opacity: 1; transform: translateX(0); }
-    .tl-left { display: flex; flex-direction: column; align-items: center; padding-top: 3px; }
-    .tl-day {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 11px;
-      letter-spacing: 0.1em; color: var(--glacier); margin-bottom: 8px;
-    }
-    .tl-dot {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--glacier); box-shadow: 0 0 10px rgba(162,210,255,0.4); flex-shrink: 0;
-    }
-    .tl-line { width: 1px; flex: 1; min-height: 16px;
-      background: linear-gradient(to bottom, rgba(162,210,255,0.2), transparent); }
-    .tl-last .tl-line { display: none; }
-    .tl-content { padding-bottom: 32px; }
-    .tl-region {
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
-      color: var(--snow); margin-bottom: 3px;
-    }
-    .tl-spots { font-size: 14px; color: var(--text); line-height: 1.65; }
-    .tl-hi { color: var(--glacier); font-weight: 500; }
+ /* ─── TIMELINE ─── */
+ .timeline-section { padding: 96px 48px; max-width: 1200px; margin: 0 auto; }
+ .timeline { display: flex; flex-direction: column; }
+ .tl-item {
+ display: grid; grid-template-columns: 88px 1fr; gap: 0 28px;
+ opacity: 0; transform: translateX(-16px);
+ transition: opacity 0.5s ease, transform 0.5s ease;
+ }
+ .tl-item.vis { opacity: 1; transform: translateX(0); }
+ .tl-left { display: flex; flex-direction: column; align-items: center; padding-top: 3px; }
+ .tl-day {
+ font-family: 'Syne', sans-serif; font-weight: 800; font-size: 11px;
+ letter-spacing: 0.1em; color: var(--glacier); margin-bottom: 8px;
+ }
+ .tl-dot {
+ width: 9px; height: 9px; border-radius: 50%;
+ background: var(--glacier); box-shadow: 0 0 10px rgba(162,210,255,0.4); flex-shrink: 0;
+ }
+ .tl-line { width: 1px; flex: 1; min-height: 16px;
+ background: linear-gradient(to bottom, rgba(162,210,255,0.2), transparent); }
+ .tl-last .tl-line { display: none; }
+ .tl-content { padding-bottom: 32px; }
+ .tl-region {
+ font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+ color: var(--snow); margin-bottom: 3px;
+ }
+ .tl-spots { font-size: 14px; color: var(--text); line-height: 1.65; }
+ .tl-hi { color: var(--glacier); font-weight: 500; }
 
-    /* ─── GRANDE CITATION ─── */
-    .bq {
-      padding: 110px 48px; text-align: center; position: relative; overflow: hidden;
-      border-top: 1px solid var(--border);
-    }
-    .bq-blob {
-      position: absolute; width: 600px; height: 600px; border-radius: 50%;
-      filter: blur(120px); top: 50%; left: 50%; transform: translate(-50%,-50%);
-      background: radial-gradient(circle, rgba(162,210,255,0.06), rgba(75,93,22,0.05) 50%, transparent 70%);
-      pointer-events: none;
-    }
-    .bq-inner { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; }
-    .bq-deco {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 140px; line-height: 0.55;
-      color: var(--glacier); opacity: 0.08; display: block; margin-bottom: -8px;
-    }
-    .bq-text {
-      font-size: clamp(20px, 3vw, 34px); font-weight: 300; font-style: italic;
-      color: var(--snow); line-height: 1.45;
-    }
-    .bq-attr {
-      margin-top: 28px; font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
-      letter-spacing: 0.25em; text-transform: uppercase; color: var(--moss-l);
-    }
+ /* ─── GRANDE CITATION ─── */
+ .bq {
+ padding: 110px 48px; text-align: center; position: relative; overflow: hidden;
+ border-top: 1px solid var(--border);
+ }
+ .bq-blob {
+ position: absolute; width: 600px; height: 600px; border-radius: 50%;
+ filter: blur(120px); top: 50%; left: 50%; transform: translate(-50%,-50%);
+ background: radial-gradient(circle, rgba(162,210,255,0.06), rgba(75,93,22,0.05) 50%, transparent 70%);
+ pointer-events: none;
+ }
+ .bq-inner { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; }
+ .bq-deco {
+ font-family: 'Syne', sans-serif; font-weight: 800; font-size: 140px; line-height: 0.55;
+ color: var(--glacier); opacity: 0.08; display: block; margin-bottom: -8px;
+ }
+ .bq-text {
+ font-size: clamp(20px, 3vw, 34px); font-weight: 300; font-style: italic;
+ color: var(--snow); line-height: 1.45;
+ }
+ .bq-attr {
+ margin-top: 28px; font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+ letter-spacing: 0.25em; text-transform: uppercase; color: var(--moss-l);
+ }
 
-    /* ─── CONTACT ─── */
-    .contact {
-      padding: 96px 48px; border-top: 1px solid var(--border);
-      max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-    }
-    .contact h2 {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(26px, 3.2vw, 44px); line-height: 1.05;
-      letter-spacing: -0.02em; color: var(--snow); margin-bottom: 16px;
-    }
-    .contact h2 span { color: var(--glacier); }
-    .contact p { font-size: 16px; color: var(--text); line-height: 1.8; }
-    .ccard {
-      background: linear-gradient(135deg, rgba(248,249,250,0.03), rgba(248,249,250,0.01));
-      border: 1px solid var(--border); border-radius: 16px; padding: 36px;
-      display: flex; flex-direction: column; gap: 24px;
-      box-shadow: 0 8px 60px rgba(0,0,0,0.4); position: relative; overflow: hidden;
-    }
-    .ccard::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--glacier), var(--moss-l), transparent);
-      opacity: 0.35;
-    }
-    .crow { display: flex; flex-direction: column; gap: 3px; }
-    .clbl {
-      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
-    }
-    .cval { font-size: 15px; color: var(--light); }
+ /* ─── CONTACT ─── */
+ .contact {
+ padding: 96px 48px; border-top: 1px solid var(--border);
+ max-width: 1200px; margin: 0 auto;
+ display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+ }
+ .contact h2 {
+ font-family: 'Syne', sans-serif; font-weight: 800;
+ font-size: clamp(26px, 3.2vw, 44px); line-height: 1.05;
+ letter-spacing: -0.02em; color: var(--snow); margin-bottom: 16px;
+ }
+ .contact h2 span { color: var(--glacier); }
+ .contact p { font-size: 16px; color: var(--text); line-height: 1.8; }
+ .ccard {
+ background: linear-gradient(135deg, rgba(248,249,250,0.03), rgba(248,249,250,0.01));
+ border: 1px solid var(--border); border-radius: 16px; padding: 36px;
+ display: flex; flex-direction: column; gap: 24px;
+ box-shadow: 0 8px 60px rgba(0,0,0,0.4); position: relative; overflow: hidden;
+ }
+ .ccard::before {
+ content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+ background: linear-gradient(90deg, transparent, var(--glacier), var(--moss-l), transparent);
+ opacity: 0.35;
+ }
+ .crow { display: flex; flex-direction: column; gap: 3px; }
+ .clbl {
+ font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+ letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+ }
+ .cval { font-size: 15px; color: var(--light); }
 
-    /* ─── FOOTER ─── */
-    footer {
-      padding: 32px 48px; border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .fl {
-      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
-    }
-    .fr { font-size: 13px; font-style: italic; color: var(--muted); }
+ /* ─── FOOTER ─── */
+ footer {
+ padding: 32px 48px; border-top: 1px solid var(--border);
+ display: flex; justify-content: space-between; align-items: center;
+ }
+ .fl {
+ font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
+ letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+ }
+ .fr { font-size: 13px; font-style: italic; color: var(--muted); }
 
-    /* ─── ENTRY ANIM ─── */
-    .hero-eyebrow { animation: up 1s ease 0.3s both; }
-    .hero-title   { animation: up 1s ease 0.5s both; }
-    .hero-desc    { animation: up 1s ease 0.7s both; }
-    .hero-meta    { animation: up 1s ease 0.9s both; }
-    .hero-scroll  { animation: up 1s ease 1.1s both; }
-    @keyframes up {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+ /* ─── ENTRY ANIM ─── */
+ .hero-eyebrow { animation: up 1s ease 0.3s both; }
+ .hero-title { animation: up 1s ease 0.5s both; }
+ .hero-desc { animation: up 1s ease 0.7s both; }
+ .hero-meta { animation: up 1s ease 0.9s both; }
+ .hero-scroll { animation: up 1s ease 1.1s both; }
+ @keyframes up {
+ from { opacity: 0; transform: translateY(24px); }
+ to { opacity: 1; transform: translateY(0); }
+ }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      nav { padding: 16px 20px; }
-      .hero { padding: 0 20px 60px; }
-      .intro-strip { grid-template-columns: 1fr 1fr; }
-      .projet { grid-template-columns: 1fr; padding: 60px 20px; gap: 48px; }
-      .gallery-header { padding: 0 20px 32px; }
-      .slide-caption { padding: 40px 20px 28px; }
-      .thumbs-strip { padding: 16px 20px; }
-      .timeline-section { padding: 72px 20px; }
-      .bq, .contact, footer { padding-left: 20px; padding-right: 20px; }
-      .contact { grid-template-columns: 1fr; gap: 40px; }
-      footer { flex-direction: column; gap: 8px; text-align: center; }
-    }
-  </style>
+ /* ─── RESPONSIVE ─── */
+ @media (max-width: 900px) {
+ nav { padding: 16px 20px; }
+ .hero { padding: 0 20px 60px; }
+ .intro-strip { grid-template-columns: 1fr 1fr; }
+ .projet { grid-template-columns: 1fr; padding: 60px 20px; gap: 48px; }
+ .gallery-header { padding: 0 20px 32px; }
+ .slide-caption { padding: 40px 20px 28px; }
+ .thumbs-strip { padding: 16px 20px; }
+ .timeline-section { padding: 72px 20px; }
+ .bq, .contact, footer { padding-left: 20px; padding-right: 20px; }
+ .contact { grid-template-columns: 1fr; gap: 40px; }
+ footer { flex-direction: column; gap: 8px; text-align: center; }
+ }
+ </style>
 </head>
 <body>
 
-  <!-- CURSEUR -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
+ <!-- CURSEUR -->
+ <div class="cursor" id="cursor"></div>
+ <div class="cursor-dot" id="cursorDot"></div>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#" class="nav-logo">Q. — Islande MMXXVI</a>
-    <ul class="nav-links">
-      <li><a href="#galerie">Galerie</a></li>
-      <li><a href="#parcours">Parcours</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+ <!-- NAV -->
+ <nav>
+ <a href="#" class="nav-logo">Q. — Islande MMXXVI</a>
+ <ul class="nav-links">
+ <li><a href="#galerie">Galerie</a></li>
+ <li><a href="#parcours">Parcours</a></li>
+ <li><a href="#contact">Contact</a></li>
+ </ul>
+ </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg">
-      <!-- ── COVER : remplace 00-cover.jpg par ton fichier ── -->
-      <img src="photos/00-cover.jpg" alt="Islande — photo de couverture">
-    </div>
-    <div class="hero-vignette"></div>
-    <div class="hero-content">
-      <div class="hero-eyebrow">Projet photographique · Mars 2026</div>
-      <h1 class="hero-title">Entre<br><span class="glacier">deux</span><br>mondes</h1>
-      <p class="hero-desc">Islande — là où la nature brute et la présence humaine se regardent sans se comprendre. De Valahnúkamöl à Kleifarvatn.</p>
-      <div class="hero-meta">
-        <div class="hm">Durée<span>11 jours</span></div>
-        <div class="hm">Distance<span>~2 500 km</span></div>
-        <div class="hm">Photos<span>3 000+</span></div>
-        <div class="hm">Spots<span>47</span></div>
-      </div>
-    </div>
-    <div class="hero-scroll"><div class="scroll-line"></div>Défiler</div>
-  </section>
+ <!-- HERO -->
+ <section class="hero">
+ <div class="hero-bg">
+ <!-- ── COVER : remplace 00-cover.jpg par ton fichier ── -->
+ <img src="photos/00-cover.jpg" alt="Islande — photo de couverture">
+ </div>
+ <div class="hero-vignette"></div>
+ <div class="hero-content">
+ <div class="hero-eyebrow">Projet photographique · Mars 2026</div>
+ <h1 class="hero-title">Entre<br><span class="glacier">deux</span><br>mondes</h1>
+ <p class="hero-desc">Islande — là où la nature brute et la présence humaine se regardent sans se comprendre. De Valahnúkamöl à Kleifarvatn.</p>
+ <div class="hero-meta">
+ <div class="hm">Durée<span>11 jours</span></div>
+ <div class="hm">Distance<span>~2 500 km</span></div>
+ <div class="hm">Photos<span>3 000+</span></div>
+ <div class="hm">Spots<span>47</span></div>
+ </div>
+ </div>
+ <div class="hero-scroll"><div class="scroll-line"></div>Défiler</div>
+ </section>
 
-  <!-- STATS STRIP -->
-  <div class="intro-strip">
-    <div class="intro-strip-item"><div class="isn">3 000+</div><div class="isl">Photographies</div></div>
-    <div class="intro-strip-item"><div class="isn">47</div><div class="isl">Spots naturels</div></div>
-    <div class="intro-strip-item"><div class="isn">~2 500</div><div class="isl">Kilomètres</div></div>
-    <div class="intro-strip-item"><div class="isn">8</div><div class="isl">Régions traversées</div></div>
-  </div>
+ <!-- STATS STRIP -->
+ <div class="intro-strip">
+ <div class="intro-strip-item"><div class="isn">3 000+</div><div class="isl">Photographies</div></div>
+ <div class="intro-strip-item"><div class="isn">47</div><div class="isl">Spots naturels</div></div>
+ <div class="intro-strip-item"><div class="isn">~2 500</div><div class="isl">Kilomètres</div></div>
+ <div class="intro-strip-item"><div class="isn">8</div><div class="isl">Régions traversées</div></div>
+ </div>
 
-  <!-- PROJET -->
-  <section class="projet">
-    <div>
-      <h2>Un territoire qui <span>résiste</span></h2>
-      <p>L'Islande est devenue l'une des destinations les plus photographiées au monde. Et pourtant quelque chose résiste — dans les fissures entre les parkings bondés et les plages de sable noir, il reste une nature qui ne pose pas.</p>
-      <p>Ce projet documente cette tension. Non pour la déplorer, mais pour la regarder en face. La question est de savoir ce qu'il reste quand les bus repartent.</p>
-      <div class="projet-quote">« J'ai presque envie de pleurer là. » — Kleifarvatn, Jour 11.</div>
-    </div>
-    <div class="projet-right">
-      <div class="region-row"><div class="rn">J1–2</div><div class="ri"><div class="ri-name">Péninsule de Reykjanes</div><div class="ri-sub">Grindavík · Valahnúkamöl · Gunnuhver</div></div></div>
-      <div class="region-row"><div class="rn">J3</div><div class="ri"><div class="ri-name">Cercle d'Or</div><div class="ri-sub">Þingvellir · Geysir · Gullfoss</div></div></div>
-      <div class="region-row"><div class="rn">J4–6</div><div class="ri"><div class="ri-name">Côte Sud & Vík</div><div class="ri-sub">DC-3 · Dyrhólaey · Reynisfjara</div></div></div>
-      <div class="region-row"><div class="rn">J7–8</div><div class="ri"><div class="ri-name">Fjords de l'Est</div><div class="ri-sub">Jökulsárlón · Hengifoss · Aurores</div></div></div>
-      <div class="region-row"><div class="rn">J9–11</div><div class="ri"><div class="ri-name">Glaciers & Épilogue</div><div class="ri-sub">Svartifoss · Kvernufoss · Bruarfoss · Kleifarvatn</div></div></div>
-    </div>
-  </section>
+ <!-- PROJET -->
+ <section class="projet">
+ <div>
+ <h2>Un territoire qui <span>résiste</span></h2>
+ <p>L'Islande est devenue l'une des destinations les plus photographiées au monde. Et pourtant quelque chose résiste — dans les fissures entre les parkings bondés et les plages de sable noir, il reste une nature qui ne pose pas.</p>
+ <p>Ce projet documente cette tension. Non pour la déplorer, mais pour la regarder en face. La question est de savoir ce qu'il reste quand les bus repartent.</p>
+ <div class="projet-quote">« L'Islande ne se laisse pas photographier. Elle se laisse traverser. » — Carnet de route, Mars 2026.</div>
+ </div>
+ <div class="projet-right">
+ <div class="region-row"><div class="rn">J1–2</div><div class="ri"><div class="ri-name">Péninsule de Reykjanes</div><div class="ri-sub">Grindavík · Valahnúkamöl · Gunnuhver</div></div></div>
+ <div class="region-row"><div class="rn">J3</div><div class="ri"><div class="ri-name">Cercle d'Or</div><div class="ri-sub">Þingvellir · Geysir · Gullfoss</div></div></div>
+ <div class="region-row"><div class="rn">J4–6</div><div class="ri"><div class="ri-name">Côte Sud & Vík</div><div class="ri-sub">DC-3 · Dyrhólaey · Reynisfjara</div></div></div>
+ <div class="region-row"><div class="rn">J7–8</div><div class="ri"><div class="ri-name">Fjords de l'Est</div><div class="ri-sub">Jökulsárlón · Hengifoss · Aurores</div></div></div>
+ <div class="region-row"><div class="rn">J9–11</div><div class="ri"><div class="ri-name">Glaciers & Épilogue</div><div class="ri-sub">Svartifoss · Kvernufoss · Bruarfoss · Kleifarvatn</div></div></div>
+ </div>
+ </section>
 
-  <!-- ═══════════ GALERIE ═══════════ -->
-  <section class="gallery-section" id="galerie">
-    <div class="gallery-header">
-      <div class="gallery-header-left">
-        <div class="sl">Galerie</div>
-        <h2><span>47 spots</span> · 11 jours</h2>
-      </div>
-      <div class="gallery-count" id="galleryCount">01 / 18</div>
-    </div>
+ <!-- ═══════════ GALERIE ═══════════ -->
+ <section class="gallery-section" id="galerie">
+ <div class="gallery-header">
+ <div class="gallery-header-left">
+ <div class="sl">Galerie</div>
+ <h2><span>47 spots</span> · 11 jours</h2>
+ </div>
+ <div class="gallery-count" id="galleryCount">01 / 18</div>
+ </div>
 
-    <!-- VIEWER -->
-    <div class="gallery-viewer" id="viewer">
+ <!-- VIEWER -->
+ <div class="gallery-viewer" id="viewer">
 
-      <!-- Les slides — format : landscape / portrait / square -->
-      <div class="slide landscape active" data-index="0">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <!-- ── PHOTO 01 : remplace par ton fichier si besoin ── -->
-      <img src="photos/01-valahnukamol.jpg" alt="Valahnúkamöl">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 2 · Péninsule de Reykjanes</div>
-            <div class="caption-spot">Valahnúkamöl</div>
-            <div class="caption-note">« Le truc le plus incroyable de toute ma vie. »</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">01</span>Paysage</div>
-        </div>
-      </div>
+ <!-- Les slides — format : landscape / portrait / square -->
+ <div class="slide landscape active" data-index="0">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <!-- ── PHOTO 01 : remplace par ton fichier si besoin ── -->
+ <img src="photos/01-valahnukamol.jpg" alt="Valahnúkamöl">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 2 · Péninsule de Reykjanes</div>
+ <div class="caption-spot">Valahnúkamöl</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">01</span>Paysage</div>
+ </div>
+ </div>
 
-      <div class="slide portrait" data-index="1">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <!-- ── PHOTO 02 : remplace par ton fichier si besoin ── -->
-      <img src="photos/02-seljalandsfoss.jpg" alt="Seljalandsfoss">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 4 · Côte Sud</div>
-            <div class="caption-spot">Seljalandsfoss</div>
-            <div class="caption-note">Longue exposition — voile d'eau.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">02</span>Portrait</div>
-        </div>
-      </div>
+ <div class="slide portrait" data-index="1">
+ <div class="slide-photo">
+ <div class="slide-photo-inner">
+ <!-- ── PHOTO 02 : remplace par ton fichier si besoin ── -->
+ <img src="photos/02-seljalandsfoss.jpg" alt="Seljalandsfoss">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 4 · Côte Sud</div>
+ <div class="caption-spot">Seljalandsfoss</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">02</span>Portrait</div>
+ </div>
+ </div>
 
-      <div class="slide landscape" data-index="2">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <!-- ── PHOTO 03 : remplace par ton fichier si besoin ── -->
-      <img src="photos/03-reynisfjara-lever.jpg" alt="Reynisfjara lever de soleil">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 5 · Vík</div>
-            <div class="caption-spot">Reynisfjara — Lever de soleil</div>
-            <div class="caption-note">Personne sur la plage. Un couple au loin. Photo clé du voyage.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">03</span>Paysage</div>
-        </div>
-      </div>
+ <div class="slide landscape" data-index="2">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <!-- ── PHOTO 03 : remplace par ton fichier si besoin ── -->
+ <img src="photos/03-reynisfjara-lever.jpg" alt="Reynisfjara lever de soleil">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 5 · Vík</div>
+ <div class="caption-spot">Reynisfjara — Lever de soleil</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">03</span>Paysage</div>
+ </div>
+ </div>
 
-      <div class="slide portrait" data-index="3">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <!-- ── PHOTO 04 : remplace par ton fichier si besoin ── -->
-      <img src="photos/04-dc3-wreck.jpg" alt="Épave DC-3">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 4 · Sólheimasandur</div>
-            <div class="caption-spot">Épave DC-3</div>
-            <div class="caption-note">1973. Icône Instagram. Métaphore parfaite.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">04</span>Portrait</div>
-        </div>
-      </div>
+ <div class="slide portrait" data-index="3">
+ <div class="slide-photo">
+ <div class="slide-photo-inner">
+ <!-- ── PHOTO 04 : remplace par ton fichier si besoin ── -->
+ <img src="photos/04-dc3-wreck.jpg" alt="Épave DC-3">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 4 · Sólheimasandur</div>
+ <div class="caption-spot">Épave DC-3</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">04</span>Portrait</div>
+ </div>
+ </div>
 
-      <div class="slide landscape" data-index="4">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <!-- ── PHOTO 05 : remplace par ton fichier si besoin ── -->
-      <img src="photos/05-gullfoss.jpg" alt="Gullfoss">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 3 · Cercle d'Or</div>
-            <div class="caption-spot">Gullfoss</div>
-            <div class="caption-note">Méga intense. Double cascade.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">05</span>Paysage</div>
-        </div>
-      </div>
+ <div class="slide landscape" data-index="4">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <!-- ── PHOTO 05 : remplace par ton fichier si besoin ── -->
+ <img src="photos/05-gullfoss.jpg" alt="Gullfoss">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 3 · Cercle d'Or</div>
+ <div class="caption-spot">Gullfoss</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">05</span>Paysage</div>
+ </div>
+ </div>
 
-      <div class="slide square" data-index="5">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <!-- ── PHOTO 06 : remplace par ton fichier si besoin ── -->
-      <img src="photos/06-jokulsarlon.jpg" alt="Jökulsárlón">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 6 · Vatnajökull</div>
-            <div class="caption-spot">Jökulsárlón</div>
-            <div class="caption-note">Lagon glaciaire. Phoques. Icebergs bleus.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">06</span>Carré</div>
-        </div>
-      </div>
+ <div class="slide square" data-index="5">
+ <div class="slide-photo">
+ <div class="slide-photo-inner">
+ <!-- ── PHOTO 06 : remplace par ton fichier si besoin ── -->
+ <img src="photos/06-jokulsarlon.jpg" alt="Jökulsárlón">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 6 · Vatnajökull</div>
+ <div class="caption-spot">Jökulsárlón</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">06</span>Carré</div>
+ </div>
+ </div>
 
-      <div class="slide landscape" data-index="6">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <!-- ── PHOTO 07 : remplace par ton fichier si besoin ── -->
-      <img src="photos/07-diamond-beach.jpg" alt="Diamond Beach">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 6 · Vatnajökull</div>
-            <div class="caption-spot">Diamond Beach</div>
-            <div class="caption-note">Blocs de glace translucides sur sable noir.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">07</span>Paysage</div>
-        </div>
-      </div>
+ <div class="slide landscape" data-index="6">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <!-- ── PHOTO 07 : remplace par ton fichier si besoin ── -->
+ <img src="photos/07-diamond-beach.jpg" alt="Diamond Beach">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 6 · Vatnajökull</div>
+ <div class="caption-spot">Diamond Beach</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">07</span>Paysage</div>
+ </div>
+ </div>
 
-      <div class="slide portrait" data-index="7">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <!-- ── PHOTO 08 : remplace par ton fichier si besoin ── -->
-      <img src="photos/08-hengifoss.jpg" alt="Hengifoss">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 8 · Fjords de l'Est</div>
-            <div class="caption-spot">Hengifoss</div>
-            <div class="caption-note">128m. Gelée. Stries rouges et noires. Rando 1h15.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">08</span>Portrait</div>
-        </div>
-      </div>
+ <div class="slide portrait" data-index="7">
+ <div class="slide-photo">
+ <div class="slide-photo-inner">
+ <!-- ── PHOTO 08 : remplace par ton fichier si besoin ── -->
+ <img src="photos/08-hengifoss.jpg" alt="Hengifoss">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 8 · Fjords de l'Est</div>
+ <div class="caption-spot">Hengifoss</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">08</span>Portrait</div>
+ </div>
+ </div>
 
-      <div class="slide landscape" data-index="8">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <!-- ── PHOTO 09 : remplace par ton fichier si besoin ── -->
-      <img src="photos/09-aurores-djupivogur.jpg" alt="Aurores Djúpivogur">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 8 · Djúpivogur</div>
-            <div class="caption-spot">Aurores boréales</div>
-            <div class="caption-note">Invisibles à l'œil nu. Vert turquoise intense en longue exposition.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">09</span>Paysage · Longue expo</div>
-        </div>
-      </div>
+ <div class="slide landscape" data-index="8">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <!-- ── PHOTO 09 : remplace par ton fichier si besoin ── -->
+ <img src="photos/09-aurores-djupivogur.jpg" alt="Aurores Djúpivogur">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 8 · Djúpivogur</div>
+ <div class="caption-spot">Aurores boréales</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">09</span>Paysage · Longue expo</div>
+ </div>
+ </div>
 
-      <div class="slide portrait" data-index="9">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <!-- ── PHOTO 10 : remplace par ton fichier si besoin ── -->
-      <img src="photos/10-svartifoss.jpg" alt="Svartifoss">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 9 · Skaftafell</div>
-            <div class="caption-spot">Svartifoss</div>
-            <div class="caption-note">Cascade gelée. Colonnes de basalte. Longue expo mains nues.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">10</span>Portrait · Longue expo</div>
-        </div>
-      </div>
+ <div class="slide portrait" data-index="9">
+ <div class="slide-photo">
+ <div class="slide-photo-inner">
+ <!-- ── PHOTO 10 : remplace par ton fichier si besoin ── -->
+ <img src="photos/10-svartifoss.jpg" alt="Svartifoss">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 9 · Skaftafell</div>
+ <div class="caption-spot">Svartifoss</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">10</span>Portrait · Longue expo</div>
+ </div>
+ </div>
 
-      <div class="slide landscape" data-index="10">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <!-- ── PHOTO 11 : remplace par ton fichier si besoin ── -->
-      <img src="photos/11-fjallarlon.jpg" alt="Fjallsárlón">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 9 · Vatnajökull</div>
-            <div class="caption-spot">Fjallsárlón</div>
-            <div class="caption-note">Sous la neige. À côté des icebergs. C'était fou.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">11</span>Paysage</div>
-        </div>
-      </div>
+ <div class="slide landscape" data-index="10">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <!-- ── PHOTO 11 : remplace par ton fichier si besoin ── -->
+ <img src="photos/11-fjallarlon.jpg" alt="Fjallsárlón">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 9 · Vatnajökull</div>
+ <div class="caption-spot">Fjallsárlón</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">11</span>Paysage</div>
+ </div>
+ </div>
 
-      <div class="slide portrait" data-index="11">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <!-- ── PHOTO 12 : remplace par ton fichier si besoin ── -->
-      <img src="photos/12-kvernufoss.jpg" alt="Kvernufoss">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 10 · Côte Sud</div>
-            <div class="caption-spot">Kvernufoss</div>
-            <div class="caption-note">Derrière la cascade. Cascade de fou pour les photographes.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">12</span>Portrait · Longue expo</div>
-        </div>
-      </div>
+ <div class="slide portrait" data-index="11">
+ <div class="slide-photo">
+ <div class="slide-photo-inner">
+ <!-- ── PHOTO 12 : remplace par ton fichier si besoin ── -->
+ <img src="photos/12-kvernufoss.jpg" alt="Kvernufoss">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 10 · Côte Sud</div>
+ <div class="caption-spot">Kvernufoss</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">12</span>Portrait · Longue expo</div>
+ </div>
+ </div>
 
-      <div class="slide square" data-index="12">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <!-- ── PHOTO 13 : remplace par ton fichier si besoin ── -->
-      <img src="photos/13-solheimajokull.jpg" alt="Sólheimajökull">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 10 · Côte Sud</div>
-            <div class="caption-spot">Sólheimajökull</div>
-            <div class="caption-note">Glacier. Lagon glaciaire. Près de la glace vive.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">13</span>Carré</div>
-        </div>
-      </div>
+ <div class="slide square" data-index="12">
+ <div class="slide-photo">
+ <div class="slide-photo-inner">
+ <!-- ── PHOTO 13 : remplace par ton fichier si besoin ── -->
+ <img src="photos/13-solheimajokull.jpg" alt="Sólheimajökull">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 10 · Côte Sud</div>
+ <div class="caption-spot">Sólheimajökull</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">13</span>Carré</div>
+ </div>
+ </div>
 
-      <div class="slide landscape" data-index="13">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <!-- ── PHOTO 14 : remplace par ton fichier si besoin ── -->
-      <img src="photos/14-dyrhólaey.jpg" alt="Dyrhólaey">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 4 · Côte Sud</div>
-            <div class="caption-spot">Dyrhólaey</div>
-            <div class="caption-note">Promontoire. Arche naturelle. Oiseaux.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">14</span>Paysage</div>
-        </div>
-      </div>
+ <div class="slide landscape" data-index="13">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <!-- ── PHOTO 14 : remplace par ton fichier si besoin ── -->
+ <img src="photos/14-dyrhólaey.jpg" alt="Dyrhólaey">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 4 · Côte Sud</div>
+ <div class="caption-spot">Dyrhólaey</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">14</span>Paysage</div>
+ </div>
+ </div>
 
-      <div class="slide portrait" data-index="14">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <!-- ── PHOTO 15 : remplace par ton fichier si besoin ── -->
-      <img src="photos/15-seydisfjordur.jpg" alt="Seyðisfjörður">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 8 · Fjords de l'Est</div>
-            <div class="caption-spot">Seyðisfjörður</div>
-            <div class="caption-note">Église bleue. Rue arc-en-ciel. Port.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">15</span>Portrait</div>
-        </div>
-      </div>
+ <div class="slide portrait" data-index="14">
+ <div class="slide-photo">
+ <div class="slide-photo-inner">
+ <!-- ── PHOTO 15 : remplace par ton fichier si besoin ── -->
+ <img src="photos/15-seydisfjordur.jpg" alt="Seyðisfjörður">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 8 · Fjords de l'Est</div>
+ <div class="caption-spot">Seyðisfjörður</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">15</span>Portrait</div>
+ </div>
+ </div>
 
-      <div class="slide landscape" data-index="15">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <!-- ── PHOTO 16 : remplace par ton fichier si besoin ── -->
-      <img src="photos/16-bruarfoss.jpg" alt="Bruarfoss">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 11 · Épilogue</div>
-            <div class="caption-spot">Bruarfoss</div>
-            <div class="caption-note">« WOW LA CLAQUE, C'EST QUOI CETTE COULEUR ? »</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">16</span>Paysage</div>
-        </div>
-      </div>
+ <div class="slide landscape" data-index="15">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <!-- ── PHOTO 16 : remplace par ton fichier si besoin ── -->
+ <img src="photos/16-bruarfoss.jpg" alt="Bruarfoss">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 11 · Épilogue</div>
+ <div class="caption-spot">Bruarfoss</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">16</span>Paysage</div>
+ </div>
+ </div>
 
-      <div class="slide landscape" data-index="16">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <!-- ── PHOTO 17 : remplace par ton fichier si besoin ── -->
-      <img src="photos/17-kleifarvatn.jpg" alt="Kleifarvatn">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 11 · Épilogue</div>
-            <div class="caption-spot">Kleifarvatn</div>
-            <div class="caption-note">Lac volcanique. Minimalisme total. Désert post-apo. « J'ai presque envie de pleurer là. »</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">17</span>Paysage</div>
-        </div>
-      </div>
+ <div class="slide landscape" data-index="16">
+ <div class="slide-photo">
+ <div class="slide-photo-inner" style="width:100%;height:100%">
+ <!-- ── PHOTO 17 : remplace par ton fichier si besoin ── -->
+ <img src="photos/17-kleifarvatn.jpg" alt="Kleifarvatn">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 11 · Épilogue</div>
+ <div class="caption-spot">Kleifarvatn</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">17</span>Paysage</div>
+ </div>
+ </div>
 
-      <div class="slide square" data-index="17">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <!-- ── PHOTO 18 : remplace par ton fichier si besoin ── -->
-      <img src="photos/18-eldhraun.jpg" alt="Eldhraun">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Jour 6 · Côte Sud-Est</div>
-            <div class="caption-spot">Eldhraun</div>
-            <div class="caption-note">Champ de lave recouvert de mousse verte. Autre monde.</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">18</span>Carré</div>
-        </div>
-      </div>
+ <div class="slide square" data-index="17">
+ <div class="slide-photo">
+ <div class="slide-photo-inner">
+ <!-- ── PHOTO 18 : remplace par ton fichier si besoin ── -->
+ <img src="photos/18-eldhraun.jpg" alt="Eldhraun">
+ </div>
+ </div>
+ <div class="slide-caption">
+ <div class="caption-left">
+ <div class="caption-day">Jour 6 · Côte Sud-Est</div>
+ <div class="caption-spot">Eldhraun</div>
+ </div>
+ <div class="caption-right"><span class="caption-index">18</span>Carré</div>
+ </div>
+ </div>
 
-      <!-- Zones de nav -->
-      <div class="gallery-nav">
-        <div class="gallery-nav-zone nav-left" id="navLeft">
-          <div class="nav-arrow">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-          </div>
-        </div>
-        <div class="gallery-nav-zone nav-right" id="navRight">
-          <div class="nav-arrow">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-          </div>
-        </div>
-      </div>
-    </div>
+ <!-- Zones de nav -->
+ <div class="gallery-nav">
+ <div class="gallery-nav-zone nav-left" id="navLeft">
+ <div class="nav-arrow">
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+ </div>
+ </div>
+ <div class="gallery-nav-zone nav-right" id="navRight">
+ <div class="nav-arrow">
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+ </div>
+ </div>
+ </div>
+ </div>
 
-    <!-- Progress -->
-    <div class="gallery-progress">
-      <div class="gallery-progress-fill" id="progressFill" style="width: 5.5%"></div>
-    </div>
+ <!-- Progress -->
+ <div class="gallery-progress">
+ <div class="gallery-progress-fill" id="progressFill" style="width: 5.5%"></div>
+ </div>
 
-    <!-- Thumbnails -->
-    <div class="thumbs-strip" id="thumbsStrip"></div>
-  </section>
+ <!-- Thumbnails -->
+ <div class="thumbs-strip" id="thumbsStrip"></div>
+ </section>
 
-  <!-- TIMELINE -->
-  <section class="timeline-section" id="parcours">
-    <div class="sh" style="padding:0; margin-bottom:48px;"><span class="sl">Parcours jour par jour</span><div class="sr"></div></div>
-    <div class="timeline">
-      <div class="tl-item"><div class="tl-left"><div class="tl-day">J1–2</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Reykjanes · Grindavík → Hveragerði</div><div class="tl-spots">Gunnuhver · Reykjanesviti · <span class="tl-hi">Valahnúkamöl ⭐⭐⭐</span> · Brimketill · Fagradalsfjall</div></div></div>
-      <div class="tl-item"><div class="tl-left"><div class="tl-day">J3</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Cercle d'Or · Hveragerði → Hvolsvöllur</div><div class="tl-spots">Þingvellir · Geysir · <span class="tl-hi">Gullfoss ⭐⭐⭐</span></div></div></div>
-      <div class="tl-item"><div class="tl-left"><div class="tl-day">J4</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Côte Sud · Hvolsvöllur → Vík</div><div class="tl-spots">Seljalandsfoss · Gljúfrabúi · Skógafoss · DC-3 Wreck · <span class="tl-hi">Dyrhólaey ⭐⭐⭐</span> · <span class="tl-hi">Reynisfjara ⭐⭐⭐</span></div></div></div>
-      <div class="tl-item"><div class="tl-left"><div class="tl-day">J5</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Vík — Pause</div><div class="tl-spots"><span class="tl-hi">Reynisfjara lever de soleil ⭐⭐⭐</span> · Víkurkirkja</div></div></div>
-      <div class="tl-item"><div class="tl-left"><div class="tl-day">J6</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Glaciers · Vík → Höfn</div><div class="tl-spots">Eldhraun · <span class="tl-hi">Jökulsárlón ⭐⭐⭐</span> · <span class="tl-hi">Diamond Beach ⭐⭐⭐</span></div></div></div>
-      <div class="tl-item"><div class="tl-left"><div class="tl-day">J7</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Fjords de l'Est · Höfn → Egilsstaðir</div><div class="tl-spots"><span class="tl-hi">Aurores Saudanes ⭐⭐⭐</span> · <span class="tl-hi">Vök Baths ⭐⭐⭐</span></div></div></div>
-      <div class="tl-item"><div class="tl-left"><div class="tl-day">J8</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Seyðisfjörður · Egilsstaðir → Djúpivogur</div><div class="tl-spots">Seyðisfjörður · Tvísöngur · <span class="tl-hi">Hengifoss ⭐⭐⭐</span> · <span class="tl-hi">Aurores Djúpivogur ⭐⭐⭐</span></div></div></div>
-      <div class="tl-item"><div class="tl-left"><div class="tl-day">J9</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Skaftafell · Djúpivogur → Fox Hostel</div><div class="tl-spots"><span class="tl-hi">Fjallsárlón ⭐⭐⭐</span> · <span class="tl-hi">Svartifoss ⭐⭐⭐</span></div></div></div>
-      <div class="tl-item"><div class="tl-left"><div class="tl-day">J10</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Retour Côte Sud · → Eyrarbakki</div><div class="tl-spots"><span class="tl-hi">Sólheimajökull ⭐⭐⭐</span> · <span class="tl-hi">Kvernufoss ⭐⭐⭐</span> · Gígjagja</div></div></div>
-      <div class="tl-item tl-last"><div class="tl-left"><div class="tl-day">J11</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Épilogue · Eyrarbakki → Reykjavík</div><div class="tl-spots">Kerið · <span class="tl-hi">Bruarfoss ⭐⭐⭐</span> · <span class="tl-hi">Kleifarvatn ⭐⭐⭐</span> — « J'ai presque envie de pleurer là. »</div></div></div>
-    </div>
-  </section>
+ <!-- TIMELINE -->
+ <section class="timeline-section" id="parcours">
+ <div class="sh" style="padding:0; margin-bottom:48px;"><span class="sl">Parcours jour par jour</span><div class="sr"></div></div>
+ <div class="timeline">
+ <div class="tl-item"><div class="tl-left"><div class="tl-day">J1–2</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Reykjanes · Grindavík → Hveragerði</div><div class="tl-spots">Gunnuhver · Reykjanesviti · <span class="tl-hi">Valahnúkamöl </span> · Brimketill · Fagradalsfjall</div></div></div>
+ <div class="tl-item"><div class="tl-left"><div class="tl-day">J3</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Cercle d'Or · Hveragerði → Hvolsvöllur</div><div class="tl-spots">Þingvellir · Geysir · <span class="tl-hi">Gullfoss </span></div></div></div>
+ <div class="tl-item"><div class="tl-left"><div class="tl-day">J4</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Côte Sud · Hvolsvöllur → Vík</div><div class="tl-spots">Seljalandsfoss · Gljúfrabúi · Skógafoss · DC-3 Wreck · <span class="tl-hi">Dyrhólaey </span> · <span class="tl-hi">Reynisfjara </span></div></div></div>
+ <div class="tl-item"><div class="tl-left"><div class="tl-day">J5</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Vík — Pause</div><div class="tl-spots"><span class="tl-hi">Reynisfjara lever de soleil </span> · Víkurkirkja</div></div></div>
+ <div class="tl-item"><div class="tl-left"><div class="tl-day">J6</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Glaciers · Vík → Höfn</div><div class="tl-spots">Eldhraun · <span class="tl-hi">Jökulsárlón </span> · <span class="tl-hi">Diamond Beach </span></div></div></div>
+ <div class="tl-item"><div class="tl-left"><div class="tl-day">J7</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Fjords de l'Est · Höfn → Egilsstaðir</div><div class="tl-spots"><span class="tl-hi">Aurores Saudanes </span> · <span class="tl-hi">Vök Baths </span></div></div></div>
+ <div class="tl-item"><div class="tl-left"><div class="tl-day">J8</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Seyðisfjörður · Egilsstaðir → Djúpivogur</div><div class="tl-spots">Seyðisfjörður · Tvísöngur · <span class="tl-hi">Hengifoss </span> · <span class="tl-hi">Aurores Djúpivogur </span></div></div></div>
+ <div class="tl-item"><div class="tl-left"><div class="tl-day">J9</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Skaftafell · Djúpivogur → Fox Hostel</div><div class="tl-spots"><span class="tl-hi">Fjallsárlón </span> · <span class="tl-hi">Svartifoss </span></div></div></div>
+ <div class="tl-item"><div class="tl-left"><div class="tl-day">J10</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Retour Côte Sud · → Eyrarbakki</div><div class="tl-spots"><span class="tl-hi">Sólheimajökull </span> · <span class="tl-hi">Kvernufoss </span> · Gígjagja</div></div></div>
+ <div class="tl-item tl-last"><div class="tl-left"><div class="tl-day">J11</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Épilogue · Eyrarbakki → Reykjavík</div><div class="tl-spots">Kerið · <span class="tl-hi">Bruarfoss </span> · <span class="tl-hi">Kleifarvatn </span> </div></div></div>
+ </div>
+ </section>
 
-  <!-- QUOTE -->
-  <section class="bq">
-    <div class="bq-blob"></div>
-    <div class="bq-inner">
-      <span class="bq-deco">"</span>
-      <p class="bq-text">De Valahnúkamöl à Kleifarvatn. La longue exposition ne cherche pas à arrêter le temps — elle cherche à en révéler la texture. Ce que l'œil rate, le capteur garde.</p>
-      <div class="bq-attr">— Note de terrain · Islande, Mars 2026</div>
-    </div>
-  </section>
+ <!-- QUOTE -->
+ <section class="bq">
+ <div class="bq-blob"></div>
+ <div class="bq-inner">
+ <span class="bq-deco">"</span>
+ <p class="bq-text">De Valahnúkamöl à Kleifarvatn. La longue exposition ne cherche pas à arrêter le temps — elle cherche à en révéler la texture. Ce que l'œil rate, le capteur garde.</p>
+ <div class="bq-attr">— Note de terrain · Islande, Mars 2026</div>
+ </div>
+ </section>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div>
-      <h2>Ce projet vous <span>intéresse ?</span></h2>
-      <p>Tirages, expositions, publications — ce travail est ouvert à toute collaboration qui respecte sa cohérence documentaire.</p>
-    </div>
-    <div class="ccard">
-      <div class="crow"><span class="clbl">Photographe</span><span class="cval">Quentin</span></div>
-      <div class="crow"><span class="clbl">Basé à</span><span class="cval">La Rochelle, France</span></div>
-      <div class="crow"><span class="clbl">Style</span><span class="cval">Documentaire · Longue exposition · Kodachrome</span></div>
-      <div class="crow"><span class="clbl">Boîtier</span><span class="cval">Sony A7 IV</span></div>
-      <div class="crow"><span class="clbl">Voyage</span><span class="cval">Islande · 7–18 Mars 2026 · ~2 500 km</span></div>
-    </div>
-  </section>
+ <!-- CONTACT -->
+ <section class="contact" id="contact">
+ <div>
+ <h2>Ce projet vous <span>intéresse ?</span></h2>
+ <p>Tirages, expositions, publications — ce travail est ouvert à toute collaboration qui respecte sa cohérence documentaire.</p>
+ </div>
+ <div class="ccard">
+ <div class="crow"><span class="clbl">Photographe</span><span class="cval">Quentin</span></div>
+ <div class="crow"><span class="clbl">Basé à</span><span class="cval">La Rochelle, France</span></div>
+ <div class="crow"><span class="clbl">Style</span><span class="cval">Documentaire · Longue exposition · Kodachrome</span></div>
+ <div class="crow"><span class="clbl">Boîtier</span><span class="cval">Sony A7 IV</span></div>
+ <div class="crow"><span class="clbl">Voyage</span><span class="cval">Islande · 7–18 Mars 2026 · ~2 500 km</span></div>
+ </div>
+ </section>
 
-  <footer>
-    <span class="fl">© 2026 — Quentin · Tous droits réservés</span>
-    <span class="fr">Entre deux mondes — Islande MMXXVI · 47 spots · 3 000+ photos</span>
-  </footer>
+ <footer>
+ <span class="fl">© 2026 — Quentin · Tous droits réservés</span>
+ <span class="fr">Entre deux mondes — Islande MMXXVI · 47 spots · 3 000+ photos</span>
+ </footer>
 
-  <script>
-    // ── GALERIE ──
-    const slides = document.querySelectorAll('.slide');
-    const total  = slides.length;
-    let current  = 0;
+ <script>
+ // ── GALERIE ──
+ const slides = document.querySelectorAll('.slide');
+ const total = slides.length;
+ let current = 0;
 
-    const countEl   = document.getElementById('galleryCount');
-    const fillEl    = document.getElementById('progressFill');
-    const stripEl   = document.getElementById('thumbsStrip');
+ const countEl = document.getElementById('galleryCount');
+ const fillEl = document.getElementById('progressFill');
+ const stripEl = document.getElementById('thumbsStrip');
 
-    // Construire les thumbnails
-    slides.forEach((s, i) => {
-      const fmt = s.classList.contains('portrait') ? 'portrait'
-                : s.classList.contains('square')   ? 'square' : '';
-      const th = document.createElement('div');
-      th.className = 'thumb' + (fmt ? ' ' + fmt : '') + (i === 0 ? ' active' : '');
-      th.textContent = String(i + 1).padStart(2,'0');
-      th.addEventListener('click', () => goTo(i));
-      stripEl.appendChild(th);
-    });
+ // Construire les thumbnails
+ slides.forEach((s, i) => {
+ const fmt = s.classList.contains('portrait') ? 'portrait'
+ : s.classList.contains('square') ? 'square' : '';
+ const th = document.createElement('div');
+ th.className = 'thumb' + (fmt ? ' ' + fmt : '') + (i === 0 ? ' active' : '');
+ th.textContent = String(i + 1).padStart(2,'0');
+ th.addEventListener('click', () => goTo(i));
+ stripEl.appendChild(th);
+ });
 
-    function goTo(idx) {
-      slides[current].classList.remove('active');
-      document.querySelectorAll('.thumb')[current].classList.remove('active');
-      current = (idx + total) % total;
-      slides[current].classList.add('active');
-      document.querySelectorAll('.thumb')[current].classList.add('active');
-      countEl.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
-      fillEl.style.width  = ((current + 1) / total * 100) + '%';
-      // Scroll thumb en vue
-      const thumbs = document.querySelectorAll('.thumb');
-      thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
+ function goTo(idx) {
+ slides[current].classList.remove('active');
+ document.querySelectorAll('.thumb')[current].classList.remove('active');
+ current = (idx + total) % total;
+ slides[current].classList.add('active');
+ document.querySelectorAll('.thumb')[current].classList.add('active');
+ countEl.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+ fillEl.style.width = ((current + 1) / total * 100) + '%';
+ // Scroll thumb en vue
+ const thumbs = document.querySelectorAll('.thumb');
+ thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+ }
 
-    document.getElementById('navLeft').addEventListener('click',  () => goTo(current - 1));
-    document.getElementById('navRight').addEventListener('click', () => goTo(current + 1));
+ document.getElementById('navLeft').addEventListener('click', () => goTo(current - 1));
+ document.getElementById('navRight').addEventListener('click', () => goTo(current + 1));
 
-    // Clavier
-    document.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') goTo(current + 1);
-      if (e.key === 'ArrowLeft')  goTo(current - 1);
-    });
+ // Clavier
+ document.addEventListener('keydown', e => {
+ if (e.key === 'ArrowRight') goTo(current + 1);
+ if (e.key === 'ArrowLeft') goTo(current - 1);
+ });
 
-    // Touch/swipe
-    let tx = 0;
-    const viewer = document.getElementById('viewer');
-    viewer.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-    viewer.addEventListener('touchend',   e => {
-      const dx = e.changedTouches[0].clientX - tx;
-      if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
-    });
+ // Touch/swipe
+ let tx = 0;
+ const viewer = document.getElementById('viewer');
+ viewer.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+ viewer.addEventListener('touchend', e => {
+ const dx = e.changedTouches[0].clientX - tx;
+ if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
+ });
 
-    // Curseur custom
-    const cursor    = document.getElementById('cursor');
-    const cursorDot = document.getElementById('cursorDot');
-    const navL = document.getElementById('navLeft');
-    const navR = document.getElementById('navRight');
+ // Curseur custom
+ const cursor = document.getElementById('cursor');
+ const cursorDot = document.getElementById('cursorDot');
+ const navL = document.getElementById('navLeft');
+ const navR = document.getElementById('navRight');
 
-    document.addEventListener('mousemove', e => {
-      cursor.style.left    = e.clientX + 'px';
-      cursor.style.top     = e.clientY + 'px';
-      cursorDot.style.left = e.clientX + 'px';
-      cursorDot.style.top  = e.clientY + 'px';
-    });
-    navL.addEventListener('mouseenter', () => cursor.classList.add('on-left'));
-    navL.addEventListener('mouseleave', () => cursor.classList.remove('on-left'));
-    navR.addEventListener('mouseenter', () => cursor.classList.add('on-right'));
-    navR.addEventListener('mouseleave', () => cursor.classList.remove('on-right'));
+ document.addEventListener('mousemove', e => {
+ cursor.style.left = e.clientX + 'px';
+ cursor.style.top = e.clientY + 'px';
+ cursorDot.style.left = e.clientX + 'px';
+ cursorDot.style.top = e.clientY + 'px';
+ });
+ navL.addEventListener('mouseenter', () => cursor.classList.add('on-left'));
+ navL.addEventListener('mouseleave', () => cursor.classList.remove('on-left'));
+ navR.addEventListener('mouseenter', () => cursor.classList.add('on-right'));
+ navR.addEventListener('mouseleave', () => cursor.classList.remove('on-right'));
 
-    // ── TIMELINE REVEAL ──
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) setTimeout(() => e.target.classList.add('vis'), i * 60);
-      });
-    }, { threshold: 0.05 });
-    document.querySelectorAll('.tl-item').forEach(el => obs.observe(el));
-  </script>
+ // ── TIMELINE REVEAL ──
+ const obs = new IntersectionObserver(entries => {
+ entries.forEach((e, i) => {
+ if (e.isIntersecting) setTimeout(() => e.target.classList.add('vis'), i * 60);
+ });
+ }, { threshold: 0.05 });
+ document.querySelectorAll('.tl-item').forEach(el => obs.observe(el));
+ </script>
 </body>
 </html>
