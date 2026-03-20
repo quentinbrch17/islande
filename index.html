@@ -977,7 +977,7 @@
 
     <div class="gallery-viewer" id="viewer2">
 
-      <div class="slide landscape active" data-idx2="0">
+      <div class="slide portrait active" data-idx2="0">
         <div class="slide-photo">
           <div class="slide-photo-inner" style="width:100%;height:100%">
             <img src="photos/T1-cheval.jpg" alt="Cheval islandais">
@@ -1149,6 +1149,49 @@
  });
  }, { threshold: 0.05 });
  document.querySelectorAll('.tl-item').forEach(el => obs.observe(el));
- </script>
+ 
+    // ── GALERIE 2 : L'ÎLE HABITÉE ──
+    (function() {
+      const viewer2  = document.getElementById('viewer2');
+      if (!viewer2) return;
+      const slides2  = viewer2.querySelectorAll('.slide');
+      const total2   = slides2.length;
+      let cur2       = 0;
+      const cnt2     = document.getElementById('galleryCount2');
+      const fill2    = document.getElementById('progressFill2');
+      const strip2   = document.getElementById('thumbsStrip2');
+
+      slides2.forEach((s, i) => {
+        const fmt = s.classList.contains('portrait') ? ' portrait' : s.classList.contains('square') ? ' square' : '';
+        const th  = document.createElement('div');
+        th.className = 'thumb' + fmt + (i === 0 ? ' active' : '');
+        th.textContent = String(i + 1).padStart(2, '0');
+        th.addEventListener('click', () => goTo2(i));
+        strip2.appendChild(th);
+      });
+
+      function goTo2(idx) {
+        slides2[cur2].classList.remove('active');
+        strip2.querySelectorAll('.thumb')[cur2].classList.remove('active');
+        cur2 = (idx + total2) % total2;
+        slides2[cur2].classList.add('active');
+        strip2.querySelectorAll('.thumb')[cur2].classList.add('active');
+        cnt2.textContent  = String(cur2 + 1).padStart(2, '0') + ' / ' + String(total2).padStart(2, '0');
+        fill2.style.width = ((cur2 + 1) / total2 * 100) + '%';
+        strip2.querySelectorAll('.thumb')[cur2].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      }
+
+      document.getElementById('navLeft2').addEventListener('click',  () => goTo2(cur2 - 1));
+      document.getElementById('navRight2').addEventListener('click', () => goTo2(cur2 + 1));
+
+      let tx2 = 0;
+      viewer2.addEventListener('touchstart', e => { tx2 = e.touches[0].clientX; }, { passive: true });
+      viewer2.addEventListener('touchend',   e => {
+        const dx = e.changedTouches[0].clientX - tx2;
+        if (Math.abs(dx) > 50) goTo2(dx < 0 ? cur2 + 1 : cur2 - 1);
+      });
+    })();
+
+  </script>
 </body>
 </html>
