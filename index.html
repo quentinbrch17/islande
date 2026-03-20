@@ -253,7 +253,6 @@
  display: flex; align-items: center; justify-content: center;
  opacity: 0; transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
  pointer-events: none;
- isolation: isolate;
  }
  .slide.active { opacity: 1; pointer-events: all; }
  .slide.prev { opacity: 0; }
@@ -262,7 +261,6 @@
  .slide-photo {
  position: absolute; inset: 0;
  display: flex; align-items: center; justify-content: center;
- z-index: 1;
  }
 
  /* Paysage : plein écran */
@@ -274,16 +272,10 @@
  /* Portrait : centré avec marges latérales */
  .slide.portrait .slide-photo-inner {
  height: 100%;
- width: auto;
- aspect-ratio: 3/4;
- flex-shrink: 0;
- overflow: hidden;
- }
- .slide.portrait .slide-photo-inner > img {
- width: 100%;
- height: 100%;
- object-fit: cover;
- display: block;
+ aspect-ratio: 2/3;
+ max-width: 60%;
+ background: var(--mid);
+ display: flex; align-items: center; justify-content: center;
  }
  /* Carré */
  .slide.square .slide-photo-inner {
@@ -327,7 +319,7 @@
  padding: 60px 64px 40px;
  background: linear-gradient(to top, rgba(17,17,16,0.85) 0%, transparent 100%);
  display: flex; align-items: flex-end; justify-content: space-between;
- z-index: 4; pointer-events: none;
+ z-index: 2;
  }
  .caption-left { display: flex; flex-direction: column; gap: 6px; }
  .caption-spot {
@@ -356,23 +348,9 @@
  display: flex; pointer-events: none; z-index: 3;
  }
  .gallery-nav-zone {
- flex: 1; pointer-events: none;
+ flex: 1; pointer-events: all; cursor: none;
  display: flex; align-items: center;
  }
- .nav-arrow {
- pointer-events: all;
- cursor: pointer;
- width: 64px; height: 64px;
- border-radius: 50%;
- border: 1px solid rgba(248,249,250,0.12);
- background: rgba(17,17,16,0.6);
- backdrop-filter: blur(8px);
- display: flex; align-items: center; justify-content: center;
- transition: all 0.2s; opacity: 0.6;
- }
- .nav-arrow:hover { opacity: 1; background: rgba(17,17,16,0.85); }
- .gallery-nav-zone.nav-left  { padding-left: 20px; justify-content: flex-start; }
- .gallery-nav-zone.nav-right { padding-right: 20px; justify-content: flex-end; }
  .nav-arrow {
  width: 48px; height: 48px; border-radius: 50%;
  border: 1px solid rgba(248,249,250,0.12);
@@ -555,116 +533,53 @@
  footer { flex-direction: column; gap: 8px; text-align: center; }
  }
  
-    /* ── BACKDROP BLUR ── */
-    .slide-backdrop {
-      position: absolute; inset: 0; z-index: 0;
-      background-size: cover; background-position: center;
-      filter: blur(28px) brightness(0.2) saturate(0.6);
-      transform: scale(1.08);
-      pointer-events: none;
-    }
-    .slide.portrait .slide-photo,
-    .slide.square .slide-photo { z-index: 1; }
+    /* ── STACKING ── */
+    .slide { isolation: isolate; }
+    .slide-photo { z-index: 1; }
+    .slide-caption { z-index: 4 !important; pointer-events: none; }
 
+    /* ── PORTRAIT ── */
+    .slide.portrait .slide-photo-inner { height: 100%; width: auto; aspect-ratio: 3/4; flex-shrink: 0; overflow: hidden; }
+    .slide.portrait .slide-photo-inner > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── BACKDROP ── */
+    .slide-backdrop { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; filter: blur(28px) brightness(0.2) saturate(0.6); transform: scale(1.08); pointer-events: none; }
 
     /* ── DIPTYQUE ── */
-    .slide.diptych .slide-photo {
-      gap: 3px;
-    }
-    .slide.diptych .slide-photo-inner {
-      height: 100%;
-      width: calc(50% - 2px);
-      flex-shrink: 0;
-      overflow: hidden;
-      position: relative;
-      box-shadow: none;
-    }
-    .slide.diptych .slide-photo-inner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .diptych-divider {
-      position: absolute; top: 0; bottom: 0; left: 50%;
-      width: 1px; background: rgba(248,249,250,0.06); z-index: 1;
-    }
-    /* Mobile : diptyque en colonne */
+    .slide.diptych .slide-photo { gap: 3px; }
+    .slide.diptych .slide-photo-inner { height: 100%; width: calc(50% - 2px); flex-shrink: 0; overflow: hidden; position: relative; box-shadow: none; }
+    .slide.diptych .slide-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .diptych-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(248,249,250,0.06); z-index: 1; }
+    .diptych-label { font-family: 'Syne', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; position: absolute; top: 16px; padding: 5px 10px; border-radius: 100px; z-index: 2; }
+    .diptych-label.nature { left: 16px; color: var(--moss-l); border: 1px solid rgba(122,148,40,0.3); background: rgba(75,93,22,0.15); }
+    .diptych-label.human  { right: 16px; color: var(--glacier); border: 1px solid rgba(162,210,255,0.3); background: rgba(162,210,255,0.08); }
     @media (max-width: 700px) {
-      .slide.diptych .slide-photo {
-        flex-direction: column;
-        gap: 2px;
-      }
-      .slide.diptych .slide-photo-inner {
-        width: 100%;
-        height: calc(50% - 1px);
-      }
+      .slide.diptych .slide-photo { flex-direction: column; gap: 2px; }
+      .slide.diptych .slide-photo-inner { width: 100%; height: calc(50% - 1px); }
       .diptych-divider { display: none; }
     }
-    .diptych-label {
-      font-family: 'Syne', sans-serif; font-size: 8px; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      position: absolute; top: 16px; padding: 5px 10px;
-      border-radius: 100px; z-index: 2;
-    }
-    .diptych-label.nature {
-      left: 16px; color: var(--moss-l);
-      border: 1px solid rgba(122,148,40,0.3);
-      background: rgba(75,93,22,0.15);
-    }
-    .diptych-label.human {
-      right: 16px; color: var(--glacier);
-      border: 1px solid rgba(162,210,255,0.3);
-      background: rgba(162,210,255,0.08);
-    }
+
+    /* ── NAV ── */
+    .gallery-nav-zone { width: 80px; flex: none; pointer-events: all; cursor: pointer; display: flex; align-items: center; }
+    .gallery-nav-zone.nav-left  { justify-content: flex-start; padding-left: 16px; }
+    .gallery-nav-zone.nav-right { justify-content: flex-end; padding-right: 16px; }
+    .nav-arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(248,249,250,0.15); background: rgba(17,17,16,0.65); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; transition: all 0.2s; opacity: 0.7; flex-shrink: 0; }
+    .nav-arrow:hover { opacity: 1; background: rgba(17,17,16,0.9); }
+
+    /* ── IMAGES CLIQUABLES ── */
+    .slide .slide-photo-inner img { position: relative; z-index: 10; cursor: zoom-in; }
+
+    /* ── THUMBS avec photo ── */
+    .thumb { background-size: cover !important; background-position: center !important; }
 
     /* ── LIGHTBOX ── */
-    .lightbox {
-      position: fixed; inset: 0; z-index: 9000;
-      background: rgba(5,5,7,0.97);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease;
-      cursor: zoom-out;
-    }
-    .lightbox.open {
-      opacity: 1; pointer-events: all;
-    }
-    .lightbox img {
-      max-width: 95vw;
-      max-height: 95vh;
-      object-fit: contain;
-      display: block;
-      box-shadow: 0 40px 120px rgba(0,0,0,0.8);
-      border-radius: 2px;
-      transform: scale(0.96);
-      transition: transform 0.3s ease;
-    }
-    .lightbox.open img {
-      transform: scale(1);
-    }
-    .lightbox-close {
-      position: absolute; top: 24px; right: 28px;
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--muted); cursor: pointer;
-      transition: color 0.2s;
-      background: none; border: none; padding: 8px;
-    }
+    .lightbox { position: fixed; inset: 0; z-index: 9000; background: rgba(5,5,7,0.97); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; cursor: zoom-out; }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img { max-width: 95vw; max-height: 95vh; object-fit: contain; display: block; box-shadow: 0 40px 120px rgba(0,0,0,0.8); transform: scale(0.96); transition: transform 0.3s ease; }
+    .lightbox.open img { transform: scale(1); }
+    .lightbox-close { position: absolute; top: 24px; right: 28px; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); cursor: pointer; background: none; border: none; padding: 8px; transition: color 0.2s; }
     .lightbox-close:hover { color: var(--snow); }
-    .lightbox-caption {
-      position: absolute; bottom: 28px; left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--muted); white-space: nowrap;
-    }
-
-    /* Images cliquables au-dessus des nav-zones */
-    .slide .slide-photo-inner img {
-      position: relative;
-      z-index: 10;
-    }
+    .lightbox-caption { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -695,6 +610,7 @@
  <div class="hero-eyebrow">Projet photographique · Mars 2026</div>
  <h1 class="hero-title">Entre<br><span class="glacier">deux</span><br>mondes</h1>
  <p class="hero-desc">Islande — là où la nature brute et la présence humaine se regardent sans se comprendre. De Valahnúkamöl à Kleifarvatn.</p>
+ </div>
  </div>
  <div class="hero-scroll"><div class="scroll-line"></div>Défiler</div>
  </section>
@@ -737,366 +653,132 @@
  <!-- VIEWER -->
  <div class="gallery-viewer" id="viewer">
 
- <!-- Les slides — format : landscape / portrait / square -->
-   <div class="slide portrait active" data-index="0">
-    <div class="slide-photo">
-      <div class="slide-photo-inner">
-        <img src="photos/00b-skogafoss.jpg" alt="Skógafoss">
-      </div>
-    </div>
-    <div class="slide-caption">
-      <div class="caption-left">
-        <div class="caption-day">Jour 4 · Côte Sud</div>
-        <div class="caption-spot">Skógafoss</div>
-      </div>
-      <div class="caption-right"><span class="caption-index">01</span>Portrait</div>
-    </div>
+  <div class="slide landscape active" data-index="0">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/01-valahnukamol.jpg" alt="Valahnúkamöl"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 2 · Péninsule de Reykjanes</div><div class="caption-spot">Valahnúkamöl</div></div><div class="caption-right"><span class="caption-index">01</span>Paysage</div></div>
   </div>
 
- <div class="slide landscape" data-index="2">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <img src="photos/01b-valahnukamol-solo.jpg" alt="Valahnúkamöl — silhouette">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 2 · Péninsule de Reykjanes</div>
- <div class="caption-spot">Valahnúkamöl</div>
- </div>
- <div class="caption-right"><span class="caption-index">—</span>Paysage</div>
- </div>
- </div>
+  <div class="slide landscape" data-index="1">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/01b-valahnukamol-solo.jpg" alt="Valahnúkamöl — silhouette"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 2 · Péninsule de Reykjanes</div><div class="caption-spot">Valahnúkamöl</div></div><div class="caption-right"><span class="caption-index">02</span>Paysage</div></div>
+  </div>
 
- <div class="slide landscape" data-index="3">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <img src="photos/01c-valahnukamol-couple.jpg" alt="Valahnúkamöl — couple">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 2 · Péninsule de Reykjanes</div>
- <div class="caption-spot">Valahnúkamöl</div>
- </div>
- <div class="caption-right"><span class="caption-index">—</span>Paysage</div>
- </div>
- </div>
+  <div class="slide landscape" data-index="2">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/01c-valahnukamol-couple.jpg" alt="Valahnúkamöl — couple"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 2 · Péninsule de Reykjanes</div><div class="caption-spot">Valahnúkamöl</div></div><div class="caption-right"><span class="caption-index">03</span>Paysage</div></div>
+  </div>
 
- <div class="slide diptych" data-index="4">
+  <div class="slide diptych" data-index="3">
     <div class="slide-photo">
-      <div class="slide-photo-inner">
-        <span class="diptych-label nature">Nature</span>
-        <img src="photos/02a-seljalandsfoss-nature.jpg" alt="Seljalandsfoss — nature">
-      </div>
-      <div class="slide-photo-inner">
-        <span class="diptych-label human">Présence</span>
-        <img src="photos/02b-seljalandsfoss-human.jpg" alt="Seljalandsfoss — présence">
-      </div>
+      <div class="slide-photo-inner"><span class="diptych-label nature">Nature</span><img src="photos/02a-seljalandsfoss-nature.jpg" alt="Seljalandsfoss — nature"></div>
+      <div class="slide-photo-inner"><span class="diptych-label human">Présence</span><img src="photos/02b-seljalandsfoss-human.jpg" alt="Seljalandsfoss — présence"></div>
       <div class="diptych-divider"></div>
     </div>
-    <div class="slide-caption">
-      <div class="caption-left">
-        <div class="caption-day">Jour 4 · Côte Sud</div>
-        <div class="caption-spot">Seljalandsfoss</div>
-      </div>
-      <div class="caption-right"><span class="caption-index">02</span>Diptyque</div>
-    </div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Côte Sud</div><div class="caption-spot">Seljalandsfoss</div></div><div class="caption-right"><span class="caption-index">04</span>Diptyque</div></div>
   </div>
 
- 
-  <div class="slide diptych" data-index="5">
+  <div class="slide diptych" data-index="4">
     <div class="slide-photo">
-      <div class="slide-photo-inner">
-        <span class="diptych-label nature">Nature</span>
-        <img src="photos/02c-gljufrabui-nature.jpg" alt="Gljúfrabúi — nature">
-      </div>
-      <div class="slide-photo-inner">
-        <span class="diptych-label human">Présence</span>
-        <img src="photos/02d-gljufrabui-human.jpg" alt="Gljúfrabúi — présence">
-      </div>
+      <div class="slide-photo-inner"><span class="diptych-label nature">Nature</span><img src="photos/02c-gljufrabui-nature.jpg" alt="Gljúfrabúi — nature"></div>
+      <div class="slide-photo-inner"><span class="diptych-label human">Présence</span><img src="photos/02d-gljufrabui-human.jpg" alt="Gljúfrabúi — présence"></div>
       <div class="diptych-divider"></div>
     </div>
-    <div class="slide-caption">
-      <div class="caption-left">
-        <div class="caption-day">Jour 4 · Côte Sud</div>
-        <div class="caption-spot">Gljúfrabúi</div>
-      </div>
-      <div class="caption-right"><span class="caption-index">03</span>Diptyque</div>
-    </div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Côte Sud</div><div class="caption-spot">Gljúfrabúi</div></div><div class="caption-right"><span class="caption-index">05</span>Diptyque</div></div>
   </div>
-<div class="slide landscape" data-index="6">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <!-- ── PHOTO 03 : remplace par ton fichier si besoin ── -->
- <img src="photos/03-reynisfjara-lever.jpg" alt="Reynisfjara lever de soleil">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 5 · Vík</div>
- <div class="caption-spot">Reynisfjara — Lever de soleil</div>
- </div>
- <div class="caption-right"><span class="caption-index">03</span>Paysage</div>
- </div>
+
+  <div class="slide portrait" data-index="5">
+    <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/00b-skogafoss.jpg" alt="Skógafoss"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Côte Sud</div><div class="caption-spot">Skógafoss</div></div><div class="caption-right"><span class="caption-index">06</span>Portrait</div></div>
+  </div>
+
+  <div class="slide landscape" data-index="6">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/03-reynisfjara-lever.jpg" alt="Reynisfjara lever de soleil"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 5 · Vík</div><div class="caption-spot">Reynisfjara — Lever de soleil</div></div><div class="caption-right"><span class="caption-index">07</span>Paysage</div></div>
+  </div>
+
+  <div class="slide portrait" data-index="7">
+    <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/04-dc3-wreck.jpg" alt="Épave DC-3"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Épave DC-3</div></div><div class="caption-right"><span class="caption-index">08</span>Portrait</div></div>
+  </div>
+
+  <div class="slide landscape" data-index="8">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/05-gullfoss.jpg" alt="Gullfoss"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 3 · Cercle d'Or</div><div class="caption-spot">Gullfoss</div></div><div class="caption-right"><span class="caption-index">09</span>Paysage</div></div>
+  </div>
+
+  <div class="slide square" data-index="9">
+    <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/06-jokulsarlon.jpg" alt="Jökulsárlón"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 6 · Vatnajökull</div><div class="caption-spot">Jökulsárlón</div></div><div class="caption-right"><span class="caption-index">10</span>Carré</div></div>
+  </div>
+
+  <div class="slide landscape" data-index="10">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/07-diamond-beach.jpg" alt="Diamond Beach"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 6 · Vatnajökull</div><div class="caption-spot">Diamond Beach</div></div><div class="caption-right"><span class="caption-index">11</span>Paysage</div></div>
+  </div>
+
+  <div class="slide portrait" data-index="11">
+    <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/08-hengifoss.jpg" alt="Hengifoss"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 8 · Fjords de l'Est</div><div class="caption-spot">Hengifoss</div></div><div class="caption-right"><span class="caption-index">12</span>Portrait</div></div>
+  </div>
+
+  <div class="slide landscape" data-index="12">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/09-aurores-djupivogur.jpg" alt="Aurores boréales"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 8 · Djúpivogur</div><div class="caption-spot">Aurores boréales</div></div><div class="caption-right"><span class="caption-index">13</span>Longue expo</div></div>
+  </div>
+
+  <div class="slide portrait" data-index="13">
+    <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/10-svartifoss.jpg" alt="Svartifoss"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 9 · Skaftafell</div><div class="caption-spot">Svartifoss</div></div><div class="caption-right"><span class="caption-index">14</span>Portrait · Longue expo</div></div>
+  </div>
+
+  <div class="slide landscape" data-index="14">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/11-fjallarlon.jpg" alt="Fjallsárlón"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 9 · Vatnajökull</div><div class="caption-spot">Fjallsárlón</div></div><div class="caption-right"><span class="caption-index">15</span>Paysage</div></div>
+  </div>
+
+  <div class="slide portrait" data-index="15">
+    <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/12-kvernufoss.jpg" alt="Kvernufoss"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 10 · Côte Sud</div><div class="caption-spot">Kvernufoss</div></div><div class="caption-right"><span class="caption-index">16</span>Portrait · Longue expo</div></div>
+  </div>
+
+  <div class="slide square" data-index="16">
+    <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/13-solheimajokull.jpg" alt="Sólheimajökull"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 10 · Côte Sud</div><div class="caption-spot">Sólheimajökull</div></div><div class="caption-right"><span class="caption-index">17</span>Carré</div></div>
+  </div>
+
+  <div class="slide landscape" data-index="17">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/14-dyrhólaey.jpg" alt="Dyrhólaey"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Côte Sud</div><div class="caption-spot">Dyrhólaey</div></div><div class="caption-right"><span class="caption-index">18</span>Paysage</div></div>
+  </div>
+
+  <div class="slide portrait" data-index="18">
+    <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/15-seydisfjordur.jpg" alt="Seyðisfjörður"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 8 · Fjords de l'Est</div><div class="caption-spot">Seyðisfjörður</div></div><div class="caption-right"><span class="caption-index">19</span>Portrait</div></div>
+  </div>
+
+  <div class="slide landscape" data-index="19">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/16-bruarfoss.jpg" alt="Bruarfoss"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 11 · Épilogue</div><div class="caption-spot">Bruarfoss</div></div><div class="caption-right"><span class="caption-index">20</span>Paysage</div></div>
+  </div>
+
+  <div class="slide landscape" data-index="20">
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/17-kleifarvatn.jpg" alt="Kleifarvatn"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 11 · Épilogue</div><div class="caption-spot">Kleifarvatn</div></div><div class="caption-right"><span class="caption-index">21</span>Paysage</div></div>
+  </div>
+
+  <div class="slide square" data-index="21">
+    <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/18-eldhraun.jpg" alt="Eldhraun"></div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 6 · Côte Sud-Est</div><div class="caption-spot">Eldhraun</div></div><div class="caption-right"><span class="caption-index">22</span>Carré</div></div>
+  </div>
+
+  <!-- Zones de nav -->
+  <div class="gallery-nav">
+   <div class="gallery-nav-zone nav-left" id="navLeft"><div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div></div>
+   <div class="gallery-nav-zone nav-right" id="navRight"><div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div></div>
+  </div>
  </div>
 
- <div class="slide portrait" data-index="7">
- <div class="slide-photo">
- <div class="slide-photo-inner">
- <!-- ── PHOTO 04 : remplace par ton fichier si besoin ── -->
- <img src="photos/04-dc3-wreck.jpg" alt="Épave DC-3">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 4 · Sólheimasandur</div>
- <div class="caption-spot">Épave DC-3</div>
- </div>
- <div class="caption-right"><span class="caption-index">04</span>Portrait</div>
- </div>
- </div>
-
- <div class="slide landscape" data-index="8">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <!-- ── PHOTO 05 : remplace par ton fichier si besoin ── -->
- <img src="photos/05-gullfoss.jpg" alt="Gullfoss">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 3 · Cercle d'Or</div>
- <div class="caption-spot">Gullfoss</div>
- </div>
- <div class="caption-right"><span class="caption-index">05</span>Paysage</div>
- </div>
- </div>
-
- <div class="slide square" data-index="9">
- <div class="slide-photo">
- <div class="slide-photo-inner">
- <!-- ── PHOTO 06 : remplace par ton fichier si besoin ── -->
- <img src="photos/06-jokulsarlon.jpg" alt="Jökulsárlón">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 6 · Vatnajökull</div>
- <div class="caption-spot">Jökulsárlón</div>
- </div>
- <div class="caption-right"><span class="caption-index">06</span>Carré</div>
- </div>
- </div>
-
- <div class="slide landscape" data-index="10">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <!-- ── PHOTO 07 : remplace par ton fichier si besoin ── -->
- <img src="photos/07-diamond-beach.jpg" alt="Diamond Beach">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 6 · Vatnajökull</div>
- <div class="caption-spot">Diamond Beach</div>
- </div>
- <div class="caption-right"><span class="caption-index">07</span>Paysage</div>
- </div>
- </div>
-
- <div class="slide portrait" data-index="11">
- <div class="slide-photo">
- <div class="slide-photo-inner">
- <!-- ── PHOTO 08 : remplace par ton fichier si besoin ── -->
- <img src="photos/08-hengifoss.jpg" alt="Hengifoss">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 8 · Fjords de l'Est</div>
- <div class="caption-spot">Hengifoss</div>
- </div>
- <div class="caption-right"><span class="caption-index">08</span>Portrait</div>
- </div>
- </div>
-
- <div class="slide landscape" data-index="12">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <!-- ── PHOTO 09 : remplace par ton fichier si besoin ── -->
- <img src="photos/09-aurores-djupivogur.jpg" alt="Aurores Djúpivogur">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 8 · Djúpivogur</div>
- <div class="caption-spot">Aurores boréales</div>
- </div>
- <div class="caption-right"><span class="caption-index">09</span>Paysage · Longue expo</div>
- </div>
- </div>
-
- <div class="slide portrait" data-index="13">
- <div class="slide-photo">
- <div class="slide-photo-inner">
- <!-- ── PHOTO 10 : remplace par ton fichier si besoin ── -->
- <img src="photos/10-svartifoss.jpg" alt="Svartifoss">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 9 · Skaftafell</div>
- <div class="caption-spot">Svartifoss</div>
- </div>
- <div class="caption-right"><span class="caption-index">10</span>Portrait · Longue expo</div>
- </div>
- </div>
-
- <div class="slide landscape" data-index="14">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <!-- ── PHOTO 11 : remplace par ton fichier si besoin ── -->
- <img src="photos/11-fjallarlon.jpg" alt="Fjallsárlón">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 9 · Vatnajökull</div>
- <div class="caption-spot">Fjallsárlón</div>
- </div>
- <div class="caption-right"><span class="caption-index">11</span>Paysage</div>
- </div>
- </div>
-
- <div class="slide portrait" data-index="15">
- <div class="slide-photo">
- <div class="slide-photo-inner">
- <!-- ── PHOTO 12 : remplace par ton fichier si besoin ── -->
- <img src="photos/12-kvernufoss.jpg" alt="Kvernufoss">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 10 · Côte Sud</div>
- <div class="caption-spot">Kvernufoss</div>
- </div>
- <div class="caption-right"><span class="caption-index">12</span>Portrait · Longue expo</div>
- </div>
- </div>
-
- <div class="slide square" data-index="16">
- <div class="slide-photo">
- <div class="slide-photo-inner">
- <!-- ── PHOTO 13 : remplace par ton fichier si besoin ── -->
- <img src="photos/13-solheimajokull.jpg" alt="Sólheimajökull">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 10 · Côte Sud</div>
- <div class="caption-spot">Sólheimajökull</div>
- </div>
- <div class="caption-right"><span class="caption-index">13</span>Carré</div>
- </div>
- </div>
-
- <div class="slide landscape" data-index="17">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <!-- ── PHOTO 14 : remplace par ton fichier si besoin ── -->
- <img src="photos/14-dyrhólaey.jpg" alt="Dyrhólaey">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 4 · Côte Sud</div>
- <div class="caption-spot">Dyrhólaey</div>
- </div>
- <div class="caption-right"><span class="caption-index">14</span>Paysage</div>
- </div>
- </div>
-
- <div class="slide portrait" data-index="18">
- <div class="slide-photo">
- <div class="slide-photo-inner">
- <!-- ── PHOTO 15 : remplace par ton fichier si besoin ── -->
- <img src="photos/15-seydisfjordur.jpg" alt="Seyðisfjörður">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 8 · Fjords de l'Est</div>
- <div class="caption-spot">Seyðisfjörður</div>
- </div>
- <div class="caption-right"><span class="caption-index">15</span>Portrait</div>
- </div>
- </div>
-
- <div class="slide landscape" data-index="19">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <!-- ── PHOTO 16 : remplace par ton fichier si besoin ── -->
- <img src="photos/16-bruarfoss.jpg" alt="Bruarfoss">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 11 · Épilogue</div>
- <div class="caption-spot">Bruarfoss</div>
- </div>
- <div class="caption-right"><span class="caption-index">16</span>Paysage</div>
- </div>
- </div>
-
- <div class="slide landscape" data-index="20">
- <div class="slide-photo">
- <div class="slide-photo-inner" style="width:100%;height:100%">
- <!-- ── PHOTO 17 : remplace par ton fichier si besoin ── -->
- <img src="photos/17-kleifarvatn.jpg" alt="Kleifarvatn">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 11 · Épilogue</div>
- <div class="caption-spot">Kleifarvatn</div>
- </div>
- <div class="caption-right"><span class="caption-index">17</span>Paysage</div>
- </div>
- </div>
-
- <div class="slide square" data-index="21">
- <div class="slide-photo">
- <div class="slide-photo-inner">
- <!-- ── PHOTO 18 : remplace par ton fichier si besoin ── -->
- <img src="photos/18-eldhraun.jpg" alt="Eldhraun">
- </div>
- </div>
- <div class="slide-caption">
- <div class="caption-left">
- <div class="caption-day">Jour 6 · Côte Sud-Est</div>
- <div class="caption-spot">Eldhraun</div>
- </div>
- <div class="caption-right"><span class="caption-index">18</span>Carré</div>
- </div>
- </div>
-
- <!-- Zones de nav -->
- <div class="gallery-nav">
- <div class="gallery-nav-zone nav-left" id="navLeft">
- <div class="nav-arrow">
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
- </div>
- </div>
- <div class="gallery-nav-zone nav-right" id="navRight">
- <div class="nav-arrow">
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
- </div>
- </div>
- </div>
- </div>
-
- <!-- Progress -->
+    <!-- Progress -->
  <div class="gallery-progress">
  <div class="gallery-progress-fill" id="progressFill" style="width: 5.5%"></div>
  </div>
@@ -1122,12 +804,8 @@
  </div>
  </section>
 
- <!-- QUOTE -->
  
-
-  <!-- ══════════════════════════════════════
-       GALERIE 2 — L'ÎLE HABITÉE
-  ══════════════════════════════════════ -->
+  <!-- ═══════════ GALERIE 2 — L'ÎLE HABITÉE ═══════════ -->
   <section class="gallery-section" id="habitee" style="padding-top:0;">
     <div class="gallery-header">
       <div class="gallery-header-left">
@@ -1136,77 +814,34 @@
       </div>
       <div class="gallery-count" id="galleryCount2">01 / 03</div>
     </div>
-
-    <div class="gallery-viewer" id="viewer2" style="cursor:default;">
-
-      <div class="slide portrait active" data-idx2="0">
-        <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <img src="photos/T1-cheval.jpg" alt="Cheval islandais">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Côte Sud · En route</div>
-            <div class="caption-spot">Cheval islandais</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">01</span>Territoire</div>
-        </div>
+    <div class="gallery-viewer" id="viewer2">
+      <div class="slide landscape active" data-idx2="0">
+        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/T1-cheval.jpg" alt="Cheval islandais"></div></div>
+        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Côte Sud · En route</div><div class="caption-spot">Cheval islandais</div></div><div class="caption-right"><span class="caption-index">01</span>Territoire</div></div>
       </div>
-
       <div class="slide diptych" data-idx2="1">
         <div class="slide-photo">
-          <div class="slide-photo-inner">
-            <span class="diptych-label nature">Habitant</span>
-            <img src="photos/T2a-ferme.jpg" alt="Ferme islandaise">
-          </div>
-          <div class="slide-photo-inner">
-            <span class="diptych-label human">Touriste</span>
-            <img src="photos/T2b-file-touristes.jpg" alt="File de touristes">
-          </div>
+          <div class="slide-photo-inner"><span class="diptych-label nature">Habitant</span><img src="photos/T2a-ferme.jpg" alt="Ferme islandaise"></div>
+          <div class="slide-photo-inner"><span class="diptych-label human">Touriste</span><img src="photos/T2b-file-touristes.jpg" alt="File de touristes"></div>
           <div class="diptych-divider"></div>
         </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Côte Sud · Cercle d'Or</div>
-            <div class="caption-spot">Habiter / Traverser</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">02</span>Diptyque</div>
-        </div>
+        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Côte Sud · Cercle d'Or</div><div class="caption-spot">Habiter / Traverser</div></div><div class="caption-right"><span class="caption-index">02</span>Diptyque</div></div>
       </div>
-
       <div class="slide landscape" data-idx2="2">
-        <div class="slide-photo">
-          <div class="slide-photo-inner" style="width:100%;height:100%">
-            <img src="photos/T3-parking.jpg" alt="Parking dans la tempête">
-          </div>
-        </div>
-        <div class="slide-caption">
-          <div class="caption-left">
-            <div class="caption-day">Péninsule de Reykjanes</div>
-            <div class="caption-spot">Parking</div>
-          </div>
-          <div class="caption-right"><span class="caption-index">03</span>Territoire</div>
-        </div>
+        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/T3-parking.jpg" alt="Parking"></div></div>
+        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Péninsule de Reykjanes</div><div class="caption-spot">Parking</div></div><div class="caption-right"><span class="caption-index">03</span>Territoire</div></div>
       </div>
-
       <div class="gallery-nav">
-        <div class="gallery-nav-zone nav-left" id="navLeft2">
-          <div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div>
-        </div>
-        <div class="gallery-nav-zone nav-right" id="navRight2">
-          <div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-        </div>
+        <div class="gallery-nav-zone nav-left" id="navLeft2"><div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div></div>
+        <div class="gallery-nav-zone nav-right" id="navRight2"><div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div></div>
       </div>
     </div>
-
-    <div class="gallery-progress">
-      <div class="gallery-progress-fill" id="progressFill2" style="width:33%"></div>
-    </div>
+    <div class="gallery-progress"><div class="gallery-progress-fill" id="progressFill2" style="width:33%"></div></div>
     <div class="thumbs-strip" id="thumbsStrip2"></div>
   </section>
 
-<section class="bq">
+<!-- QUOTE -->
+ <section class="bq">
  <div class="bq-blob"></div>
  <div class="bq-inner">
  <span class="bq-deco">"</span>
@@ -1236,8 +871,6 @@
  </footer>
 
  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-
  // ── GALERIE ──
  const slides = document.querySelectorAll('.slide');
  const total = slides.length;
@@ -1268,13 +901,11 @@
  fillEl.style.width = ((current + 1) / total * 100) + '%';
  // Scroll thumb en vue
  const thumbs = document.querySelectorAll('.thumb');
- var th1 = thumbs[current];
-      var sr1 = document.getElementById('thumbsStrip');
-      sr1.scrollLeft = th1.offsetLeft - sr1.offsetWidth / 2 + th1.offsetWidth / 2;
+ thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
  }
 
- document.getElementById('navLeft').addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo(current - 1); });
- document.getElementById('navRight').addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo(current + 1); });
+ document.getElementById('navLeft').addEventListener('click', () => goTo(current - 1));
+ document.getElementById('navRight').addEventListener('click', () => goTo(current + 1));
 
  // Clavier
  document.addEventListener('keydown', e => {
@@ -1315,119 +946,12 @@
  });
  }, { threshold: 0.05 });
  document.querySelectorAll('.tl-item').forEach(el => obs.observe(el));
- 
-    // ── GALERIE 2 : L'ÎLE HABITÉE ──
-    (function() {
-      var v2 = document.getElementById('viewer2');
-      if (!v2) return;
-      var sl2   = v2.querySelectorAll('.slide');
-      var tot2  = sl2.length;
-      var cur2  = 0;
-      var cnt2  = document.getElementById('galleryCount2');
-      var fil2  = document.getElementById('progressFill2');
-      var str2  = document.getElementById('thumbsStrip2');
-
-      sl2.forEach(function(s, i) {
-        var th = document.createElement('div');
-        var fmt = s.classList.contains('portrait') ? ' portrait' : s.classList.contains('square') ? ' square' : '';
-        th.className = 'thumb' + fmt + (i === 0 ? ' active' : '');
-        th.textContent = String(i + 1).padStart(2, '0');
-        th.addEventListener('click', function() { go2(i); });
-        str2.appendChild(th);
-      });
-
-      function go2(idx) {
-        sl2[cur2].classList.remove('active');
-        str2.querySelectorAll('.thumb')[cur2].classList.remove('active');
-        cur2 = (idx + tot2) % tot2;
-        sl2[cur2].classList.add('active');
-        str2.querySelectorAll('.thumb')[cur2].classList.add('active');
-        cnt2.textContent  = String(cur2 + 1).padStart(2, '0') + ' / ' + String(tot2).padStart(2, '0');
-        fil2.style.width  = ((cur2 + 1) / tot2 * 100) + '%';
-        // Scroll horizontal uniquement dans la strip, sans toucher au scroll de page
-        var activeThumb = str2.querySelectorAll('.thumb')[cur2];
-        var stripRect   = str2.getBoundingClientRect();
-        var thumbRect   = activeThumb.getBoundingClientRect();
-        str2.scrollLeft += thumbRect.left - stripRect.left - (stripRect.width / 2) + (thumbRect.width / 2);
-      }
-
-      document.getElementById('navLeft2').addEventListener('click', function(e) {
-        e.preventDefault(); e.stopPropagation(); go2(cur2 - 1);
-      });
-      document.getElementById('navRight2').addEventListener('click', function(e) {
-        e.preventDefault(); e.stopPropagation(); go2(cur2 + 1);
-      });
-
-      var tx2 = 0;
-      v2.addEventListener('touchstart', function(e) { tx2 = e.touches[0].clientX; }, { passive: true });
-      v2.addEventListener('touchend', function(e) {
-        var dx = e.changedTouches[0].clientX - tx2;
-        if (Math.abs(dx) > 50) go2(dx < 0 ? cur2 + 1 : cur2 - 1);
-      });
-    })();
-
-  
-    // ── BACKDROP BLUR ──
-    document.querySelectorAll('.slide.portrait, .slide.square').forEach(function(slide) {
-      var img = slide.querySelector('img');
-      if (!img) return;
-      var bd = document.createElement('div');
-      bd.className = 'slide-backdrop';
-      function applyBg() { bd.style.backgroundImage = 'url("' + img.src + '")'; }
-      if (img.complete && img.naturalWidth > 0) { applyBg(); }
-      else { img.addEventListener('load', applyBg); }
-      slide.insertBefore(bd, slide.firstChild);
-    });
-
-  
-    
-
-  
-    // ── LIGHTBOX ──
-    const lightbox     = document.getElementById('lightbox');
-    const lightboxImg  = document.getElementById('lightboxImg');
-    const lightboxCap  = document.getElementById('lightboxCaption');
-    const lightboxClose= document.getElementById('lightboxClose');
-
-    function openLightbox(src, caption) {
-      lightboxImg.src = src;
-      lightboxCap.textContent = caption;
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    // Clic sur toutes les images des slides → lightbox
-    document.querySelectorAll('.slide .slide-photo-inner img').forEach(img => {
-      img.style.cursor = 'zoom-in';
-      img.addEventListener('click', function(e) {
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        const slide = img.closest('.slide');
-        const spot = slide.querySelector('.caption-spot');
-        openLightbox(img.src, spot ? spot.textContent : '');
-      }, true); // capture phase : avant les nav-zones
-    });
-
-    lightbox.addEventListener('click', closeLightbox);
-    lightboxClose.addEventListener('click', closeLightbox);
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeLightbox();
-    });
-
-  
-    });
-  </script>
-
+ </script>
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightboxClose">✕ &nbsp;Fermer</button>
     <img id="lightboxImg" src="" alt="">
     <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
-
 </body>
 </html>
