@@ -272,7 +272,7 @@
  /* Portrait : centré avec marges latérales */
  .slide.portrait .slide-photo-inner {
  height: 100%;
- aspect-ratio: 2/3;
+ aspect-ratio: 3/4;
  max-width: 60%;
  background: var(--mid);
  display: flex; align-items: center; justify-content: center;
@@ -1114,7 +1114,9 @@
  fillEl.style.width = ((current + 1) / total * 100) + '%';
  // Scroll thumb en vue
  const thumbs = document.querySelectorAll('.thumb');
- thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+ var th1 = thumbs[current];
+      var sr1 = document.getElementById('thumbsStrip');
+      sr1.scrollLeft = th1.offsetLeft - sr1.offsetWidth / 2 + th1.offsetWidth / 2;
  }
 
  document.getElementById('navLeft').addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo(current - 1); });
@@ -1188,7 +1190,11 @@
         str2.querySelectorAll('.thumb')[cur2].classList.add('active');
         cnt2.textContent  = String(cur2 + 1).padStart(2, '0') + ' / ' + String(tot2).padStart(2, '0');
         fil2.style.width  = ((cur2 + 1) / tot2 * 100) + '%';
-        str2.querySelectorAll('.thumb')[cur2].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+        // Scroll horizontal uniquement dans la strip, sans toucher au scroll de page
+        var activeThumb = str2.querySelectorAll('.thumb')[cur2];
+        var stripRect   = str2.getBoundingClientRect();
+        var thumbRect   = activeThumb.getBoundingClientRect();
+        str2.scrollLeft += thumbRect.left - stripRect.left - (stripRect.width / 2) + (thumbRect.width / 2);
       }
 
       document.getElementById('navLeft2').addEventListener('click', function(e) {
@@ -1216,6 +1222,24 @@
       function applyBg() { bd.style.backgroundImage = 'url("' + img.src + '")'; }
       if (img.complete && img.naturalWidth > 0) { applyBg(); }
       else { img.addEventListener('load', applyBg); }
+      slide.insertBefore(bd, slide.firstChild);
+    });
+
+  
+    // ── BACKDROP : fond flouté pour slides portrait et carré ──
+    document.querySelectorAll('.slide.portrait, .slide.square').forEach(function(slide) {
+      var img = slide.querySelector('img');
+      if (!img) return;
+      var bd = document.createElement('div');
+      bd.className = 'slide-backdrop';
+      function applyBg() {
+        bd.style.backgroundImage = 'url("' + img.src + '")';
+      }
+      if (img.complete && img.naturalWidth > 0) {
+        applyBg();
+      } else {
+        img.addEventListener('load', applyBg);
+      }
       slide.insertBefore(bd, slide.firstChild);
     });
 
