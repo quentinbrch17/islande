@@ -594,8 +594,11 @@
     .lightbox-close:hover { color: var(--snow); }
     .lightbox-caption { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 
-    /* ── MOBILE : portraits plein écran ── */
+    /* ── MOBILE : viewer + portraits plein écran ── */
     @media (max-width: 900px) {
+      .gallery-section { padding-top: 0 !important; }
+      .gallery-header { padding-bottom: 16px; }
+      .gallery-viewer { height: calc(100vh - 120px); }
       .slide.portrait .slide-photo-inner {
         width: 100% !important;
         height: 100% !important;
