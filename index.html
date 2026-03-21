@@ -557,6 +557,19 @@
       .slide.diptych .slide-photo { flex-direction: column; gap: 2px; }
       .slide.diptych .slide-photo-inner { width: 100%; height: calc(50% - 1px); }
       .diptych-divider { display: none; }
+      /* Portrait mobile : limiter la hauteur pour ne pas dépasser l'écran */
+      .slide.portrait .slide-photo-inner {
+        height: 80vh;
+        width: auto;
+        max-width: 92vw;
+        aspect-ratio: auto;
+      }
+      .slide.portrait .slide-photo-inner > img {
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+      }
     }
 
     /* ── NAV ── */
