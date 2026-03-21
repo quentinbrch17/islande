@@ -251,7 +251,7 @@
  .slide {
  position: absolute; inset: 0;
  display: flex; align-items: center; justify-content: center;
- opacity: 0; transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+ opacity: 0; transition: opacity 0.4s cubic-bezier(.4,0,.2,1);
  pointer-events: none;
  }
  .slide.active { opacity: 1; pointer-events: all; }
@@ -905,6 +905,7 @@
       if(img){var src=img.getAttribute('src');th.style.backgroundImage='url("'+src+'")';th.style.backgroundSize='cover';th.style.backgroundPosition='center';}
       th.addEventListener('click',function(){go1(i);}); strip1.appendChild(th);
     });
+    function preload1(idx){[idx-1,idx+1].forEach(function(i){var s=sl1[(i+tot1)%tot1];if(s){var im=s.querySelector('img');if(im&&im.dataset.src){im.src=im.dataset.src;delete im.dataset.src;}}});}
     function go1(idx){
       sl1[cur1].classList.remove('active');strip1.querySelectorAll('.thumb')[cur1].classList.remove('active');
       cur1=(idx+tot1)%tot1;
@@ -913,6 +914,7 @@
       fill1.style.width=((cur1+1)/tot1*100)+'%';
       var th=strip1.querySelectorAll('.thumb')[cur1];
       strip1.scrollLeft=th.offsetLeft-strip1.offsetWidth/2+th.offsetWidth/2;
+      preload1(cur1);
     }
     document.getElementById('navLeft').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go1(cur1-1);});
     document.getElementById('navRight').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go1(cur1+1);});
@@ -933,12 +935,14 @@
         if(img){var src=img.getAttribute('src');th.style.backgroundImage='url("'+src+'")';th.style.backgroundSize='cover';th.style.backgroundPosition='center';}
         th.addEventListener('click',function(){go2(i);}); strip2.appendChild(th);
       });
+      function preload2(idx){[idx-1,idx+1].forEach(function(i){var s=sl2[(i+tot2)%tot2];if(s){var im=s.querySelector('img');if(im&&im.dataset.src){im.src=im.dataset.src;delete im.dataset.src;}}});}
       function go2(idx){
         sl2[cur2].classList.remove('active');strip2.querySelectorAll('.thumb')[cur2].classList.remove('active');
         cur2=(idx+tot2)%tot2;
         sl2[cur2].classList.add('active');strip2.querySelectorAll('.thumb')[cur2].classList.add('active');
         cnt2.textContent=String(cur2+1).padStart(2,'0')+' / '+String(tot2).padStart(2,'0');
         fill2.style.width=((cur2+1)/tot2*100)+'%';
+        preload2(cur2);
       }
       document.getElementById('navLeft2').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go2(cur2-1);});
       document.getElementById('navRight2').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go2(cur2+1);});
