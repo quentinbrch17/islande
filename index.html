@@ -917,9 +917,9 @@
     document.getElementById('navLeft').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go1(cur1-1);});
     document.getElementById('navRight').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go1(cur1+1);});
     document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')go1(cur1+1);if(e.key==='ArrowLeft')go1(cur1-1);});
-    var tx1=0;
-    v1.addEventListener('touchstart',function(e){tx1=e.touches[0].clientX;},{passive:true});
-    v1.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx1;if(Math.abs(dx)>50)go1(dx<0?cur1+1:cur1-1);});
+    var tx1=0,ty1=0;
+    v1.addEventListener('touchstart',function(e){tx1=e.touches[0].clientX;ty1=e.touches[0].clientY;},{passive:true});
+    v1.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx1,dy=e.changedTouches[0].clientY-ty1;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go1(dx<0?cur1+1:cur1-1);});
 
     // ── GALERIE 2 ──
     var v2=document.getElementById('viewer2');
@@ -942,9 +942,9 @@
       }
       document.getElementById('navLeft2').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go2(cur2-1);});
       document.getElementById('navRight2').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go2(cur2+1);});
-      var tx2=0;
-      v2.addEventListener('touchstart',function(e){tx2=e.touches[0].clientX;},{passive:true});
-      v2.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx2;if(Math.abs(dx)>50)go2(dx<0?cur2+1:cur2-1);});
+      var tx2=0,ty2=0;
+      v2.addEventListener('touchstart',function(e){tx2=e.touches[0].clientX;ty2=e.touches[0].clientY;},{passive:true});
+      v2.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx2,dy=e.changedTouches[0].clientY-ty2;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go2(dx<0?cur2+1:cur2-1);});
     }
 
     // ── BACKDROP ──
