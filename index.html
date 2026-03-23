@@ -10,6 +10,8 @@
  <meta property="og:description" content="Une immersion visuelle dans les paysages bruts de l'Islande, entre nature sauvage et sites touristiques." />
  <meta property="og:image" content="photos/00-cover.webp" />
  <meta property="og:type" content="website" />
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
  <link rel="preconnect" href="https://fonts.googleapis.com" />
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
@@ -612,6 +614,11 @@
     }
     .slide:hover .slide-exif { opacity: 0.85; }
 
+    /* ── MAP ── */
+    .map-section { padding: 80px 48px; border-top: 1px solid var(--border); }
+    #map { height: 500px; width: 100%; border-radius: 16px; border: 1px solid var(--border); filter: grayscale(1) invert(1) contrast(0.8) brightness(0.9); }
+    .leaflet-container { background: var(--black) !important; }
+
     /* ── MOBILE : viewer + portraits plein écran ── */
     @media (max-width: 900px) {
       .gallery-section { padding-top: 0 !important; }
@@ -915,6 +922,12 @@
  </div>
  </section>
 
+  <!-- CARTE -->
+  <section class="map-section" id="carte">
+    <div class="sh" style="padding:0; margin-bottom:48px;"><span class="sl">Carte du voyage</span><div class="sr"></div></div>
+    <div id="map"></div>
+  </section>
+
  <footer>
  <span class="fl">© 2026 — Quentin · Tous droits réservés</span>
  <span class="fr">Entre deux mondes — Islande MMXXVI · 47 spots · 3 000+ photos</span>
@@ -1026,6 +1039,41 @@
       entries.forEach(function(e,i){if(e.isIntersecting)setTimeout(function(){e.target.classList.add('vis');},i*60);});
     },{threshold:0.05});
     document.querySelectorAll('.tl-item').forEach(function(el){obs.observe(el);});
+
+    // ── CARTE ──
+    var map = L.map('map', {
+      center: [64.8, -18.5],
+      zoom: 6,
+      zoomControl: false,
+      scrollWheelZoom: false
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    var locations = [
+      { name: 'Valahnúkamöl', coords: [63.8125, -22.7144], index: 0 },
+      { name: 'Gullfoss', coords: [64.3271, -20.1199], index: 9 },
+      { name: 'Seljalandsfoss', coords: [63.6156, -19.9886], index: 2 },
+      { name: 'Skógafoss', coords: [63.5321, -19.5113], index: 4 },
+      { name: 'Reynisfjara', coords: [63.4028, -19.0448], index: 5 },
+      { name: 'Jökulsárlón', coords: [64.0484, -16.1794], index: 10 },
+      { name: 'Hengifoss', coords: [65.0961, -14.8894], index: 12 },
+      { name: 'Svartifoss', coords: [64.0275, -16.9753], index: 14 },
+      { name: 'Seyðisfjörður', coords: [65.2598, -13.9975], index: 19 },
+      { name: 'Bruarfoss', coords: [64.2643, -20.5157], index: 20 },
+      { name: 'Kleifarvatn', coords: [63.9231, -21.9904], index: 21 }
+    ];
+
+    locations.forEach(function(loc) {
+      var marker = L.marker(loc.coords).addTo(map);
+      marker.bindTooltip(loc.name, { permanent: false, direction: 'top' });
+      marker.on('click', function() {
+        document.getElementById('galerie').scrollIntoView({ behavior: 'smooth' });
+        go1(loc.index);
+      });
+    });
 
   });
  </script>
