@@ -601,6 +601,17 @@
     .lightbox-close:hover { color: var(--snow); }
     .lightbox-caption { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 
+    /* ── EXIF DATA ── */
+    .slide-exif {
+      position: absolute; bottom: 12px; right: 16px; z-index: 15;
+      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 0.1em; color: var(--muted);
+      opacity: 0.5; transition: opacity 0.3s; pointer-events: none;
+      background: rgba(17,17,16,0.3); padding: 4px 8px; border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+    .slide:hover .slide-exif { opacity: 0.85; }
+
     /* ── MOBILE : viewer + portraits plein écran ── */
     @media (max-width: 900px) {
       .gallery-section { padding-top: 0 !important; }
@@ -688,12 +699,12 @@
  <div class="gallery-viewer" id="viewer">
 
   <div class="slide landscape active" data-index="0">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/01b-valahnukamol-solo.webp" alt="Silhouette solitaire d'un voyageur face aux falaises de Valahnúkamöl en Islande"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/01b-valahnukamol-solo.webp" alt="Silhouette solitaire d'un voyageur face aux falaises de Valahnúkamöl en Islande"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 2 · Péninsule de Reykjanes</div><div class="caption-spot">Valahnúkamöl</div></div><div class="caption-right"><span class="caption-index">02</span>Paysage</div></div>
   </div>
 
   <div class="slide landscape" data-index="2">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/01c-valahnukamol-couple.webp" alt="Couple contemplant l'océan Atlantique déchaîné à Valahnúkamöl, péninsule de Reykjanes"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/01c-valahnukamol-couple.webp" alt="Couple contemplant l'océan Atlantique déchaîné à Valahnúkamöl, péninsule de Reykjanes"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 2 · Péninsule de Reykjanes</div><div class="caption-spot">Valahnúkamöl</div></div><div class="caption-right"><span class="caption-index">03</span>Paysage</div></div>
   </div>
 
@@ -702,7 +713,7 @@
       <div class="slide-photo-inner"><span class="diptych-label nature">Nature</span><img loading="lazy" src="photos/02a-seljalandsfoss-nature.webp" alt="Vue rapprochée de la chute d'eau brute de Seljalandsfoss"></div>
       <div class="slide-photo-inner"><span class="diptych-label human">Présence</span><img loading="lazy" src="photos/02b-seljalandsfoss-human.webp" alt="Touriste minuscule face à l'immensité de la cascade Seljalandsfoss"></div>
       <div class="diptych-divider"></div>
-    </div>
+    <div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Côte Sud</div><div class="caption-spot">Seljalandsfoss</div></div><div class="caption-right"><span class="caption-index">04</span>Diptyque</div></div>
   </div>
 
@@ -711,102 +722,102 @@
       <div class="slide-photo-inner"><span class="diptych-label nature">Nature</span><img loading="lazy" src="photos/02c-gljufrabui-nature.webp" alt="Cascade cachée de Gljúfrabúi à l'intérieur d'une grotte rocheuse"></div>
       <div class="slide-photo-inner"><span class="diptych-label human">Présence</span><img loading="lazy" src="photos/02d-gljufrabui-human.webp" alt="Exploration photographe de la cascade secrète de Gljúfrabúi"></div>
       <div class="diptych-divider"></div>
-    </div>
+    <div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Côte Sud</div><div class="caption-spot">Gljúfrabúi</div></div><div class="caption-right"><span class="caption-index">05</span>Diptyque</div></div>
   </div>
 
   <div class="slide portrait" data-index="5">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/00b-skogafoss.webp" alt="Puissante chute d'eau de Skógafoss sous un ciel dramatique en Islande"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/00b-skogafoss.webp" alt="Puissante chute d'eau de Skógafoss sous un ciel dramatique en Islande"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Côte Sud</div><div class="caption-spot">Skógafoss</div></div><div class="caption-right"><span class="caption-index">06</span>Portrait</div></div>
   </div>
 
   <div class="slide landscape" data-index="6">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/03-reynisfjara-lever.jpg" alt="Plage de sable noir de Reynisfjara au lever du soleil avec ses colonnes de basalte iconiques"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/03-reynisfjara-lever.jpg" alt="Plage de sable noir de Reynisfjara au lever du soleil avec ses colonnes de basalte iconiques"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 5 · Vík</div><div class="caption-spot">Reynisfjara — Lever de soleil</div></div><div class="caption-right"><span class="caption-index">07</span>Paysage</div></div>
   </div>
 
   <div class="slide portrait" data-index="7">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/04-dc3-wreck.webp" alt="Épave de l'avion DC-3 abandonné sur la plage de sable noir de Sólheimasandur"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/04-dc3-wreck.webp" alt="Épave de l'avion DC-3 abandonné sur la plage de sable noir de Sólheimasandur"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Épave DC-3</div></div><div class="caption-right"><span class="caption-index">08</span>Portrait</div></div>
   </div>
 
   <div class="slide landscape" data-index="7b">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/04b-dc3-buggies.webp" alt="Buggies touristiques traversant le désert de Sólheimasandur près du DC-3"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/04b-dc3-buggies.webp" alt="Buggies touristiques traversant le désert de Sólheimasandur près du DC-3"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Paix intérieure</div></div><div class="caption-right"><span class="caption-index">09</span>Paysage</div></div>
   </div>
 
   <div class="slide landscape" data-index="7c">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/04c-camion-tourisme.webp" alt="Le monstre des sables - Gros camion de tourisme 4x4 tout-terrain en Islande"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/04c-camion-tourisme.webp" alt="Le monstre des sables - Gros camion de tourisme 4x4 tout-terrain en Islande"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Le monstre des sables</div></div><div class="caption-right"><span class="caption-index">10</span>Paysage</div></div>
   </div>
 
   <div class="slide landscape" data-index="8">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/05-gullfoss.jpg" alt="La majestueuse cascade de Gullfoss, la chute dorée du Cercle d'Or"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/05-gullfoss.jpg" alt="La majestueuse cascade de Gullfoss, la chute dorée du Cercle d'Or"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 3 · Cercle d'Or</div><div class="caption-spot">Gullfoss</div></div><div class="caption-right"><span class="caption-index">11</span>Paysage</div></div>
   </div>
 
   <div class="slide square" data-index="9">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/06-jokulsarlon.jpg" alt="Icebergs bleutés flottant sur le lagon glaciaire de Jökulsárlón"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/06-jokulsarlon.jpg" alt="Icebergs bleutés flottant sur le lagon glaciaire de Jökulsárlón"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 6 · Vatnajökull</div><div class="caption-spot">Jökulsárlón</div></div><div class="caption-right"><span class="caption-index">12</span>Carré</div></div>
   </div>
 
   <div class="slide landscape" data-index="10">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/07-diamond-beach.jpg" alt="Blocs de glace translucides comme des diamants sur le sable noir de Diamond Beach"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/07-diamond-beach.jpg" alt="Blocs de glace translucides comme des diamants sur le sable noir de Diamond Beach"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 6 · Vatnajökull</div><div class="caption-spot">Diamond Beach</div></div><div class="caption-right"><span class="caption-index">13</span>Paysage</div></div>
   </div>
 
   <div class="slide portrait" data-index="11">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/08-hengifoss.jpg" alt="Cascade de Hengifoss avec ses couches de basalte et d'argile rouge"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/08-hengifoss.jpg" alt="Cascade de Hengifoss avec ses couches de basalte et d'argile rouge"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 8 · Fjords de l'Est</div><div class="caption-spot">Hengifoss</div></div><div class="caption-right"><span class="caption-index">14</span>Portrait</div></div>
   </div>
 
   <div class="slide landscape" data-index="12">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/09-aurores-djupivogur.jpg" alt="Aurores boréales vertes dansant au-dessus de Djúpivogur en Islande"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/09-aurores-djupivogur.jpg" alt="Aurores boréales vertes dansant au-dessus de Djúpivogur en Islande"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 8 · Djúpivogur</div><div class="caption-spot">Aurores boréales</div></div><div class="caption-right"><span class="caption-index">15</span>Longue expo</div></div>
   </div>
 
   <div class="slide portrait" data-index="13">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/10-svartifoss.jpg" alt="Svartifoss, la cascade noire entourée de colonnes de basalte hexagonales"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/10-svartifoss.jpg" alt="Svartifoss, la cascade noire entourée de colonnes de basalte hexagonales"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 9 · Skaftafell</div><div class="caption-spot">Svartifoss</div></div><div class="caption-right"><span class="caption-index">16</span>Portrait · Longue expo</div></div>
   </div>
 
   <div class="slide landscape" data-index="14">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/11-fjallarlon.jpg" alt="Vue panoramique sur le lagon glaciaire de Fjallsárlón et le glacier en arrière-plan"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/11-fjallarlon.jpg" alt="Vue panoramique sur le lagon glaciaire de Fjallsárlón et le glacier en arrière-plan"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 9 · Vatnajökull</div><div class="caption-spot">Fjallsárlón</div></div><div class="caption-right"><span class="caption-index">17</span>Paysage</div></div>
   </div>
 
   <div class="slide portrait" data-index="15">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/12-kvernufoss.jpg" alt="Cascade de Kvernufoss cachée dans un canyon verdoyant sur la côte sud"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/12-kvernufoss.jpg" alt="Cascade de Kvernufoss cachée dans un canyon verdoyant sur la côte sud"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 10 · Côte Sud</div><div class="caption-spot">Kvernufoss</div></div><div class="caption-right"><span class="caption-index">18</span>Portrait · Longue expo</div></div>
   </div>
 
   <div class="slide square" data-index="16">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/13-solheimajokull.jpg" alt="Langue glaciaire de Sólheimajökull avec ses reflets bleus et noirs"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/13-solheimajokull.jpg" alt="Langue glaciaire de Sólheimajökull avec ses reflets bleus et noirs"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 10 · Côte Sud</div><div class="caption-spot">Sólheimajökull</div></div><div class="caption-right"><span class="caption-index">19</span>Carré</div></div>
   </div>
 
   <div class="slide landscape" data-index="17">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/14-dyrhólaey.jpg" alt="Arche naturelle de Dyrhólaey surplombant l'océan Atlantique"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/14-dyrhólaey.jpg" alt="Arche naturelle de Dyrhólaey surplombant l'océan Atlantique"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Côte Sud</div><div class="caption-spot">Dyrhólaey</div></div><div class="caption-right"><span class="caption-index">20</span>Paysage</div></div>
   </div>
 
   <div class="slide portrait" data-index="18">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/15-seydisfjordur.jpg" alt="Village coloré de Seyðisfjörður dans les fjords de l'Est islandais"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/15-seydisfjordur.jpg" alt="Village coloré de Seyðisfjörður dans les fjords de l'Est islandais"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 8 · Fjords de l'Est</div><div class="caption-spot">Seyðisfjörður</div></div><div class="caption-right"><span class="caption-index">21</span>Portrait</div></div>
   </div>
 
   <div class="slide landscape" data-index="19">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/16-bruarfoss.jpg" alt="Eaux bleu turquoise intense de la cascade Bruarfoss, la perle bleue d'Islande"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/16-bruarfoss.jpg" alt="Eaux bleu turquoise intense de la cascade Bruarfoss, la perle bleue d'Islande"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 11 · Épilogue</div><div class="caption-spot">Bruarfoss</div></div><div class="caption-right"><span class="caption-index">22</span>Paysage</div></div>
   </div>
 
   <div class="slide landscape" data-index="20">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/17-kleifarvatn.jpg" alt="Paysage austère et volcanique des rives du lac Kleifarvatn"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/17-kleifarvatn.jpg" alt="Paysage austère et volcanique des rives du lac Kleifarvatn"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 11 · Épilogue</div><div class="caption-spot">Kleifarvatn</div></div><div class="caption-right"><span class="caption-index">23</span>Paysage</div></div>
   </div>
 
   <div class="slide square" data-index="21">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/18-eldhraun.jpg" alt="Champ de lave d'Eldhraun recouvert d'une mousse verte épaisse et fragile"></div></div>
+    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/18-eldhraun.jpg" alt="Champ de lave d'Eldhraun recouvert d'une mousse verte épaisse et fragile"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
     <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 6 · Côte Sud-Est</div><div class="caption-spot">Eldhraun</div></div><div class="caption-right"><span class="caption-index">24</span>Carré</div></div>
   </div>
 
@@ -855,7 +866,7 @@
     </div>
     <div class="gallery-viewer" id="viewer2">
       <div class="slide portrait active" data-idx2="0">
-        <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/T1-cheval.webp" alt="Cheval islandais robuste dans un paysage de montagnes enneigées"></div></div>
+        <div class="slide-photo"><div class="slide-photo-inner"><img src="photos/T1-cheval.webp" alt="Cheval islandais robuste dans un paysage de montagnes enneigées"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
         <div class="slide-caption"><div class="caption-left"><div class="caption-day">Côte Sud · En route</div><div class="caption-spot">Cheval islandais</div></div><div class="caption-right"><span class="caption-index">01</span>Territoire</div></div>
       </div>
       <div class="slide diptych" data-idx2="1">
@@ -863,11 +874,11 @@
           <div class="slide-photo-inner"><span class="diptych-label nature">Habitant</span><img loading="lazy" src="photos/T2a-ferme.webp" alt="Petite ferme islandaise isolée au pied des montagnes escarpées"></div>
           <div class="slide-photo-inner"><span class="diptych-label human">Touriste</span><img loading="lazy" src="photos/T2b-file-touristes.webp" alt="File de touristes marchant sur un sentier balisé vers un site naturel en Islande"></div>
           <div class="diptych-divider"></div>
-        </div>
+        <div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
         <div class="slide-caption"><div class="caption-left"><div class="caption-day">Côte Sud · Cercle d'Or</div><div class="caption-spot">Habiter / Traverser</div></div><div class="caption-right"><span class="caption-index">02</span>Diptyque</div></div>
       </div>
       <div class="slide landscape" data-idx2="2">
-        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/T3-parking.webp" alt="Parking de site touristique rempli de voitures et vans de location en Islande"></div></div>
+        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/T3-parking.webp" alt="Parking de site touristique rempli de voitures et vans de location en Islande"></div><div class="slide-exif">f/0.0 · 0s · ISO 000</div></div>
         <div class="slide-caption"><div class="caption-left"><div class="caption-day">Péninsule de Reykjanes</div><div class="caption-spot">Parking</div></div><div class="caption-right"><span class="caption-index">03</span>Territoire</div></div>
       </div>
       <div class="gallery-nav">
