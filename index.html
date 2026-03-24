@@ -616,7 +616,7 @@
 
     /* ── MAP ── */
     .map-section { padding: 80px 48px; border-top: 1px solid var(--border); }
-    #map { height: 500px; width: 100%; border-radius: 16px; border: 1px solid var(--border); }
+    #map { height: 500px; width: 100%; border-radius: 16px; border: 1px solid var(--border); filter: grayscale(1) invert(1) contrast(0.9) brightness(0.8); }
     .leaflet-container { background: var(--black) !important; }
 
     .map-legend {
@@ -1063,7 +1063,7 @@
     var map = L.map('map', {
       center: [64.8, -18.5],
       zoom: 6,
-      zoomControl: false,
+      zoomControl: true,
       scrollWheelZoom: false
     });
 
