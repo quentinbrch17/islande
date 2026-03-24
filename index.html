@@ -619,6 +619,15 @@
     #map { height: 500px; width: 100%; border-radius: 16px; border: 1px solid var(--border); filter: grayscale(1) invert(1) contrast(0.8) brightness(0.9); }
     .leaflet-container { background: var(--black) !important; }
 
+    .map-legend {
+      position: absolute; bottom: 20px; left: 20px; z-index: 1000;
+      background: rgba(17,17,16,0.85); padding: 12px 16px; border-radius: 12px;
+      border: 1px solid var(--border); backdrop-filter: blur(8px);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.05em; }
+    .legend-color { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); }
+
     /* ── MOBILE : viewer + portraits plein écran ── */
     @media (max-width: 900px) {
       .gallery-section { padding-top: 0 !important; }
@@ -925,7 +934,17 @@
   <!-- CARTE -->
   <section class="map-section" id="carte">
     <div class="sh" style="padding:0; margin-bottom:48px;"><span class="sl">Carte du voyage</span><div class="sr"></div></div>
-    <div id="map"></div>
+    <div style="position:relative;">
+      <div id="map"></div>
+      <div class="map-legend">
+        <div class="legend-item"><div class="legend-color" style="background:#A2D2FF;"></div>Cascades</div>
+        <div class="legend-color-item" style="display:none;"></div> <!-- Spacer -->
+        <div class="legend-item"><div class="legend-color" style="background:#FF595E;"></div>Volcanisme</div>
+        <div class="legend-item"><div class="legend-color" style="background:#4B5D16;"></div>Côte & Plage</div>
+        <div class="legend-item"><div class="legend-color" style="background:#F8F9FA;"></div>Glaciers</div>
+        <div class="legend-item"><div class="legend-color" style="background:#FFCA3A;"></div>Présence humaine</div>
+      </div>
+    </div>
   </section>
 
  <footer>
@@ -1053,21 +1072,54 @@
     }).addTo(map);
 
     var locations = [
-      { name: 'Valahnúkamöl', coords: [63.8125, -22.7144], index: 0 },
-      { name: 'Gullfoss', coords: [64.3271, -20.1199], index: 9 },
-      { name: 'Seljalandsfoss', coords: [63.6156, -19.9886], index: 2 },
-      { name: 'Skógafoss', coords: [63.5321, -19.5113], index: 4 },
-      { name: 'Reynisfjara', coords: [63.4028, -19.0448], index: 5 },
-      { name: 'Jökulsárlón', coords: [64.0484, -16.1794], index: 10 },
-      { name: 'Hengifoss', coords: [65.0961, -14.8894], index: 12 },
-      { name: 'Svartifoss', coords: [64.0275, -16.9753], index: 14 },
-      { name: 'Seyðisfjörður', coords: [65.2598, -13.9975], index: 19 },
-      { name: 'Bruarfoss', coords: [64.2643, -20.5157], index: 20 },
-      { name: 'Kleifarvatn', coords: [63.9231, -21.9904], index: 21 }
+      { name: 'Valahnúkamöl', coords: [63.8125, -22.7144], type: 'cote', index: 0 },
+      { name: 'Gunnuhver', coords: [63.8188, -22.6841], type: 'volcan', index: 0 },
+      { name: 'Reykjanesviti', coords: [63.8136, -22.7049], type: 'humain', index: 0 },
+      { name: 'Brimketill', coords: [63.8169, -22.5647], type: 'cote', index: 0 },
+      { name: 'Fagradalsfjall', coords: [63.8931, -22.2693], type: 'volcan', index: 0 },
+      { name: 'Þingvellir', coords: [64.2559, -21.1295], type: 'volcan', index: 9 },
+      { name: 'Geysir', coords: [64.3104, -20.3024], type: 'volcan', index: 9 },
+      { name: 'Gullfoss', coords: [64.3271, -20.1199], type: 'cascade', index: 9 },
+      { name: 'Seljalandsfoss', coords: [63.6156, -19.9886], type: 'cascade', index: 2 },
+      { name: 'Gljúfrabúi', coords: [63.6209, -19.9864], type: 'cascade', index: 2 },
+      { name: 'Skógafoss', coords: [63.5321, -19.5113], type: 'cascade', index: 4 },
+      { name: 'Kvernufoss', coords: [63.5283, -19.4810], type: 'cascade', index: 15 },
+      { name: 'DC-3 Wreck', coords: [63.4591, -19.3647], type: 'humain', index: 7 },
+      { name: 'Dyrhólaey', coords: [63.3996, -19.1269], type: 'cote', index: 17 },
+      { name: 'Reynisfjara', coords: [63.4028, -19.0448], type: 'cote', index: 5 },
+      { name: 'Víkurkirkja', coords: [63.4194, -19.0061], type: 'humain', index: 5 },
+      { name: 'Eldhraun', coords: [63.6761, -18.1404], type: 'cote', index: 21 },
+      { name: 'Jökulsárlón', coords: [64.0484, -16.1794], type: 'glace', index: 10 },
+      { name: 'Diamond Beach', coords: [64.0441, -16.1777], type: 'cote', index: 11 },
+      { name: 'Vök Baths', coords: [65.2341, -14.4533], type: 'humain', index: 19 },
+      { name: 'Seyðisfjörður', coords: [65.2598, -13.9975], type: 'humain', index: 19 },
+      { name: 'Hengifoss', coords: [65.0961, -14.8894], type: 'cascade', index: 12 },
+      { name: 'Svartifoss', coords: [64.0275, -16.9753], type: 'cascade', index: 14 },
+      { name: 'Fjallsárlón', coords: [64.0175, -16.3861], type: 'glace', index: 14 },
+      { name: 'Sólheimajökull', coords: [63.5569, -19.3028], type: 'glace', index: 16 },
+      { name: 'Gígjagjá', coords: [63.4344, -18.7610], type: 'cote', index: 16 },
+      { name: 'Kerið', coords: [64.0413, -20.8851], type: 'volcan', index: 20 },
+      { name: 'Bruarfoss', coords: [64.2643, -20.5157], type: 'cascade', index: 20 },
+      { name: 'Kleifarvatn', coords: [63.9231, -21.9904], type: 'volcan', index: 21 }
     ];
 
+    var typeColors = {
+      'cascade': '#A2D2FF',
+      'volcan':  '#FF595E',
+      'cote':    '#4B5D16',
+      'glace':   '#F8F9FA',
+      'humain':  '#FFCA3A'
+    };
+
     locations.forEach(function(loc) {
-      var marker = L.marker(loc.coords).addTo(map);
+      var marker = L.circleMarker(loc.coords, {
+        radius: 6,
+        fillColor: typeColors[loc.type] || '#FFF',
+        color: '#000',
+        weight: 1,
+        fillOpacity: 0.8
+      }).addTo(map);
+      
       marker.bindTooltip(loc.name, { permanent: false, direction: 'top' });
       marker.on('click', function() {
         document.getElementById('galerie').scrollIntoView({ behavior: 'smooth' });
