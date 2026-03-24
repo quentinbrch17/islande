@@ -606,13 +606,13 @@
     /* ── EXIF DATA ── */
     .slide-exif {
       position: absolute; bottom: 12px; right: 16px; z-index: 15;
-      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
-      letter-spacing: 0.1em; color: var(--muted);
-      opacity: 0.5; transition: opacity 0.3s; pointer-events: none;
-      background: rgba(17,17,16,0.3); padding: 4px 8px; border-radius: 4px;
-      backdrop-filter: blur(4px);
+      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; color: var(--snow);
+      opacity: 0.6; transition: opacity 0.3s, background 0.3s; pointer-events: none;
+      background: rgba(17,17,16,0.7); padding: 5px 10px; border-radius: 4px;
+      backdrop-filter: blur(8px); border: 1px solid rgba(248,249,250,0.1);
     }
-    .slide:hover .slide-exif { opacity: 0.85; }
+    .slide:hover .slide-exif { opacity: 0.95; background: rgba(17,17,16,0.85); }
 
     /* ── MAP ── */
     .map-section { padding: 80px 48px; border-top: 1px solid var(--border); }
