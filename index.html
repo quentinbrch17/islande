@@ -624,8 +624,11 @@
 
     /* ── MAP ── */
     .map-section { padding: 80px 48px; border-top: 1px solid var(--border); }
-    #map { height: 500px; width: 100%; border-radius: 16px; border: 1px solid var(--border); filter: grayscale(1) invert(1) contrast(0.9) brightness(0.8); }
+    #map { height: 500px; width: 100%; border-radius: 16px; border: 1px solid var(--border); }
     .leaflet-container { background: var(--black) !important; }
+    .leaflet-tile-pane {
+      filter: grayscale(1) invert(1) contrast(0.9) brightness(0.8);
+    }
 
     .map-legend {
       position: absolute; bottom: 20px; left: 20px; z-index: 1000;
@@ -738,7 +741,7 @@
       <div class="slide-photo-inner"><span class="diptych-label human">Présence</span><img loading="lazy" src="photos/02b-seljalandsfoss-human.webp" alt="Touriste minuscule face à l'immensité de la cascade Seljalandsfoss"></div>
       <div class="diptych-divider"></div>
     </div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Seljalandsfoss</div><div class="caption-spot">Le tourisme en filigrane</div></div><div class="caption-right"><span class="caption-index">04</span>Diptyque</div></div>
+    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Seljalandsfoss</div><div class="caption-spot">Présences dans la bruine</div></div><div class="caption-right"><span class="caption-index">04</span>Diptyque</div></div>
   </div>
 
   <div class="slide diptych" data-index="4">
