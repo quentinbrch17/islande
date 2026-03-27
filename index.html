@@ -245,6 +245,21 @@
  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
  letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
  }
+ .gallery-intro {
+   padding: 0 48px 40px;
+   max-width: 580px;
+ }
+ .gallery-intro p {
+   font-family: 'DM Sans', sans-serif;
+   font-style: italic;
+   font-weight: 300;
+   font-size: clamp(14px, 1.1vw, 16px);
+   line-height: 1.8;
+   color: var(--light);
+   border-left: 1px solid var(--border);
+   padding-left: 20px;
+   margin: 0;
+ }
 
  /* Viewer plein écran */
  .gallery-viewer {
@@ -721,6 +736,9 @@
  </div>
  <div class="gallery-count" id="galleryCount">01 / 23</div>
  </div>
+ <div class="gallery-intro">
+   <p>11 jours de route. Des paysages islandais dans ce qu'ils ont de brut — et les humains qui s'y croisent. Les deux font partie du sujet.</p>
+ </div>
 
  <!-- VIEWER -->
  <div class="gallery-viewer" id="viewer" tabindex="0" role="region" aria-label="Galerie principale, navigation avec les flèches gauche et droite">
@@ -891,6 +909,9 @@
         <h2 style="margin-top:12px;">Territoire · <span style="color:var(--glacier);">Présences</span></h2>
       </div>
       <div class="gallery-count" id="galleryCount2">01 / 07</div>
+    </div>
+    <div class="gallery-intro">
+      <p>Un fil tiré de la galerie principale, centré sur ceux qui habitent ou traversent le territoire : animaux, locaux, visiteurs — et la façon dont chacun l'occupe.</p>
     </div>
     <div class="gallery-viewer" id="viewer2" tabindex="0" role="region" aria-label="Galerie l'ile habitee, navigation avec les flèches gauche et droite">
       <div class="slide portrait active" data-idx2="0">
