@@ -1,0 +1,315 @@
+/* Islande — an open photographic sequence. Native scrolling throughout. */
+:root{--paper:#eae8df;--ink:#292c29;--muted:#696b64;--night:#151c1e;--serif:"Iowan Old Style","Baskerville","Palatino Linotype",Georgia,serif;--sans:Arial,Helvetica,sans-serif;--ease:cubic-bezier(.2,.65,.2,1)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:78px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+body.modal-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;border-radius:0;padding:0;cursor:pointer}
+button,a{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible{outline:2px solid currentColor;outline-offset:6px}
+img{display:block;max-width:100%}
+figure,p,h1,h2{margin:0}
+h1,h2{font-weight:400}
+em{font-weight:400}
+::selection{background:#70776d;color:#fff}
+.skip{position:fixed;left:15px;top:-90px;background:var(--paper);padding:16px;z-index:100}
+.skip:focus{top:12px}
+.progress{position:fixed;top:0;left:0;width:100%;height:2px;background:#f4f1e7;transform:scaleX(0);transform-origin:left;mix-blend-mode:difference;z-index:40;pointer-events:none}
+.site-header{position:fixed;z-index:30;top:0;left:0;width:100%;display:flex;align-items:center;justify-content:space-between;padding:22px 3.2vw;color:#fff;mix-blend-mode:difference;pointer-events:none}
+.site-header a,.site-header button{pointer-events:auto}
+.signature{font-size:13px;letter-spacing:.02em;padding:10px 0}
+.site-header nav{display:flex;gap:32px;align-items:center}
+.text-button{font-size:12px;line-height:1.5;padding:8px 0;position:relative}
+.text-button::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.text-button:hover::after,.text-button:focus-visible::after{transform:scaleX(1)}
+.nav-count{font-size:9px;vertical-align:super;margin-left:3px;opacity:.7}
+.masthead{position:relative;padding:115px 3vw 0}
+.masthead-note{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:0 .5vw}
+.masthead h1{font-family:var(--serif);font-size:clamp(110px,23vw,470px);letter-spacing:-.07em;line-height:.99;margin-left:-.035em;margin-top:1.2vw}
+.masthead h1 span{color:#777d70}
+.begin-link{position:absolute;right:4vw;bottom:3vw;display:flex;gap:20px;align-items:center;font-size:11px}
+.begin-link span:last-child{font-size:26px;transition:transform .3s}
+.begin-link:hover span:last-child{transform:translateY(5px)}
+.photo{position:relative;margin:0;min-width:0}
+.photo-frame{display:block;position:relative;overflow:hidden;background:#b4b7ae;isolation:isolate;cursor:pointer}
+.photo-frame img{width:100%;height:auto;transform:translate3d(0,var(--image-shift,0%),0) scale(var(--image-scale,1));transform-origin:center;backface-visibility:hidden}
+.photo-frame.is-active img{will-change:transform}
+.photo-open{position:absolute;right:18px;bottom:16px;z-index:2;width:36px;height:36px;display:grid;place-items:center;background:rgba(19,25,25,.36);color:white;border-radius:50%;font-size:20px;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s;pointer-events:none}
+.photo-frame:hover .photo-open,.photo-frame:focus-visible .photo-open{opacity:1;transform:translateY(0)}
+figcaption{display:flex;justify-content:space-between;padding:12px 0 0;font-size:10px;line-height:1.4;letter-spacing:.02em;color:var(--muted)}
+figcaption span:last-child{font-variant-numeric:tabular-nums;opacity:.75}
+.photo:focus-within{z-index:8!important}
+.opening figcaption{padding-inline:3.4vw}
+.breath{position:relative;display:grid;grid-template-columns:1.8fr 1fr;gap:8vw;align-items:end;padding:clamp(100px,12vw,200px) 8vw}
+.large-text{max-width:24ch;font-family:var(--serif);font-size:clamp(29px,4.4vw,86px);line-height:1.12;letter-spacing:-.035em;text-wrap:pretty}
+.line{display:block}
+.aside-text{font-size:clamp(16px,1.1vw,19px);line-height:1.8;max-width:30ch;padding-bottom:.4em;text-wrap:pretty}
+.first-breath{padding-left:13vw;padding-right:9vw;grid-template-columns:2.1fr 1fr}
+.first-breath .large-text{font-size:clamp(29px,4.1vw,82px)}
+.composition{position:relative;isolation:isolate}
+.coast-cluster{padding-bottom:7vw}
+.photo-cote{width:56%;margin-left:3%}
+.photo-basalte{width:76%;margin-left:24%;margin-top:3vw;z-index:2}
+.photo-basalte figcaption{padding-right:3vw}
+.journey-cluster{padding-top:5vw}
+.photo-epave{width:96%;margin-left:2%}
+.photo-bus{width:70%;margin-left:30%;margin-top:3vw;z-index:2}
+.photo-bus figcaption{padding-right:3vw}
+.photo-buggies{width:94%;margin:5vw 0 0}
+.photo-buggies figcaption{padding-left:3vw}
+.shared-breath{padding:14vw 10vw 12vw 17vw;grid-template-columns:2.1fr 1fr;gap:7vw}
+.shared-breath .large-text{font-size:clamp(30px,3.65vw,76px)}
+.inhabited-cluster{padding-bottom:10vw}
+.photo-ferme{width:88%;margin-left:0}
+.photo-ferme figcaption{padding-left:3vw}
+.photo-chemin{width:53%;margin-left:45%;margin-top:2.5vw;z-index:2}
+.photo-parking{width:88%;margin-left:2%;margin-top:3.5vw}
+.night-section{background:var(--night);color:var(--paper);padding-top:10vw}
+.night-section figcaption{color:#a6ada7}
+.cascade-cluster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2vw;margin:0 2vw;align-items:start}
+.photo-cascade{width:100%;margin-left:0}
+.photo-fantomes{width:100%;margin-left:0;margin-top:8vw}
+.desire-breath{padding:11vw 12vw 12vw;grid-template-columns:1.5fr 1fr}
+.desire-breath .aside-text{color:#c3c8c1;max-width:32ch}
+.ice-cluster{padding:10vw 0 4vw}
+.photo-silhouette{width:57%;margin-left:0}
+.photo-silhouette figcaption{padding-left:3vw}
+.photo-chevaliere{width:54%;margin-left:46%;margin-top:3vw;z-index:2}
+.photo-chevaliere figcaption{padding-right:3vw}
+.reflection-section{width:62%;margin:8vw auto 9vw}.child-section{width:57%;margin:5vw 0 10vw 3%}.wave-section{padding-bottom:0}
+.wave-section figcaption{padding:13px 3.2vw 22px}
+.horse-section{padding:12vw 0 10vw}.return-photo{width:56%}.return-section{padding:clamp(100px,12vw,200px) 12vw}.return-text{max-width:650px;margin-inline:auto}
+.return-photo{min-width:0}
+.return-photo figcaption{padding-left:3vw}
+.return-text{padding-right:1vw}
+.small-label{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:30px}
+.return-text h2{max-width:9ch;font-family:var(--serif);font-size:clamp(35px,4.4vw,90px);line-height:1.08;letter-spacing:-.04em;margin-bottom:36px}
+.return-text p{font-size:clamp(16px,1.1vw,18px);line-height:1.85;max-width:52ch;margin-top:18px}
+.last-image{width:96%;margin-left:2%}
+.footer{padding:6vw 3.2vw 32px}
+.footer-title{font-family:var(--serif);font-size:clamp(35px,6.2vw,126px);letter-spacing:-.045em;margin-bottom:5vw}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid #babdb3;padding-top:22px;font-size:11px}
+.footer-bottom .text-button{font-size:11px}
+/* Only text is concealed for progressive appearance; photographs remain visible. */
+.motion-ready .reveal{opacity:0;transform:translateY(22px);transition:opacity 1.05s var(--ease),transform 1.2s var(--ease)}
+.motion-ready .reveal.visible{opacity:1;transform:translateY(0)}
+.motion-ready .large-text .line{opacity:0;transform:translateY(14px);transition:opacity .9s var(--ease),transform 1.1s var(--ease)}
+.motion-ready .large-text.visible .line{opacity:1;transform:translateY(0)}
+.large-text .line:nth-child(2){transition-delay:90ms}
+.large-text .line:nth-child(3){transition-delay:180ms}
+.large-text .line:nth-child(4){transition-delay:270ms}
+/* Images in the reader are complete, still and uncropped. */
+dialog{border:0;padding:0;color:var(--ink);background:var(--paper)}
+dialog::backdrop{background:rgba(12,17,18,.8)}
+.close-button{display:flex;align-items:center;gap:15px;font-size:12px;min-height:44px;white-space:nowrap}
+.close-button span{font-size:27px;font-weight:300;line-height:1}
+.lightbox{width:100%;height:100%;max-width:none;max-height:none;margin:0;background:#111719;color:var(--paper)}
+.lightbox-inner{display:grid;grid-template-rows:52px minmax(0,1fr) 56px;height:100dvh;padding:0 3vw}
+.viewer-top,.viewer-bottom{display:flex;align-items:center;justify-content:space-between;font-size:11px;gap:20px}
+#viewer-count{font-variant-numeric:tabular-nums}
+.viewer-frame{min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.viewer-frame img{width:100%;height:100%;object-fit:contain;touch-action:pan-y}
+.viewer-controls{display:flex;gap:20px}
+.viewer-controls button{width:46px;height:44px;font-size:25px}
+.photo-index{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;padding:32px 4vw 70px}
+.dialog-heading{display:flex;justify-content:space-between;align-items:center;gap:30px;margin-bottom:45px}
+.dialog-heading h2{font-family:var(--serif);font-size:clamp(26px,4vw,64px);letter-spacing:-.03em}
+.dialog-heading sup{font-family:var(--sans);font-size:11px;vertical-align:super;margin-left:7px;letter-spacing:0}
+.index-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px 2vw;align-items:start}
+.index-photo{display:block;text-align:left;width:100%;min-width:0}
+.index-photo img{width:100%;height:clamp(140px,20vw,320px);object-fit:contain;object-position:center bottom;transition:opacity .25s}
+.index-photo:hover img{opacity:.85}
+.index-photo>span{display:flex;gap:12px;padding-top:10px;font-size:12px;line-height:1.5}
+.index-photo>span>span{color:var(--muted);font-variant-numeric:tabular-nums}
+.about{width:min(850px,94vw);max-height:90dvh;padding:60px 7%;overscroll-behavior:contain}
+.about>.close-button{position:absolute;top:16px;right:25px}
+.about .small-label{margin-top:22px}
+.about h2{font-family:var(--serif);font-size:clamp(32px,4.7vw,68px);line-height:1.07;letter-spacing:-.035em;margin:24px 0 35px}
+.about p{font-size:14px;line-height:1.85;margin-bottom:19px;max-width:60ch}
+.about-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #b5baaf;padding-top:17px;margin-top:35px;font-size:11px;gap:20px}
+@media(min-width:1800px){.aside-text{max-width:34ch}.return-text p{max-width:52ch}}
+@media(max-width:1000px){.breath{gap:5vw}.shared-breath{padding-left:10vw;padding-right:8vw}.index-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.return-text p{font-size:16px}}
+@media(max-width:700px){
+  html{scroll-padding-top:64px}
+  .site-header{padding:12px 5vw}.signature{font-size:11px}.site-header nav{gap:20px}.text-button{font-size:11px}
+  .masthead{padding:94px 4vw 0}.masthead-note{font-size:8px;letter-spacing:.075em;gap:15px}.masthead h1{font-size:25.6vw;margin-top:5vw;line-height:1.06}.begin-link{right:5vw;bottom:4vw}.begin-link span:first-child{display:none}.begin-link span:last-child{font-size:20px}
+  figcaption{font-size:9px;padding-top:9px}.opening figcaption{padding-inline:4vw}.photo-open{right:12px;bottom:10px;width:30px;height:30px;font-size:17px}
+  .breath{display:block;padding:85px 8vw 88px}.large-text,.first-breath .large-text{font-size:clamp(27px,6.5vw,44px);line-height:1.16}.aside-text{font-size:16px;line-height:1.8;max-width:35ch;margin-top:28px;margin-left:auto;width:74%}
+  .coast-cluster{padding-bottom:13vw}.photo-cote{width:86%;margin-left:0}.photo-cote figcaption{padding-left:4vw}.photo-basalte{width:96%;margin-left:4%;margin-top:3vw}.photo-basalte figcaption{padding-right:4vw}
+  .journey-cluster{padding-top:3vw}.photo-epave{width:96%;margin-left:2%}.photo-bus{width:88%;margin-left:12%;margin-top:6vw}.photo-buggies{width:94%;margin-top:7vw}
+  .shared-breath{padding:91px 8vw}.shared-breath .large-text{font-size:6.1vw}.shared-breath .aside-text{width:80%}
+  .inhabited-cluster{padding-bottom:20vw}.photo-ferme{width:96%;margin-left:0}.photo-chemin{width:83%;margin-left:17%;margin-top:7vw}.photo-chemin figcaption{padding-right:4vw}.photo-parking{width:96%;margin-left:0;margin-top:7vw}.photo-parking figcaption{padding-left:4vw}
+  .reflection-section{width:90%;margin:16vw 0 18vw 5%}.child-section{width:88%;margin:6vw 0 18vw 0}.child-section figcaption{padding-left:4vw}.cascade-cluster{display:block;margin:0}.night-section{padding-top:16vw}.photo-cascade,.photo-fantomes{width:88%;margin-inline:auto}.photo-fantomes{margin-top:24px}
+  .desire-breath{padding:88px 8vw 90px}.desire-breath .large-text{font-size:7.2vw}.desire-breath .aside-text{width:78%}
+  .ice-cluster{padding-top:16vw;padding-bottom:12vw}.photo-silhouette{width:85%;margin-left:0}.photo-chevaliere{width:84%;margin-left:16%;margin-top:4vw}.photo-chevaliere figcaption{padding-right:4vw}
+  .horse-section{padding:20vw 0 17vw}.return-section{padding:90px 9vw 70px}.return-photo{width:86%}.return-text{padding:0}.return-text h2{font-size:11vw;line-height:1.08;margin-bottom:27px}.return-text p{font-size:16px;max-width:34ch}.small-label{margin-bottom:22px;font-size:9px}
+  .last-image{width:96%;margin-left:4%}.last-image figcaption{padding-right:4vw}
+  .footer{padding:14vw 5vw 28px}.footer-title{font-size:9vw;margin-bottom:11vw}.footer-bottom{flex-wrap:wrap;font-size:10px;row-gap:15px}.footer-bottom>span{width:100%}.footer-bottom .text-button{font-size:10px}
+  .lightbox-inner{padding:0 4vw;grid-template-rows:52px minmax(0,1fr) 56px;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .photo-index{padding:22px 5vw 55px}.dialog-heading{margin-bottom:30px;gap:16px}.dialog-heading h2{font-size:27px}.index-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 4vw}.index-photo img{height:48vw}.index-photo>span{font-size:12px;gap:8px}.close-button{font-size:11px;gap:10px}
+  .about{padding:60px 8vw 30px;max-height:92dvh}.about h2{font-size:10vw}.about p{font-size:16px}.about>.close-button{right:7vw}.about-footer{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}.photo-frame img{transform:none!important}.motion-ready .reveal,.motion-ready .large-text .line{opacity:1;transform:none}}
+html.motion-off{scroll-behavior:auto}
+.motion-off .photo-frame img{transform:none!important}
+.motion-off .reveal,.motion-off .large-text .line{opacity:1!important;transform:none!important;transition:none!important}
+
+/* From the third photograph onward, one complete frame fits inside the viewport. */
+:root{--photo-height:min(80vh,calc(100vh - 120px))}
+@supports(height:100svh){:root{--photo-height:min(80svh,calc(100svh - 120px))}}
+.viewport-photo{max-width:calc(var(--photo-height) * var(--photo-ratio))}
+.photo-basalte,.photo-bus,.photo-chevaliere{margin-left:auto}
+.photo-chemin{margin-left:auto;margin-right:2%}
+.photo-epave,.reflection-section>.photo,.child-section>.photo,.wave-section>.photo,.last-image>.photo{margin-inline:auto}
+.cascade-cluster>.photo{justify-self:center}
+
+/* A first night within the journey. The houses remain still and whole. */
+.grindavik{background:#080a0b;color:#eae8df;padding:0 0 clamp(90px,12vw,200px);scroll-margin-top:0}
+.grindavik figcaption{color:#a7aca9;font-size:12px;line-height:1.5}
+.grindavik .photo{width:86%;margin-inline:auto}
+.grindavik .photo-frame{background:#080a0b}
+.grindavik-heading{padding:110px 8vw 80px;max-width:1100px;margin-inline:auto}
+.chapter-label{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#a7aca9;margin-bottom:32px}
+.grindavik-heading h2{font-family:var(--serif);font-size:clamp(48px,8.5vw,150px);line-height:1.06;letter-spacing:-.045em}
+.grindavik-heading>p{font-size:clamp(16px,1.35vw,21px);line-height:1.6;margin-top:36px}
+.chapter-copy{font-size:clamp(17px,1.35vw,21px);line-height:1.8;max-width:43ch;text-wrap:pretty;color:#c9ccc6}
+.chapter-copy p+p{margin-top:1.3em}
+.chapter-arrival{margin:clamp(55px,7vw,110px) auto clamp(90px,12vw,180px) 13vw;text-align:left}
+.chapter-book{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:7vw;align-items:center;margin:0 6vw}
+.book-photo{width:100%;max-width:none;justify-self:center}
+.book-photo img{width:100%;height:auto}
+.book-photo figcaption{padding-top:14px}
+.chapter-statement{font-family:var(--serif);font-size:clamp(38px,6.5vw,108px);line-height:1.12;letter-spacing:-.035em;text-wrap:pretty;margin:clamp(100px,14vw,230px) 12vw 45px}
+.chapter-weather{margin:0 12vw clamp(60px,7vw,120px) auto}
+.chapter-streets .photo-station{width:80%;margin-left:6%;margin-right:auto}
+.chapter-streets .photo-panneau{width:76%;margin:clamp(35px,5vw,85px) 6% 0 auto}
+.chapter-passage{margin:clamp(75px,10vw,160px) auto;max-width:35ch}
+.grindavik .photo-tunnel{width:92%}
+.chapter-houses{margin:clamp(75px,10vw,150px) 14vw clamp(65px,8vw,120px) auto}
+.grindavik .photo-maisonrouge,.grindavik .photo-maisonflash{width:80%}
+.grindavik [data-motion="0"] img{transform:none!important}
+.chapter-distance{margin:clamp(80px,12vw,180px) 12vw;display:grid;grid-template-columns:1.3fr 1fr;gap:7vw;align-items:end}
+.chapter-distance .chapter-statement{margin:0;font-size:clamp(38px,5.5vw,90px)}
+.chapter-distance .chapter-copy{max-width:29ch}
+.chapter-departure{margin:clamp(70px,9vw,140px) auto}
+.chapter-ending{font-family:var(--serif);font-size:clamp(29px,3.6vw,64px);line-height:1.35;letter-spacing:-.025em;margin:clamp(80px,11vw,180px) 10vw 0;text-wrap:pretty}
+.chapter-ending em{color:#aeb8b8}
+/* Only the opening title crosses a photograph; scrolling uncovers the entire frame. */
+.chapter-motion .grindavik-opening{height:185svh;position:relative}
+.chapter-motion .grindavik-sticky{position:sticky;top:0;height:100svh;display:grid;place-items:center;padding:74px 0 35px}
+.chapter-motion .grindavik-heading{position:absolute;inset:0;z-index:3;max-width:none;display:flex;flex-direction:column;justify-content:center;padding:80px 12vw;background:rgba(8,10,11,var(--chapter-veil,1));pointer-events:none}
+.chapter-motion .grindavik-heading>*{opacity:var(--chapter-title,1);transform:translateY(var(--chapter-rise,0px))}
+@media(max-width:700px){
+ .grindavik .photo{width:92%;margin-inline:auto}
+ .grindavik-heading{padding:90px 8vw 60px}.grindavik-heading h2{font-size:clamp(44px,12vw,82px)}
+ .chapter-copy{font-size:17px;line-height:1.8;margin-left:9vw;margin-right:9vw;max-width:none}
+ .chapter-arrival{margin-top:55px;margin-bottom:90px}
+ .chapter-book{display:block;margin:0 9vw}.book-photo{width:100%;margin:0 0 42px}.chapter-book .chapter-copy{margin:0}
+ .chapter-statement{margin:95px 9vw 35px;font-size:clamp(36px,8.5vw,60px)}
+ .chapter-weather{margin-bottom:55px}.chapter-streets .photo-panneau{margin-top:38px}
+ .chapter-passage,.chapter-houses{margin-top:75px;margin-bottom:65px}
+ .chapter-distance{display:block;margin:85px 9vw}.chapter-distance .chapter-statement{font-size:11vw}.chapter-distance .chapter-copy{margin:30px 0 0;max-width:32ch}
+ .chapter-departure{margin-top:65px;margin-bottom:75px}.chapter-ending{font-size:clamp(27px,6.8vw,42px);margin:85px 9vw 0}
+ .chapter-motion .grindavik-sticky{padding-top:64px}.chapter-motion .grindavik-heading{padding-inline:8vw}
+}
+@media(max-height:520px){.chapter-motion .grindavik-heading h2{font-size:clamp(32px,8vh,70px)}.chapter-motion .chapter-label{margin-bottom:16px}.chapter-motion .grindavik-heading>p{margin-top:16px}}
+@media(prefers-reduced-motion:reduce){.chapter-motion .grindavik-opening{height:auto}.chapter-motion .grindavik-sticky{position:static;height:auto;display:block}.chapter-motion .grindavik-heading{position:static;display:block}.chapter-motion .grindavik-heading>*{opacity:1;transform:none}}
+
+/* Paired portraits share a height, with each original frame kept intact. */
+.portrait-pair{--pair-height:min(var(--photo-height),56vw);display:flex;justify-content:center;align-items:flex-start;gap:3vw;width:94%;margin-inline:auto;isolation:isolate}
+.portrait-pair>.photo{flex:0 0 auto;width:calc(var(--pair-height) * var(--photo-ratio));max-width:calc(var(--photo-height) * var(--photo-ratio));margin:0}
+.portrait-pair>.photo figcaption{padding-inline:0}
+.snow-pair{margin-top:2vw;margin-bottom:7vw}
+.visitors-pair{margin-top:5vw;margin-bottom:5vw}
+.new-landscape{padding-inline:3vw;margin:7vw 0}
+.new-landscape>.photo{width:94%;margin-inline:auto}
+.house-landscape{margin-top:0;margin-bottom:10vw}
+.yellow-section{margin-top:0;margin-bottom:8vw}
+.cascade-cluster.portrait-pair{margin-top:0}
+.ice-cluster.portrait-pair{padding-top:9vw;padding-bottom:5vw}
+@media(max-width:700px){
+ .portrait-pair{display:flex;flex-direction:column;align-items:center;gap:28px;width:100%}
+ .portrait-pair>.photo{flex:none;width:88%;max-width:calc(var(--photo-height) * var(--photo-ratio));margin:0}
+ .snow-pair{margin-top:0;margin-bottom:60px}
+ .visitors-pair{margin-block:40px}
+ .new-landscape{padding-inline:2vw;margin-block:55px}
+ .new-landscape>.photo{width:96%}
+ .house-landscape{margin-top:0;margin-bottom:65px}
+ .yellow-section{margin-top:0;margin-bottom:50px}
+ .ice-cluster.portrait-pair{padding-top:55px;padding-bottom:40px}
+}
+
+/* Separate the visit date from the closing words. */
+.grindavik .chapter-date{display:block;text-align:center;margin:clamp(64px,8vw,112px) auto 0;padding:0 24px;line-height:1.6}
+
+.reflection-child-pair{margin-top:5vw;margin-bottom:10vw}
+@media(max-width:700px){.reflection-child-pair{margin-top:24px;margin-bottom:65px}}
+
+.chapter-flash{font-size:clamp(24px,2.5vw,38px);line-height:1.45;letter-spacing:-.015em;max-width:38ch}
+
+/* Geysir: a light, unhurried chapter. Images retain their entire frame. */
+.geysir{--geysir-space:clamp(64px,8vw,120px);background:#e7ebed;color:#293238;margin:clamp(70px,9vw,140px) 0;padding:var(--geysir-space) 5vw;scroll-margin-top:32px}
+.geysir-label{display:block;font-size:10px;line-height:1.6;letter-spacing:.14em;text-transform:uppercase;color:#59656b}
+.geysir-heading{max-width:1000px;margin:0 auto var(--geysir-space);padding-left:5vw}
+.geysir-heading h2{font-family:var(--serif);font-size:clamp(36px,6.2vw,92px);line-height:1.08;letter-spacing:-.045em;margin:28px 0 32px;overflow-wrap:break-word}
+.geysir-intro{max-width:34ch;font-family:var(--serif);font-size:clamp(22px,2.1vw,30px);line-height:1.5;text-wrap:pretty}
+.geysir-copy{width:100%;max-width:45ch;font-size:clamp(16px,1.2vw,19px);line-height:1.85;text-wrap:pretty}
+.geysir-copy p+p{margin-top:1.3em}
+.geysir-arrival{margin:0 7% 48px auto}
+.geysir .photo{width:100%;margin:0 auto}
+.geysir .photo-frame img{transform:none!important}
+.geysir figcaption{color:#59656b;gap:16px}
+.geysir-wide{width:100%;margin:0 auto var(--geysir-space)}
+.geysir-crowd,.geysir-finale{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(40px,7vw,110px);max-width:1120px;width:90%;margin:0 auto var(--geysir-space)}
+.geysir-crowd>.photo,.geysir-finale>.photo{max-width:min(36vw,calc(var(--photo-height) * var(--photo-ratio)))}
+.geysir-expected{width:100%;margin:0 auto var(--geysir-space)}
+.geysir-expected>.geysir-copy{margin:0 auto 48px}
+.geysir-expected>.photo{width:100%;max-width:calc(var(--photo-height) * var(--photo-ratio))}
+.geysir-turn{width:86%;max-width:1120px;margin:0 auto 48px;padding-top:clamp(20px,3vw,45px)}
+.geysir-statement{font-family:var(--serif);font-size:clamp(30px,3.5vw,48px);line-height:1.2;letter-spacing:-.025em;margin-bottom:32px}
+.geysir-turn-copy{max-width:42ch;font-size:clamp(24px,2.5vw,36px);line-height:1.45;letter-spacing:-.015em}
+.geysir-threshold{width:76%;margin:0 0 var(--geysir-space)}
+.geysir-pleasure{margin:0 auto 48px}
+.geysir-pair{--geysir-pair-height:min(var(--photo-height),37vw);display:flex;justify-content:center;gap:3vw;align-items:start;margin:0 auto var(--geysir-space)}
+.geysir-pair>.photo{flex:0 0 auto;width:calc(var(--geysir-pair-height) * var(--photo-ratio));margin:0}
+.geysir-finale{margin-bottom:0}
+.geysir-copy .geysir-ending{font-family:var(--serif);font-size:clamp(24px,2.3vw,32px);line-height:1.45;margin-top:32px}
+.geysir-date{text-align:right;width:90%;max-width:1120px;margin:64px auto 0}
+@media(max-width:700px){
+ .geysir{padding:64px 6vw;margin-block:64px}
+ .geysir-heading{padding-left:0;margin-bottom:48px}
+ .geysir-heading h2{margin-top:22px}
+ .geysir-copy{max-width:45ch}
+ .geysir-arrival{margin:0 auto 36px}
+ .geysir-crowd,.geysir-expected,.geysir-finale{grid-template-columns:minmax(0,1fr);width:100%;gap:36px}
+ .geysir-crowd>.photo,.geysir-finale>.photo{max-width:calc(var(--photo-height) * var(--photo-ratio))}
+ .geysir-expected>.photo{width:100%;max-width:calc(var(--photo-height) * var(--photo-ratio))}
+ .geysir-turn{width:100%;padding-top:0;margin-bottom:36px}
+ .geysir-threshold{width:100%}
+ .geysir-pair{flex-direction:column;align-items:center;gap:28px}
+ .geysir-pair>.photo{width:100%;max-width:calc(var(--photo-height) * var(--photo-ratio))}
+ .geysir-date{width:100%;margin-top:48px}
+}
+
+/* A white opening, with native scrolling and no text over the photographs. */
+.geysir{background:#f2f4f3}
+.geysir-opening{margin-bottom:var(--geysir-space)}
+.geysir-heading{padding-block:clamp(20px,4vw,60px);margin-bottom:48px}
+.geysir-park-reveal .photo-frame{background:#f2f4f3}
+.geysir-park-reveal .photo-frame::after{content:"";position:absolute;inset:0;background:#f2f4f3;opacity:0;pointer-events:none}
+@media(prefers-reduced-motion:no-preference){
+ .chapter-motion .geysir-park-reveal .photo-frame::after{opacity:var(--geysir-white,1)}
+ .chapter-motion .geysir-park-reveal:focus-within .photo-frame::after{opacity:0}
+}
+.geysir-opening>.geysir-arrival{margin:0 auto 40px;max-width:52ch}
+.geysir-expected>.photo{width:calc(100% + 10vw);max-width:none;margin-left:-5vw;margin-right:-5vw}
+.geysir-expected>.photo figcaption{padding-inline:5vw}
+.geysir-source-scene{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:6vw;align-items:center;width:86%;max-width:1100px;margin:0 auto var(--geysir-space)}
+@media(max-width:700px){
+ .geysir-heading{padding-block:12px;margin-bottom:32px}
+ .geysir-source-scene{width:100%;grid-template-columns:minmax(0,1fr);gap:28px}
+ .geysir-source-scene>.photo{width:88%}
+ .geysir-expected>.photo{width:calc(100% + 12vw);margin-left:-6vw;margin-right:-6vw}
+ .geysir-expected>.photo figcaption{padding-inline:6vw}
+}

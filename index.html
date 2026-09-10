@@ -1,1256 +1,637 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
- <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <title>Islande · Entre deux mondes | Projet Photographique de Quentin</title>
- <meta name="description" content="Découvrez 'Entre deux mondes', un projet photographique documentaire sur l'Islande explorant la tension entre nature sauvage et présence humaine. Photos de Valahnúkamöl, Reynisfjara, Jökulsárlón et plus." />
- <meta name="keywords" content="Islande, photographie, voyage, documentaire, paysages, nature, aurores boréales, cascades, Reynisfjara, Jökulsárlón, roadtrip" />
- <meta property="og:title" content="Islande · Entre deux mondes | Projet Photographique" />
- <meta property="og:description" content="Une immersion visuelle dans les paysages bruts de l'Islande, entre nature sauvage et sites touristiques." />
- <meta property="og:image" content="photos/00-cover.jpg" />
- <meta property="og:type" content="website" />
- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
- <link rel="preconnect" href="https://fonts.googleapis.com" />
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
- <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
- <style>
- *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
- :root {
- --black: #111110;
- --dark: #1a1a18;
- --mid: #242422;
- --border: rgba(248,249,250,0.07);
- --muted: #6b6b68;
- --text: #a8a89e;
- --light: #d0d0c8;
- --snow: #F8F9FA;
- --glacier: #A2D2FF;
- --moss: #4B5D16;
- --moss-l: #7a9428;
- }
-
- html { scroll-behavior: smooth; }
- body {
- background: var(--black); color: var(--text);
- font-family: 'DM Sans', sans-serif;
- font-size: 17px; line-height: 1.75;
- overflow-x: hidden;
- }
-
- /* ─── GRAIN ─── */
- body::after {
- content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
- background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
- }
-
- /* ─── NAV ─── */
- nav {
- position: fixed; top: 0; left: 0; right: 0; z-index: 500;
- display: flex; justify-content: space-between; align-items: center;
- padding: 22px 48px;
- backdrop-filter: blur(14px);
- background: rgba(17,17,16,0.7);
- border-bottom: 1px solid var(--border);
- transition: background 0.3s;
- }
- .nav-logo {
- font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px;
- letter-spacing: 0.08em; text-transform: uppercase;
- text-decoration: none; color: var(--glacier);
- }
- .nav-links { display: flex; gap: 32px; list-style: none; }
- .nav-links a {
- font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
- letter-spacing: 0.15em; text-transform: uppercase;
- color: var(--muted); text-decoration: none; transition: color 0.25s;
- }
- .nav-links a:hover { color: var(--snow); }
-
- /* ─── HERO ─── */
- .hero {
- height: 100vh; position: relative;
- display: flex; flex-direction: column;
- justify-content: flex-end; padding: 0 48px 72px;
- overflow: hidden;
- }
-
- /* Placeholder image de fond */
- .hero-bg {
- position: absolute; inset: 0;
- background: linear-gradient(160deg, #1e2018 0%, #131312 40%, #0f1415 100%);
- }
- /* ── COVER : remplacer "photos/00-cover.webp" par ta photo de couverture ── */
- .hero-bg img {
- width: 100%; height: 100%; object-fit: cover; opacity: 0.55;
- }
- .hero-ph-label {
- position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
- font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
- letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
- border: 1px solid var(--border); padding: 10px 20px; border-radius: 100px;
- }
-
- .hero-vignette {
- position: absolute; inset: 0;
- background:
- linear-gradient(to top, rgba(17,17,16,1) 0%, rgba(17,17,16,0.3) 40%, transparent 70%),
- linear-gradient(to right, rgba(17,17,16,0.5) 0%, transparent 50%);
- }
-
- .hero-content { position: relative; z-index: 2; max-width: 700px; }
-
- .hero-eyebrow {
- font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
- letter-spacing: 0.28em; text-transform: uppercase; color: var(--moss-l);
- margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
- }
- .hero-eyebrow::before {
- content: ''; width: 28px; height: 1px;
- background: var(--moss-l);
- }
-
- .hero-title {
- font-family: 'Syne', sans-serif; font-weight: 800;
- font-size: clamp(52px, 8vw, 112px); line-height: 0.88;
- letter-spacing: -0.03em; color: var(--snow); margin-bottom: 20px;
- }
- .hero-title .glacier { color: var(--glacier); }
-
- .hero-desc {
- font-size: clamp(14px, 1.5vw, 17px); font-style: italic; font-weight: 300;
- color: var(--text); max-width: 460px; margin-bottom: 36px; line-height: 1.7;
- }
-
- .hero-meta {
- display: flex; gap: 28px; flex-wrap: wrap;
- }
- .hm {
- font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
- letter-spacing: 0.16em; text-transform: uppercase;
- color: var(--muted); display: flex; flex-direction: column; gap: 3px;
- }
- .hm span { color: var(--light); font-size: 13px; letter-spacing: 0.03em; }
-
- .hero-scroll {
- position: absolute; bottom: 32px; right: 48px; z-index: 2;
- display: flex; flex-direction: column; align-items: center; gap: 8px;
- font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
- letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
- }
- .scroll-line {
- width: 1px; height: 48px;
- background: linear-gradient(to bottom, var(--glacier), transparent);
- animation: pulse 2s ease-in-out infinite;
- }
- @keyframes pulse {
- 0%,100% { opacity: 0.3; transform: scaleY(1); }
- 50% { opacity: 1; transform: scaleY(1.25); }
- }
-
- /* ─── INTRO STRIP ─── */
- .intro-strip {
- display: grid; grid-template-columns: repeat(4,1fr);
- border-top: 1px solid var(--border);
- border-bottom: 1px solid var(--border);
- }
- .intro-strip-item {
- padding: 36px 32px;
- border-right: 1px solid var(--border);
- display: flex; flex-direction: column; gap: 6px;
- }
- .intro-strip-item:last-child { border-right: none; }
- .isn {
- font-family: 'Syne', sans-serif; font-weight: 800;
- font-size: clamp(28px, 3.5vw, 48px); color: var(--snow); line-height: 1;
- }
- .isl {
- font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
- letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
- }
-
- /* ─── SECTION HEADER ─── */
- .sh {
- display: flex; align-items: center; gap: 20px;
- padding: 0 48px; margin-bottom: 0;
- }
- .sl {
- font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
- letter-spacing: 0.28em; text-transform: uppercase; color: var(--glacier);
- white-space: nowrap;
- }
- .sr { flex: 1; height: 1px; background: var(--border); }
-
- /* ─── PROJET TEXT ─── */
- .projet {
- padding: 80px 48px; max-width: 1200px; margin: 0 auto;
- display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
- }
- .projet h2 {
- font-family: 'Syne', sans-serif; font-weight: 800;
- font-size: clamp(26px, 3vw, 42px); line-height: 1.05;
- color: var(--snow); margin-bottom: 20px; letter-spacing: -0.02em;
- }
- .projet h2 span { color: var(--glacier); }
- .projet p { font-size: 16px; color: var(--text); line-height: 1.85; margin-bottom: 14px; }
- .projet-quote {
- padding: 16px 20px; border-left: 2px solid var(--moss-l);
- background: rgba(75,93,22,0.07); border-radius: 0 8px 8px 0;
- font-style: italic; color: var(--light); font-size: 15px;
- margin-top: 24px;
- }
- .projet-right {
- display: flex; flex-direction: column; gap: 0;
- border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
- }
- .region-row {
- display: flex; align-items: center; gap: 20px;
- padding: 18px 24px; border-bottom: 1px solid var(--border);
- transition: background 0.2s;
- }
- .region-row:last-child { border-bottom: none; }
- .region-row:hover { background: rgba(162,210,255,0.03); }
- .rn {
- font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px;
- color: var(--glacier); min-width: 52px; line-height: 1;
- }
- .ri { display: flex; flex-direction: column; gap: 2px; }
- .ri-name {
- font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--light);
- }
- .ri-sub {
- font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
- letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
- }
-
- /* ─────────────────────────────────────────
- GALERIE PLEIN ÉCRAN
- ───────────────────────────────────────── */
- .gallery-section {
- padding: 80px 0 0;
- }
- .gallery-header {
- padding: 0 48px 48px;
- display: flex; align-items: flex-end; justify-content: space-between;
- }
- .gallery-header-left h2 {
- font-family: 'Syne', sans-serif; font-weight: 800;
- font-size: clamp(28px, 4vw, 52px); line-height: 1;
- letter-spacing: -0.02em; color: var(--snow); margin-top: 16px;
- }
- .gallery-header-left h2 span { color: var(--glacier); }
- .gallery-count {
- font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
- letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
- }
- .gallery-intro {
-   padding: 0 48px 40px;
-   max-width: 580px;
- }
- .gallery-intro p {
-   font-family: 'DM Sans', sans-serif;
-   font-style: italic;
-   font-weight: 300;
-   font-size: clamp(14px, 1.1vw, 16px);
-   line-height: 1.8;
-   color: var(--light);
-   border-left: 1px solid var(--border);
-   padding-left: 20px;
-   margin: 0;
- }
-
- /* Viewer plein écran */
- .gallery-viewer {
- position: relative;
- width: 100%; height: 90vh;
- background: var(--dark);
- overflow: hidden;
- cursor: crosshair;
- }
-
- /* Slides */
- .slide {
- position: absolute; inset: 0;
- display: flex; align-items: center; justify-content: center;
- opacity: 0; transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
- transform: scale(1.05);
- pointer-events: none;
- }
- .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
- .slide.prev { opacity: 0; }
-
- /* Photo placeholder — portrait ou paysage selon ratio */
- .slide-photo {
- position: absolute; inset: 0;
- display: flex; align-items: center; justify-content: center;
- }
-
- /* Paysage : plein écran */
- .slide.landscape .slide-photo-inner {
- width: 100%; height: 100%;
- background: var(--mid);
- display: flex; align-items: center; justify-content: center;
- }
- /* Portrait : centré avec marges latérales */
- .slide.portrait .slide-photo-inner {
- height: min(90vh, 90vw);
- aspect-ratio: 2/3;
- max-width: 60%;
- background: var(--mid);
- display: flex; align-items: center; justify-content: center;
- }
- /* Carré */
- .slide.square .slide-photo-inner {
- height: min(85vh, 70vw);
- aspect-ratio: 1/1;
- max-width: 70%;
- background: var(--mid);
- display: flex; align-items: center; justify-content: center;
- }
-
- .slide-photo-inner {
- position: relative; overflow: hidden;
- box-shadow: 0 32px 80px rgba(0,0,0,0.6);
- }
- /* Images réelles dans les slides */
- .slide-photo-inner > img {
- width: 100%; height: 100%; object-fit: cover; display: block;
- }
-
- /* Overlay interne */
- .slide-photo-inner::before {
- content: ''; position: absolute; inset: 0;
- background: linear-gradient(160deg, rgba(162,210,255,0.04), transparent 50%, rgba(75,93,22,0.05));
- }
-
- /* Placeholder visuel */
- .ph-inner {
- position: absolute; inset: 0;
- display: flex; flex-direction: column;
- align-items: center; justify-content: center; gap: 12px;
- }
- .ph-inner svg { opacity: 0.15; }
- .ph-inner-lbl {
- font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
- letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
- }
-
- /* Caption */
- .slide-caption {
- position: absolute; bottom: 0; left: 0; right: 0;
- padding: 60px 64px 40px;
- background: linear-gradient(to top, rgba(17,17,16,0.85) 0%, transparent 100%);
- display: flex; align-items: flex-end; justify-content: space-between;
- z-index: 2;
- }
- .caption-left { display: flex; flex-direction: column; gap: 6px; }
- .caption-spot {
- font-family: 'Syne', sans-serif; font-weight: 800;
- font-size: clamp(18px, 2.5vw, 28px); color: var(--snow); line-height: 1;
- }
- .caption-day {
- font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
- letter-spacing: 0.2em; text-transform: uppercase; color: var(--glacier);
- }
- .caption-note {
- font-size: 14px; font-style: italic; color: var(--text); max-width: 380px; margin-top: 4px;
- }
- .caption-right {
- font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
- letter-spacing: 0.12em; color: var(--muted); text-align: right;
- }
- .caption-index {
- font-size: 32px; font-weight: 800; color: var(--snow); display: block;
- line-height: 1;
- }
-
- /* Navigation flèches */
- .gallery-nav {
- position: absolute; top: 0; left: 0; right: 0; bottom: 0;
- display: flex; justify-content: space-between; pointer-events: none; z-index: 3;
- }
- .gallery-nav-zone {
- flex: 1; pointer-events: all; cursor: none;
- display: flex; align-items: center;
- }
- .nav-arrow {
- width: 48px; height: 48px; border-radius: 50%;
- border: 1px solid rgba(248,249,250,0.12);
- background: rgba(17,17,16,0.5); backdrop-filter: blur(8px);
- display: flex; align-items: center; justify-content: center;
- transition: all 0.2s; opacity: 0;
- margin: 0 28px;
- }
- .gallery-nav-zone:hover .nav-arrow { opacity: 1; }
- .nav-arrow svg { color: var(--snow); }
- .nav-right { justify-content: flex-end; }
- .gallery-nav-zone,
- .thumb {
- appearance: none;
- -webkit-appearance: none;
- background: transparent;
- border: 0;
- padding: 0;
- }
- .gallery-nav-zone:focus-visible .nav-arrow,
- .thumb:focus-visible {
- opacity: 1;
- outline: 2px solid var(--glacier);
- outline-offset: 3px;
- }
-
- /* Curseur custom */
- .cursor {
- position: fixed; width: 40px; height: 40px;
- border-radius: 50%; pointer-events: none; z-index: 10000;
- transform: translate(-50%,-50%);
- border: 1px solid rgba(162,210,255,0.5);
- transition: width 0.2s, height 0.2s, opacity 0.2s, background 0.2s;
- mix-blend-mode: normal;
- }
- .cursor.on-left { width: 56px; height: 56px; background: rgba(162,210,255,0.08); }
- .cursor.on-right { width: 56px; height: 56px; background: rgba(162,210,255,0.08); }
- .cursor-dot {
- position: fixed; width: 5px; height: 5px; border-radius: 50%;
- background: var(--glacier); pointer-events: none; z-index: 10001;
- transform: translate(-50%,-50%);
- }
-
- /* Progress bar */
- .gallery-progress {
- height: 2px; background: var(--border); position: relative; overflow: hidden;
- }
- .gallery-progress-fill {
- height: 100%; background: linear-gradient(90deg, var(--moss-l), var(--glacier));
- transition: width 0.6s cubic-bezier(.4,0,.2,1);
- }
-
- /* Thumbnails strip */
- .thumbs-strip {
- padding: 20px 48px; display: flex; gap: 8px; overflow-x: auto;
- scrollbar-width: none; background: var(--dark);
- border-bottom: 1px solid var(--border);
- }
- .thumbs-strip::-webkit-scrollbar { display: none; }
- .thumb {
- width: 72px; height: 48px; flex-shrink: 0;
- background: var(--mid); border-radius: 3px;
- border: 1px solid var(--border);
- cursor: pointer; transition: all 0.2s; opacity: 0.4;
- display: flex; align-items: center; justify-content: center;
- font-family: 'Syne', sans-serif; font-size: 7px; font-weight: 600;
- letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
- }
- .thumb.active { opacity: 1; border-color: var(--glacier); }
- .thumb:hover { opacity: 0.8; }
- /* Thumb portrait */
- .thumb.portrait { width: 32px; height: 48px; }
- .thumb.square { width: 48px; height: 48px; }
-
- /* ─── TIMELINE ─── */
- .timeline-section { padding: 96px 48px; max-width: 1200px; margin: 0 auto; }
- .timeline { display: flex; flex-direction: column; }
- .tl-item {
- display: grid; grid-template-columns: 88px 1fr; gap: 0 28px;
- opacity: 0; transform: translateX(-16px);
- transition: opacity 0.5s ease, transform 0.5s ease;
- }
- .tl-item.vis { opacity: 1; transform: translateX(0); }
- .tl-left { display: flex; flex-direction: column; align-items: center; padding-top: 3px; }
- .tl-day {
- font-family: 'Syne', sans-serif; font-weight: 800; font-size: 11px;
- letter-spacing: 0.1em; color: var(--glacier); margin-bottom: 8px;
- }
- .tl-dot {
- width: 9px; height: 9px; border-radius: 50%;
- background: var(--glacier); box-shadow: 0 0 10px rgba(162,210,255,0.4); flex-shrink: 0;
- }
- .tl-line { width: 1px; flex: 1; min-height: 16px;
- background: linear-gradient(to bottom, rgba(162,210,255,0.2), transparent); }
- .tl-last .tl-line { display: none; }
- .tl-content { padding-bottom: 32px; }
- .tl-region {
- font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
- color: var(--snow); margin-bottom: 3px;
- }
- .tl-spots { font-size: 14px; color: var(--text); line-height: 1.65; }
- .tl-hi { color: var(--glacier); font-weight: 500; }
-
- /* ─── GRANDE CITATION ─── */
- .bq {
- padding: 110px 48px; text-align: center; position: relative; overflow: hidden;
- border-top: 1px solid var(--border);
- }
- .bq-blob {
- position: absolute; width: 600px; height: 600px; border-radius: 50%;
- filter: blur(120px); top: 50%; left: 50%; transform: translate(-50%,-50%);
- background: radial-gradient(circle, rgba(162,210,255,0.06), rgba(75,93,22,0.05) 50%, transparent 70%);
- pointer-events: none;
- }
- .bq-inner { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; }
- .bq-deco {
- font-family: 'Syne', sans-serif; font-weight: 800; font-size: 140px; line-height: 0.55;
- color: var(--glacier); opacity: 0.08; display: block; margin-bottom: -8px;
- }
- .bq-text {
- font-size: clamp(20px, 3vw, 34px); font-weight: 300; font-style: italic;
- color: var(--snow); line-height: 1.45;
- }
- .bq-attr {
- margin-top: 28px; font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
- letter-spacing: 0.25em; text-transform: uppercase; color: var(--moss-l);
- }
-
- /* ─── CONTACT ─── */
- .contact {
- padding: 96px 48px; border-top: 1px solid var(--border);
- max-width: 1200px; margin: 0 auto;
- display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
- }
- .contact h2 {
- font-family: 'Syne', sans-serif; font-weight: 800;
- font-size: clamp(26px, 3.2vw, 44px); line-height: 1.05;
- letter-spacing: -0.02em; color: var(--snow); margin-bottom: 16px;
- }
- .contact h2 span { color: var(--glacier); }
- .contact p { font-size: 16px; color: var(--text); line-height: 1.8; }
- .ccard {
- background: linear-gradient(135deg, rgba(248,249,250,0.03), rgba(248,249,250,0.01));
- border: 1px solid var(--border); border-radius: 16px; padding: 36px;
- display: flex; flex-direction: column; gap: 24px;
- box-shadow: 0 8px 60px rgba(0,0,0,0.4); position: relative; overflow: hidden;
- }
- .ccard::before {
- content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
- background: linear-gradient(90deg, transparent, var(--glacier), var(--moss-l), transparent);
- opacity: 0.35;
- }
- .crow { display: flex; flex-direction: column; gap: 3px; }
- .clbl {
- font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
- letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
- }
- .cval { font-size: 15px; color: var(--light); }
-
- /* ─── FOOTER ─── */
- footer {
- padding: 32px 48px; border-top: 1px solid var(--border);
- display: flex; justify-content: space-between; align-items: center;
- }
- .fl {
- font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
- letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
- }
- .fr { font-size: 13px; font-style: italic; color: var(--muted); }
-
- /* ─── ENTRY ANIM ─── */
- .hero-eyebrow { animation: up 1s ease 0.3s both; }
- .hero-title { animation: up 1s ease 0.5s both; }
- .hero-desc { animation: up 1s ease 0.7s both; }
- .hero-meta { animation: up 1s ease 0.9s both; }
- .hero-scroll { animation: up 1s ease 1.1s both; }
- @keyframes up {
- from { opacity: 0; transform: translateY(24px); }
- to { opacity: 1; transform: translateY(0); }
- }
-
- /* ─── RESPONSIVE ─── */
- @media (max-width: 900px) {
- nav { padding: 16px 20px; }
- .hero { padding: 0 20px 60px; }
- .intro-strip { grid-template-columns: 1fr 1fr; }
- .projet { grid-template-columns: 1fr; padding: 60px 20px; gap: 48px; }
- .gallery-header { padding: 0 20px 32px; }
- .slide-caption { padding: 40px 20px 28px; }
- .thumbs-strip { padding: 16px 20px; }
- .timeline-section { padding: 72px 20px; }
- .bq, .contact, footer { padding-left: 20px; padding-right: 20px; }
- .contact { grid-template-columns: 1fr; gap: 40px; }
- footer { flex-direction: column; gap: 8px; text-align: center; }
- }
- 
-    /* ── STACKING ── */
-    .slide { isolation: isolate; }
-    .slide-photo { z-index: 1; }
-    .slide-caption { z-index: 4 !important; pointer-events: none; }
-
-    /* ── PORTRAIT ── */
-    .slide.portrait .slide-photo-inner { height: 100%; width: auto; aspect-ratio: 3/4; flex-shrink: 0; overflow: hidden; }
-    .slide.portrait .slide-photo-inner > img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    /* ── BACKDROP ── */
-    .slide-backdrop { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; filter: blur(28px) brightness(0.2) saturate(0.6); transform: scale(1.08); pointer-events: none; }
-
-    /* ── DIPTYQUE ── */
-    .slide.diptych .slide-photo { gap: 3px; }
-    .slide.diptych .slide-photo-inner { height: 100%; width: calc(50% - 2px); flex-shrink: 0; overflow: hidden; position: relative; box-shadow: none; }
-    .slide.diptych .slide-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .diptych-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(248,249,250,0.06); z-index: 1; }
-    .diptych-label { font-family: 'Syne', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; position: absolute; top: 16px; padding: 5px 10px; border-radius: 100px; z-index: 2; }
-    .diptych-label.nature { left: 16px; color: var(--moss-l); border: 1px solid rgba(122,148,40,0.3); background: rgba(75,93,22,0.15); }
-    .diptych-label.human  { right: 16px; color: var(--glacier); border: 1px solid rgba(162,210,255,0.3); background: rgba(162,210,255,0.08); }
-    @media (max-width: 700px) {
-      .slide.diptych .slide-photo { flex-direction: column; gap: 2px; }
-      .slide.diptych .slide-photo-inner { width: 100%; height: calc(50% - 1px); }
-      .diptych-divider { display: none; }
-      /* Portrait mobile : limiter la hauteur pour ne pas dépasser l'écran */
-      .slide.portrait .slide-photo-inner {
-        height: 80vh;
-        width: auto;
-        max-width: 92vw;
-        aspect-ratio: auto;
-      }
-      .slide.portrait .slide-photo-inner > img {
-        height: 100%;
-        width: auto;
-        max-width: 100%;
-        object-fit: contain;
-      }
-    }
-
-    /* ── NAV ── */
-    .gallery-nav-zone { width: 80px; flex: none; pointer-events: all; cursor: pointer; display: flex; align-items: center; }
-    .gallery-nav-zone.nav-left  { justify-content: flex-start; padding-left: 16px; }
-    .gallery-nav-zone.nav-right { justify-content: flex-end; padding-right: 16px; }
-    .nav-arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(248,249,250,0.15); background: rgba(17,17,16,0.65); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; transition: all 0.2s; opacity: 0.7; flex-shrink: 0; }
-    .nav-arrow:hover { opacity: 1; background: rgba(17,17,16,0.9); }
-
-    /* ── IMAGES CLIQUABLES ── */
-    .slide .slide-photo-inner img { position: relative; z-index: 10; cursor: zoom-in; }
-    .slide .slide-photo-inner img:focus-visible {
-      outline: 2px solid var(--glacier);
-      outline-offset: 4px;
-    }
-
-    /* ── THUMBS avec photo ── */
-    .thumb { background-size: cover !important; background-position: center !important; }
-
-    /* ── LIGHTBOX ── */
-    .lightbox { position: fixed; inset: 0; z-index: 9000; background: rgba(5,5,7,0.97); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; cursor: zoom-out; }
-    .lightbox.open { opacity: 1; pointer-events: all; }
-    .lightbox img { max-width: 95vw; max-height: 95vh; object-fit: contain; display: block; box-shadow: 0 40px 120px rgba(0,0,0,0.8); transform: scale(0.96); transition: transform 0.3s ease; }
-    .lightbox.open img { transform: scale(1); }
-    .lightbox-close { position: absolute; top: 24px; right: 28px; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); cursor: pointer; background: none; border: none; padding: 8px; transition: color 0.2s; }
-    .lightbox-close:hover { color: var(--snow); }
-    .lightbox-close:focus-visible { outline: 2px solid var(--glacier); outline-offset: 4px; }
-    .lightbox-caption { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-
-    /* ── MAP ── */
-    .map-section { padding: 80px 48px; border-top: 1px solid var(--border); }
-    #map { height: 500px; width: 100%; border-radius: 16px; border: 1px solid var(--border); }
-    .leaflet-container { background: var(--black) !important; }
-    .leaflet-tile-pane {
-      filter: grayscale(1) invert(1) contrast(0.9) brightness(0.8);
-    }
-
-    .map-legend {
-      position: absolute; bottom: 20px; left: 20px; z-index: 1000;
-      background: rgba(17,17,16,0.85); padding: 12px 16px; border-radius: 12px;
-      border: 1px solid var(--border); backdrop-filter: blur(8px);
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .legend-item { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.05em; }
-    .legend-color { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); }
-
-    /* ── MOBILE : viewer + portraits plein écran ── */
-    @media (max-width: 900px) {
-      .gallery-section { padding-top: 0 !important; }
-      .gallery-header { padding-bottom: 16px; }
-      .gallery-viewer { height: calc(100vh - 120px); }
-      .slide.portrait .slide-photo-inner {
-        width: 100% !important;
-        height: 100% !important;
-        aspect-ratio: unset !important;
-        max-width: none !important;
-        flex-shrink: 1;
-      }
-    }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eae8df">
+  <title>Islande — Entre deux mondes · Quentin Brache</title>
+  <meta name="description" content="Photographies de Quentin Brache. L’Islande, le désir d’une image et le regard qui reste après le voyage.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Islande — Entre deux mondes · Quentin Brache">
+  <meta property="og:description" content="La puissance des lieux, notre présence et le désir d’en faire une image. Un parcours photographique de Quentin Brache.">
+  <meta property="og:url" content="https://quentinbrch17.github.io/islande/">
+  <meta property="og:image" content="https://quentinbrch17.github.io/islande/photos/falaise-1800-v2.webp">
+  <meta property="og:image:alt" content="La côte islandaise photographiée par Quentin Brache.">
+  <link rel="stylesheet" href="style.css?v=23">
+  <script src="app.js?v=22" defer></script>
 </head>
-<body>
-
- <!-- CURSEUR -->
- <div class="cursor" id="cursor"></div>
- <div class="cursor-dot" id="cursorDot"></div>
-
- <!-- NAV -->
- <nav>
- <a href="#" class="nav-logo">Q. · Islande MMXXVI</a>
- <ul class="nav-links">
-      <li><a href="#galerie">Galerie</a></li>
-      <li><a href="#parcours">Parcours</a></li>
-      <li><a href="#habitee">L'île habitée</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
- </nav>
-
- <!-- HERO -->
- <section class="hero">
- <div class="hero-bg">
- <!-- ── COVER : remplace 00-cover.jpg par ton fichier ── -->
- <img src="photos/00-cover.webp" alt="Paysage spectaculaire d'Islande au lever du soleil - Photo de couverture du projet Entre deux mondes">
- </div>
- <div class="hero-vignette"></div>
- <div class="hero-content">
- <div class="hero-eyebrow">Projet photographique · Mars 2026</div>
- <h1 class="hero-title">Entre<br><span class="glacier">deux</span><br>mondes</h1>
- <p class="hero-desc">Islande, là où la nature brute et la présence humaine se regardent sans se comprendre.</p>
- </div>
- </div>
- <div class="hero-scroll"><div class="scroll-line"></div>Défiler</div>
- </section>
-
- <!-- STATS STRIP -->
-  <div class="intro-strip">
-    <div class="intro-strip-item"><div class="isn">11</div><div class="isl">Jours</div></div>
-    <div class="intro-strip-item"><div class="isn">3 000+</div><div class="isl">Photographies</div></div>
-    <div class="intro-strip-item"><div class="isn">47</div><div class="isl">Lieux</div></div>
-    <div class="intro-strip-item"><div class="isn">2 500 km</div><div class="isl">Kilomètres</div></div>
-  </div>
-
-  <!-- PROJET -->
- <section class="projet">
- <div>
- <h2>Un territoire qui <span>résiste</span></h2>
- <p>L'Islande est devenue l'une des destinations les plus photographiées au monde. Et pourtant quelque chose résiste. Dans les fissures entre les parkings bondés et les plages de sable noir, il reste une nature qui ne pose pas.</p>
- <p>Ce projet documente cette tension. Non pour la déplorer, mais pour la regarder en face. La question est de savoir ce qu'il reste quand les bus repartent.</p>
- <div class="projet-quote">« L'Islande ne se laisse pas photographier. Elle se laisse traverser. » · Carnet de route, Mars 2026.</div>
- </div>
- <div class="projet-right">
- <div class="region-row"><div class="rn">J1–2</div><div class="ri"><div class="ri-name">Péninsule de Reykjanes</div><div class="ri-sub">Grindavík · Valahnúkamöl · Gunnuhver</div></div></div>
- <div class="region-row"><div class="rn">J3</div><div class="ri"><div class="ri-name">Cercle d'Or</div><div class="ri-sub">Þingvellir · Geysir · Gullfoss</div></div></div>
- <div class="region-row"><div class="rn">J4–6</div><div class="ri"><div class="ri-name">Côte Sud & Vík</div><div class="ri-sub">DC-3 · Dyrhólaey · Reynisfjara</div></div></div>
- <div class="region-row"><div class="rn">J7–8</div><div class="ri"><div class="ri-name">Fjords de l'Est</div><div class="ri-sub">Jökulsárlón · Hengifoss · Aurores</div></div></div>
- <div class="region-row"><div class="rn">J9–11</div><div class="ri"><div class="ri-name">Glaciers & Épilogue</div><div class="ri-sub">Svartifoss · Kvernufoss · Bruarfoss · Kleifarvatn</div></div></div>
- </div>
- </section>
-
- <!-- ═══════════ GALERIE ═══════════ -->
- <section class="gallery-section" id="galerie">
- <div class="gallery-header">
- <div class="gallery-header-left">
- <div class="sl">Galerie</div>
- <h2><span>Une sélection</span> · 11 jours</h2>
- </div>
- <div class="gallery-count" id="galleryCount">01 / 25</div>
- </div>
- <div class="gallery-intro">
-   <p>11 jours de route. Des paysages islandais dans ce qu'ils ont de brut, et les humains qui s'y croisent. Les deux font partie du sujet.</p>
- </div>
-
- <!-- VIEWER -->
- <div class="gallery-viewer" id="viewer" tabindex="0" role="region" aria-label="Galerie principale, navigation avec les flèches gauche et droite">
-
-  <div class="slide landscape active" data-index="0">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img src="photos/01b-valahnukamol-solo.webp" alt="Silhouette solitaire d'un voyageur face aux falaises de Valahnúkamöl en Islande"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 2 · Péninsule de Reykjanes</div><div class="caption-spot">Le bord du monde</div></div><div class="caption-right"><span class="caption-index">02</span>Paysage</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="2">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/01c-valahnukamol-couple.webp" alt="Couple contemplant l'océan Atlantique déchaîné à Valahnúkamöl, péninsule de Reykjanes"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 2 · Valahnúkamöl</div><div class="caption-spot">Au-delà du panneau danger</div></div><div class="caption-right"><span class="caption-index">03</span>Paysage</div></div>
-  </div>
-
-  <div class="slide diptych" data-index="3">
-    <div class="slide-photo">
-      <div class="slide-photo-inner"><span class="diptych-label nature">Nature</span><img loading="lazy" src="photos/02a-seljalandsfoss-nature.webp" alt="Vue rapprochée de la chute d'eau brute de Seljalandsfoss"></div>
-      <div class="slide-photo-inner"><span class="diptych-label human">Présence</span><img loading="lazy" src="photos/02b-seljalandsfoss-human.webp" alt="Touriste minuscule face à l'immensité de la cascade Seljalandsfoss"></div>
-      <div class="diptych-divider"></div>
-    </div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Seljalandsfoss</div><div class="caption-spot">Présences dans la bruine</div></div><div class="caption-right"><span class="caption-index">04</span>Diptyque</div></div>
-  </div>
-
-  <div class="slide diptych" data-index="4">
-    <div class="slide-photo">
-      <div class="slide-photo-inner"><span class="diptych-label nature">Nature</span><img loading="lazy" src="photos/02c-gljufrabui-nature.webp" alt="Cascade cachée de Gljúfrabúi à l'intérieur d'une grotte rocheuse"></div>
-      <div class="slide-photo-inner"><span class="diptych-label human">Présence</span><img loading="lazy" src="photos/02d-gljufrabui-human.webp" alt="Exploration photographe de la cascade secrète de Gljúfrabúi"></div>
-      <div class="diptych-divider"></div>
-    </div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Gljúfrabúi</div><div class="caption-spot">La fissure secrète</div></div><div class="caption-right"><span class="caption-index">05</span>Diptyque</div></div>
-  </div>
-
-  <div class="slide portrait" data-index="5">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/00b-skogafoss.webp" alt="Puissante chute d'eau de Skógafoss sous un ciel dramatique en Islande"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Skógafoss</div><div class="caption-spot">Couleurs en cascade</div></div><div class="caption-right"><span class="caption-index">06</span>Portrait</div></div>
-  </div>
-
-
-  <div class="slide portrait" data-index="5b">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/reflet-cote-sud.webp" alt="Silhouette d'un marcheur se reflétant dans un lac au pied d'une montagne pyramidale sur la côte sud islandaise"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Côte Sud</div><div class="caption-spot">Le double</div></div><div class="caption-right"><span class="caption-index">07</span>Portrait</div></div>
-  </div>
-  <div class="slide landscape" data-index="6">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/03-reynisfjara-lever.jpg" alt="Plage de sable noir de Reynisfjara au lever du soleil avec ses colonnes de basalte iconiques"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 5 · Vík</div><div class="caption-spot">Le réveil du basalte</div></div><div class="caption-right"><span class="caption-index">08</span>Paysage</div></div>
-  </div>
-
-  <div class="slide diptych" data-index="6b">
-    <div class="slide-photo">
-      <div class="slide-photo-inner"><span class="diptych-label nature">Nature</span><img loading="lazy" src="photos/03-reynisfjara-lever.jpg" alt="Plage de sable noir de Reynisfjara au lever du soleil avec ses colonnes de basalte iconiques"></div>
-      <div class="slide-photo-inner"><span class="diptych-label human">Présence</span><img loading="lazy" src="photos/L'etrangere.webp" alt="Silhouette d'une femme face aux aiguilles de Vík sur la plage de sable noir de Reynisfjara au coucher du soleil"></div>
-      <div class="diptych-divider"></div>
-    </div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 5 · Reynisfjara</div><div class="caption-spot">L'étrangère</div></div><div class="caption-right"><span class="caption-index">09</span>Diptyque</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="6c">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/Coucher de soleil.webp" alt="Coucher de soleil sur la plage de sable noir de Reynisfjara avec les aiguilles de Vík dans la brume et des silhouettes de touristes"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 5 · Reynisfjara</div><div class="caption-spot">Avant la nuit</div></div><div class="caption-right"><span class="caption-index">10</span>Paysage</div></div>
-  </div>
-
-  <div class="slide portrait" data-index="7">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/04-dc3-wreck.webp" alt="Épave de l'avion DC-3 abandonné sur la plage de sable noir de Sólheimasandur"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Le dernier vol</div></div><div class="caption-right"><span class="caption-index">11</span>Portrait</div></div>
-  </div>
-
-
-  <div class="slide portrait" data-index="7c">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/04e-pas-concernés.webp" alt="Deux touristes consultatn leur téléphone devant l’épave du DC-3 couverte de graffitis à Sólheimasandur"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Hors cadre</div></div><div class="caption-right"><span class="caption-index">12</span>Portrait</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="7d">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/04d-introspection.webp" alt="Silhouette seule face au désert noir de Sólheimasandur dans une scène de contemplation"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Introspection</div></div><div class="caption-right"><span class="caption-index">13</span>Paysage</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="8">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/05-gullfoss.jpg" alt="La majestueuse cascade de Gullfoss, la chute dorée du Cercle d'Or"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 3 · Cercle d'Or</div><div class="caption-spot">La colère dorée</div></div><div class="caption-right"><span class="caption-index">14</span>Paysage</div></div>
-  </div>
-
-  <div class="slide square" data-index="9">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/06-jokulsarlon.jpg" alt="Icebergs bleutés flottant sur le lagon glaciaire de Jökulsárlón"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 6 · Vatnajökull</div><div class="caption-spot">La dérive bleue</div></div><div class="caption-right"><span class="caption-index">15</span>Carré</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="10">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/07-diamond-beach.jpg" alt="Blocs de glace translucides comme des diamants sur le sable noir de Diamond Beach"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 6 · Vatnajökull</div><div class="caption-spot">Les éclats du froid</div></div><div class="caption-right"><span class="caption-index">16</span>Paysage</div></div>
-  </div>
-
-  <div class="slide portrait" data-index="11">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/08-hengifoss.jpg" alt="Cascade de Hengifoss avec ses couches de basalte et d'argile rouge"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 8 · Fjords de l'Est</div><div class="caption-spot">La cicatrice rouge</div></div><div class="caption-right"><span class="caption-index">17</span>Portrait</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="12">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/09-aurores-djupivogur.jpg" alt="Aurores boréales vertes dansant au-dessus de Djúpivogur en Islande"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 8 · Djúpivogur</div><div class="caption-spot">Le ciel prend feu</div></div><div class="caption-right"><span class="caption-index">18</span>Longue expo</div></div>
-  </div>
-
-  <div class="slide portrait" data-index="13">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/10-svartifoss.jpg" alt="Svartifoss, la cascade noire entourée de colonnes de basalte hexagonales"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 9 · Skaftafell</div><div class="caption-spot">La nef noire</div></div><div class="caption-right"><span class="caption-index">19</span>Portrait · Longue expo</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="14">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/11-fjallarlon.jpg" alt="Vue panoramique sur le lagon glaciaire de Fjallsárlón et le glacier en arrière-plan"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 9 · Vatnajökull</div><div class="caption-spot">Le silence du glacier</div></div><div class="caption-right"><span class="caption-index">20</span>Paysage</div></div>
-  </div>
-
-  <div class="slide portrait" data-index="15">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/12-kvernufoss.jpg" alt="Cascade de Kvernufoss cachée dans un canyon verdoyant sur la côte sud"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 10 · Côte Sud</div><div class="caption-spot">Derrière le rideau</div></div><div class="caption-right"><span class="caption-index">21</span>Portrait · Longue expo</div></div>
-  </div>
-
-  <div class="slide square" data-index="16">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/13-solheimajokull.jpg" alt="Langue glaciaire de Sólheimajökull avec ses reflets bleus et noirs"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 10 · Côte Sud</div><div class="caption-spot">La bouche de glace</div></div><div class="caption-right"><span class="caption-index">22</span>Carré</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="17">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/14-dyrhólaey.jpg" alt="Arche naturelle de Dyrhólaey surplombant l'océan Atlantique"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Dyrhólaey</div><div class="caption-spot">Le promontoire des tempêtes</div></div><div class="caption-right"><span class="caption-index">23</span>Paysage</div></div>
-  </div>
-
-
-  <div class="slide portrait" data-index="17b">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/phare.webp" alt="Phare de Dyrhólaey avec son dôme rouge vif se détachant sur un ciel de tempête en Islande"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Dyrhólaey</div><div class="caption-spot">Le veilleur rouge</div></div><div class="caption-right"><span class="caption-index">24</span>Portrait</div></div>
-  </div>
-
-  <div class="slide portrait" data-index="17c">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/la ligne noire.webp" alt="Vue plongeante depuis Dyrhólaey sur la plage de sable noir qui s'étend à l'infini vers le nord"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Dyrhólaey</div><div class="caption-spot">La ligne noire</div></div><div class="caption-right"><span class="caption-index">25</span>Portrait</div></div>
-  </div>
-  <div class="slide portrait" data-index="18">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/15-seydisfjordur.jpg" alt="Village coloré de Seyðisfjörður dans les fjords de l'Est islandais"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 8 · Fjords de l'Est</div><div class="caption-spot">Le village au bout du fjord</div></div><div class="caption-right"><span class="caption-index">26</span>Portrait</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="19">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/16-bruarfoss.jpg" alt="Eaux bleu turquoise intense de la cascade Bruarfoss, la perle bleue d'Islande"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 11 · Épilogue</div><div class="caption-spot">L'eau impossible</div></div><div class="caption-right"><span class="caption-index">27</span>Paysage</div></div>
-  </div>
-
-  <div class="slide landscape" data-index="20">
-    <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/17-kleifarvatn.jpg" alt="Paysage austère et volcanique des rives du lac Kleifarvatn"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 11 · Épilogue</div><div class="caption-spot">Les rives du vide</div></div><div class="caption-right"><span class="caption-index">28</span>Paysage</div></div>
-  </div>
-
-  <div class="slide square" data-index="21">
-    <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/18-eldhraun.jpg" alt="Champ de lave d'Eldhraun recouvert d'une mousse verte épaisse et fragile"></div></div>
-    <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 6 · Côte Sud-Est</div><div class="caption-spot">La mousse sur la lave</div></div><div class="caption-right"><span class="caption-index">29</span>Carré</div></div>
-  </div>
-
-  <!-- Zones de nav -->
-  <div class="gallery-nav">
-   <button class="gallery-nav-zone nav-left" id="navLeft" type="button" aria-label="Image precedente"><div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div></button>
-   <button class="gallery-nav-zone nav-right" id="navRight" type="button" aria-label="Image suivante"><div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div></button>
-  </div>
- </div>
-
-    <!-- Progress -->
- <div class="gallery-progress">
- <div class="gallery-progress-fill" id="progressFill" style="width: 3.4%"></div>
- </div>
-
- <!-- Thumbnails -->
- <div class="thumbs-strip" id="thumbsStrip"></div>
- </section>
-
- <!-- TIMELINE -->
- <section class="timeline-section" id="parcours">
- <div class="sh" style="padding:0; margin-bottom:48px;"><span class="sl">Parcours jour par jour</span><div class="sr"></div></div>
- <div class="timeline">
- <div class="tl-item"><div class="tl-left"><div class="tl-day">J1–2</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Reykjanes · Grindavík → Hveragerði</div><div class="tl-spots">Gunnuhver · Reykjanesviti · <span class="tl-hi">Valahnúkamöl </span> · Brimketill · Fagradalsfjall</div></div></div>
- <div class="tl-item"><div class="tl-left"><div class="tl-day">J3</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Cercle d'Or · Hveragerði → Hvolsvöllur</div><div class="tl-spots">Þingvellir · Geysir · <span class="tl-hi">Gullfoss </span></div></div></div>
- <div class="tl-item"><div class="tl-left"><div class="tl-day">J4</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Côte Sud · Hvolsvöllur → Vík</div><div class="tl-spots">Seljalandsfoss · Gljúfrabúi · Skógafoss · DC-3 Wreck · <span class="tl-hi">Dyrhólaey </span> · <span class="tl-hi">Reynisfjara </span></div></div></div>
- <div class="tl-item"><div class="tl-left"><div class="tl-day">J5</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Vík · Pause</div><div class="tl-spots"><span class="tl-hi">Reynisfjara lever de soleil </span> · Víkurkirkja</div></div></div>
- <div class="tl-item"><div class="tl-left"><div class="tl-day">J6</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Glaciers · Vík → Höfn</div><div class="tl-spots">Eldhraun · <span class="tl-hi">Jökulsárlón </span> · <span class="tl-hi">Diamond Beach </span></div></div></div>
- <div class="tl-item"><div class="tl-left"><div class="tl-day">J7</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Fjords de l'Est · Höfn → Egilsstaðir</div><div class="tl-spots"><span class="tl-hi">Aurores Saudanes </span> · <span class="tl-hi">Vök Baths </span></div></div></div>
- <div class="tl-item"><div class="tl-left"><div class="tl-day">J8</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Seyðisfjörður · Egilsstaðir → Djúpivogur</div><div class="tl-spots">Seyðisfjörður · Tvísöngur · <span class="tl-hi">Hengifoss </span> · <span class="tl-hi">Aurores Djúpivogur </span></div></div></div>
- <div class="tl-item"><div class="tl-left"><div class="tl-day">J9</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Skaftafell · Djúpivogur → Fox Hostel</div><div class="tl-spots"><span class="tl-hi">Fjallsárlón </span> · <span class="tl-hi">Svartifoss </span></div></div></div>
- <div class="tl-item"><div class="tl-left"><div class="tl-day">J10</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Retour Côte Sud · → Eyrarbakki</div><div class="tl-spots"><span class="tl-hi">Sólheimajökull </span> · <span class="tl-hi">Kvernufoss </span> · Gígjagja</div></div></div>
- <div class="tl-item tl-last"><div class="tl-left"><div class="tl-day">J11</div><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-region">Épilogue · Eyrarbakki → Reykjavík</div><div class="tl-spots">Kerið · <span class="tl-hi">Bruarfoss </span> · <span class="tl-hi">Kleifarvatn </span> </div></div></div>
- </div>
- </section>
-
- 
-  <!-- ═══════════ GALERIE 2 — L'ÎLE HABITÉE ═══════════ -->
-  <section class="gallery-section" id="habitee" style="padding-top:0;">
-    <div class="gallery-header">
-      <div class="gallery-header-left">
-        <div class="sl" style="color:var(--moss-l);">L'île habitée</div>
-        <h2 style="margin-top:12px;">Territoire · <span style="color:var(--glacier);">Présences</span></h2>
+<body id="haut">
+  <a href="#photographies" class="skip">Aller aux photographies</a>
+  <div class="progress" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="signature" href="#haut">Quentin Brache</a>
+    <nav aria-label="Navigation principale">
+      <button class="text-button" data-index>Index <span class="nav-count">38</span></button>
+      <button class="text-button" data-about>Le regard <span aria-hidden="true">↗</span></button>
+    </nav>
+  </header>
+  <main>
+    <section class="opening" aria-labelledby="title">
+      <div class="masthead">
+        <div class="masthead-note"><span>Entre deux mondes</span><span>Un parcours photographique</span></div>
+        <h1 id="title">Islande<span>.</span></h1>
+        <a class="begin-link" href="#photographies" aria-label="Commencer le parcours"><span>Descendre</span><span aria-hidden="true">↓</span></a>
       </div>
-      <div class="gallery-count" id="galleryCount2">01 / 08</div>
-    </div>
-    <div class="gallery-intro">
-      <p>Un fil tiré de la galerie principale, centré sur ceux qui habitent ou traversent le territoire : animaux, locaux, visiteurs, et la façon dont chacun l'occupe.</p>
-    </div>
-    <div class="gallery-viewer" id="viewer2" tabindex="0" role="region" aria-label="Galerie l'ile habitee, navigation avec les flèches gauche et droite">
-      <div class="slide diptych active" data-idx2="0">
-        <div class="slide-photo">
-          <div class="slide-photo-inner"><span class="diptych-label nature">Habitant</span><img src="photos/T2a-ferme.webp" alt="Petite ferme islandaise isolée au pied des montagnes escarpées"></div>
-          <div class="slide-photo-inner"><span class="diptych-label human">Touriste</span><img src="photos/T2b-file-touristes.webp" alt="File de touristes marchant sur un sentier balisé vers un site naturel en Islande"></div>
-          <div class="diptych-divider"></div>
+      <div id="photographies"><figure class="photo photo-falaise" id="photo-falaise" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/falaise-3200-v2.webp" data-photo="falaise" data-title="Valahnúkamöl" data-motion=".065" aria-label="Voir la photographie : Valahnúkamöl">
+        <img src="photos/falaise-1800-v2.webp" srcset="photos/falaise-800-v2.webp 800w, photos/falaise-1800-v2.webp 1800w, photos/falaise-3200-v2.webp 3200w" sizes="100vw" width="7008" height="4672" alt="Deux personnes minuscules sur une falaise noire et dorée, des oiseaux devant la paroi et la mer en contrebas." loading="eager" fetchpriority="high" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Valahnúkamöl</span><span>01 / 38</span></figcaption>
+    </figure></div>
+    </section>
+
+    <section class="breath first-breath" aria-label="Ce que je cherchais">
+      <p class="large-text reveal">Je voulais des photos à la hauteur de ce que je ressentais.</p>
+      <p class="aside-text reveal">La puissance des lieux me donnait envie de photographier. Je cherchais à en garder quelque chose : une lumière, un mouvement, la sensation d’être là.</p>
+    </section>
+
+    <section class="coast-cluster composition" aria-label="La côte, la roche et la mer">
+      <figure class="photo photo-cote" id="photo-cote" style="--photo-ratio:0.75000000">
+      <a class="photo-frame" href="photos/cote-3200-v2.webp" data-photo="cote" data-title="La côte sud" data-motion=".085" aria-label="Voir la photographie : La côte sud">
+        <img src="photos/cote-1800-v2.webp" srcset="photos/cote-800-v2.webp 600w, photos/cote-1800-v2.webp 1350w, photos/cote-3200-v2.webp 2400w" sizes="(max-width: 700px) 86vw, 56vw" width="2802" height="3736" alt="Une plage de sable noir s’étire entre la mer blanche d’écume et la terre ocre." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>La côte sud</span><span>02 / 38</span></figcaption>
+    </figure>
+      <figure class="photo photo-basalte viewport-photo" id="photo-basalte" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/basalte-3200-v2.webp" data-photo="basalte" data-title="Reynisfjara" data-motion=".065" aria-label="Voir la photographie : Reynisfjara">
+        <img src="photos/basalte-1800-v2.webp" srcset="photos/basalte-800-v2.webp 800w, photos/basalte-1800-v2.webp 1800w, photos/basalte-3200-v2.webp 3200w" sizes="(max-width: 700px) 96vw, 76vw" width="7008" height="4672" alt="Une immense paroi d’orgues de basalte à gauche, un piton marin à droite ; les vagues et les oiseaux traversent l’espace entre les deux." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Reynisfjara</span><span>03 / 38</span></figcaption>
+    </figure>
+    </section>
+
+
+    <section class="journey-cluster composition" aria-label="Traverser le paysage">
+      <figure class="photo photo-epave viewport-photo" id="photo-epave" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/epave-3200-v2.webp" data-photo="epave" data-title="Sólheimasandur" data-motion=".085" aria-label="Voir la photographie : Sólheimasandur">
+        <img src="photos/epave-1800-v2.webp" srcset="photos/epave-800-v2.webp 800w, photos/epave-1800-v2.webp 1800w, photos/epave-3200-v2.webp 3200w" sizes="96vw" width="3360" height="2240" alt="Deux personnes traversent une vaste étendue noire ; une épave d’avion apparaît au loin." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Sólheimasandur</span><span>04 / 38</span></figcaption>
+    </figure>
+      <figure class="photo photo-bus viewport-photo" id="photo-bus" style="--photo-ratio:1.50012877">
+      <a class="photo-frame" href="photos/bus-3200-v2.webp" data-photo="bus" data-title="De passage" data-motion=".085" aria-label="Voir la photographie : De passage">
+        <img src="photos/bus-1800-v2.webp" srcset="photos/bus-800-v2.webp 800w, photos/bus-1800-v2.webp 1800w, photos/bus-3200-v2.webp 3200w" sizes="(max-width: 700px) 88vw, 70vw" width="5825" height="3883" alt="Une personne en bleu marche sur le sable noir, devant un bus isolé sur la ligne de crête et des montagnes enneigées." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>De passage</span><span>05 / 38</span></figcaption>
+    </figure>
+      <figure class="photo photo-buggies viewport-photo" id="photo-buggies" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/buggies-3200-v2.webp" data-photo="buggies" data-title="Face à la mer" data-motion=".085" aria-label="Voir la photographie : Face à la mer">
+        <img src="photos/buggies-1800-v2.webp" srcset="photos/buggies-800-v2.webp 800w, photos/buggies-1800-v2.webp 1800w, photos/buggies-3200-v2.webp 3200w" sizes="94vw" width="4860" height="3240" alt="Une petite personne en bleu regarde la mer, entre deux buggies sur le sable noir." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Face à la mer</span><span>06 / 38</span></figcaption>
+    </figure>
+    </section>
+
+    <section class="breath shared-breath" aria-label="Ma présence parmi les autres">
+      <p class="large-text reveal">Je photographie les autres touristes, mais j’en suis un aussi.</p>
+      <p class="aside-text reveal">Les autres voyageurs font partie du paysage. Parfois leur présence l’enrichit, parfois elle l’interrompt. Je suis venu, moi aussi, avec mon appareil et l’envie d’en rapporter une image extraordinaire.</p>
+    </section>
+
+    <section class="portrait-pair snow-pair" aria-label="Le passage et le geste">
+      <figure class="photo photo-neige viewport-photo" id="photo-neige" style="--photo-ratio:0.80028531">
+      <a class="photo-frame" href="photos/neige-3200-v8.webp" data-photo="neige" data-title="Le passage" data-motion="0" aria-label="Voir la photographie : Le passage">
+        <img src="photos/neige-1800-v8.webp" srcset="photos/neige-800-v8.webp 640w, photos/neige-1800-v8.webp 1122w, photos/neige-3200-v8.webp 1122w" sizes="(max-width:700px) 88vw, 44vw" width="1122" height="1402" alt="Deux rangées de poteaux bordent un chemin enneigé, face aux sapins et à une montagne blanche." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Le passage</span><span>07 / 38</span></figcaption>
+    </figure>
+      <figure class="photo photo-pas viewport-photo" id="photo-pas" style="--photo-ratio:0.66666667">
+      <a class="photo-frame" href="photos/pas-3200-v8.webp" data-photo="pas" data-title="Dans la neige" data-motion=".025" aria-label="Voir la photographie : Dans la neige">
+        <img src="photos/pas-1800-v8.webp" srcset="photos/pas-800-v8.webp 533w, photos/pas-1800-v8.webp 1200w, photos/pas-3200-v8.webp 2133w" sizes="(max-width:700px) 88vw, 44vw" width="4672" height="7008" alt="Une personne de dos, en veste blanche, avance jambes écartées dans la neige près des cordes du chemin." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Dans la neige</span><span>08 / 38</span></figcaption>
+    </figure>
+    </section>
+    <section id="geysir" class="geysir" aria-labelledby="geysir-title">
+      <div class="geysir-opening">
+      <header class="geysir-heading">
+        <span class="geysir-label">À Geysir</span>
+        <h2 id="geysir-title">Attendre l'image.<br><em>Ou la provoquer.</em></h2>
+        <p class="geysir-intro">Je savais ce que j’étais venu voir : les geysers, l’une des images que j’avais en tête avant de partir en Islande.</p>
+      </header>
+      <div class="geysir-copy geysir-arrival reveal">
+        <p>A mon arrivée, une première chose m'a frappé. Depuis le début du voyage, c'était la première fois que le parking d'un site touristique était aussi bondé. Probablement le plus grand que j’aie vu de tout le voyage d'ailleurs.</p>
+      </div>
+      <div class="geysir-park-reveal" data-geysir-stage>
+        <figure class="photo photo-geysirparc viewport-photo" id="photo-geysirparc" style="--photo-ratio:1.49989259">
+      <a class="photo-frame" href="photos/geysirparc-2400-v21.webp" data-photo="geysirparc" data-title="Le parc" data-motion="0" aria-label="Voir la photographie : Le parc">
+        <img src="photos/geysirparc-1600-v21.webp" srcset="photos/geysirparc-800-v21.webp 800w, photos/geysirparc-1600-v21.webp 1600w, photos/geysirparc-2400-v21.webp 2400w" sizes="(max-width:700px) 88vw, 90vw" width="6982" height="4655" alt="Un chemin vide traverse la neige entre les sources fumantes, les cordes et un petit aménagement en bois." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Le parc</span><span>09 / 38</span></figcaption>
+    </figure>
+      </div>
+      </div>
+
+      <div class="geysir-source-scene">
+      <div class="geysir-copy reveal">
+        <p>J'ai démarré ma visite en photographiant les petites sources, puis je me suis approché du geyser principal. Une foule l’entourait déjà. Les téléphones étaient levés, en mode vidéo. Certains filmaient pendant plusieurs minutes en attendant que la source jaillisse.</p>
+      </div>
+      <figure class="photo photo-geysirsource viewport-photo" id="photo-geysirsource" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/geysirsource-2400-v21.webp" data-photo="geysirsource" data-title="Une petite source" data-motion="0" aria-label="Voir la photographie : Une petite source">
+        <img src="photos/geysirsource-1600-v21.webp" srcset="photos/geysirsource-800-v21.webp 800w, photos/geysirsource-1600-v21.webp 1600w, photos/geysirsource-2400-v21.webp 2400w" sizes="(max-width:700px) 88vw, 44vw" width="7008" height="4672" alt="Une cavité sombre entourée de terre ocre et de roche se découpe dans la neige." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Une petite source</span><span>10 / 38</span></figcaption>
+    </figure>
+      </div>
+      <div class="geysir-wide"><figure class="photo photo-geysirfoule viewport-photo" id="photo-geysirfoule" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/geysirfoule-2400-v21.webp" data-photo="geysirfoule" data-title="Autour du geyser" data-motion="0" aria-label="Voir la photographie : Autour du geyser">
+        <img src="photos/geysirfoule-1600-v21.webp" srcset="photos/geysirfoule-800-v21.webp 800w, photos/geysirfoule-1600-v21.webp 1600w, photos/geysirfoule-2400-v21.webp 2400w" sizes="(max-width:700px) 88vw, 90vw" width="7008" height="4672" alt="Des visiteurs en manteaux colorés attendent derrière une corde ; certains regardent leur téléphone, d’autres le lèvent." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Autour du geyser</span><span>11 / 38</span></figcaption>
+    </figure></div>
+
+      <div class="geysir-crowd">
+        <figure class="photo photo-geysirattente viewport-photo" id="photo-geysirattente" style="--photo-ratio:0.66666667">
+      <a class="photo-frame" href="photos/geysirattente-2400-v21.webp" data-photo="geysirattente" data-title="Parmi les autres" data-motion="0" aria-label="Voir la photographie : Parmi les autres">
+        <img src="photos/geysirattente-1600-v21.webp" srcset="photos/geysirattente-800-v21.webp 533w, photos/geysirattente-1600-v21.webp 1067w, photos/geysirattente-2400-v21.webp 1600w" sizes="(max-width:700px) 88vw, 36vw" width="4182" height="6273" alt="Une rangée de visiteurs photographie le geyser ; au premier plan, une grande capuche sombre et des mains tenant des téléphones." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Parmi les autres</span><span>12 / 38</span></figcaption>
+    </figure>
+        <div class="geysir-copy reveal">
+          <p>Mon premier réflexe a été de photographier les gens.</p>
+          <p>Après chaque éruption, une partie de la foule s’en allait et une autre prenait sa place. Et ça recommençait. Je savais ce qui allait se passer. Et j’avais déjà en tête la photo à prendre.</p>
+          <p>Il fallait attendre le jet, le prendre au plus haut.</p>
+          <p>J’étais frustré de faire partie de ce truc. Produire une image parce que tout le monde le fait. Mais j’étais là, moi aussi, avec mon appareil. Comme ces gens, j’avais pris l’avion, loué une voiture, et j’étais venu en Islande pour ressentir des émotions fortes. D'une certaine façon, je recherchais du spectaculaire.</p>
         </div>
-        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Côte Sud · Cercle d'Or</div><div class="caption-spot">Habiter / Traverser</div></div><div class="caption-right"><span class="caption-index">01</span>Diptyque</div></div>
       </div>
-      <div class="slide portrait" data-idx2="1">
-        <div class="slide-photo"><div class="slide-photo-inner"><img loading="lazy" src="photos/T1-cheval.webp" alt="Cheval islandais robuste dans un paysage de montagnes enneigées"></div></div>
-        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Côte Sud · En route</div><div class="caption-spot">Le gardien des plaines</div></div><div class="caption-right"><span class="caption-index">02</span>Territoire</div></div>
+
+      <div class="geysir-expected">
+        <div class="geysir-copy reveal">
+          <p>J’ai attendu deux éruptions, peut-être. J’ai photographié le jet au plus haut. Serré parmi les autres, je n’arrivais pas à trouver mon cadrage. J’avais la désagréable impression de refaire une image déjà vue partout. Avant même de regarder mes photos, je préférais déjà celles que j’avais prises des gens autour.</p>
+          <p>Alors, je me suis éloigné. J’ai continué le chemin et pris un peu de hauteur pour regarder le site et les paysages.</p>
+        </div>
+        <figure class="photo photo-geysirjet viewport-photo" id="photo-geysirjet" style="--photo-ratio:1.49990999">
+      <a class="photo-frame" href="photos/geysirjet-2400-v21.webp" data-photo="geysirjet" data-title="L’image attendue" data-motion="0" aria-label="Voir la photographie : L’image attendue">
+        <img src="photos/geysirjet-1600-v21.webp" srcset="photos/geysirjet-800-v21.webp 800w, photos/geysirjet-1600-v21.webp 1600w, photos/geysirjet-2400-v21.webp 2400w" sizes="100vw" width="8332" height="5555" alt="Un jet d’eau immense jaillit d’un bassin turquoise, avec des visiteurs et des bancs à l’arrière-plan." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>L’image attendue</span><span>13 / 38</span></figcaption>
+    </figure>
       </div>
-      <div class="slide landscape" data-idx2="2">
-        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/T3-parking.webp" alt="Parking de site touristique rempli de voitures et vans de location en Islande"></div></div>
-        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Péninsule de Reykjanes</div><div class="caption-spot">Le vide au bout du parking</div></div><div class="caption-right"><span class="caption-index">03</span>Territoire</div></div>
+
+      <div class="geysir-turn reveal">
+        <p class="geysir-statement geysir-turn-copy">En redescendant, je me suis demandé pourquoi je m’obstinais à photographier le geyser. La vapeur, elle, transformait les gens qui la traversaient, presque comme un voile.</p>
+        <div class="geysir-copy">
+          <p>Alors je trouve un angle. L’odeur d’œuf est très forte. La brume passe devant les gens, les cache, puis laisse réapparaître une silhouette.</p>
+        </div>
       </div>
-      <div class="slide landscape" data-idx2="3">
-        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/04c-camion-tourisme.webp" alt="Le monstre des sables - Gros camion de tourisme 4x4 tout-terrain en Islande"></div></div>
-        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Le monstre des sables</div></div><div class="caption-right"><span class="caption-index">04</span>Territoire</div></div>
+      <div class="geysir-threshold"><figure class="photo photo-geysirvoile viewport-photo" id="photo-geysirvoile" style="--photo-ratio:1.50010737">
+      <a class="photo-frame" href="photos/geysirvoile-2400-v21.webp" data-photo="geysirvoile" data-title="Ce qui apparaît" data-motion="0" aria-label="Voir la photographie : Ce qui apparaît">
+        <img src="photos/geysirvoile-1600-v21.webp" srcset="photos/geysirvoile-800-v21.webp 800w, photos/geysirvoile-1600-v21.webp 1600w, photos/geysirvoile-2400-v21.webp 2400w" sizes="(max-width:700px) 88vw, 68vw" width="6986" height="4657" alt="Une personne marche de profil devant des silhouettes partiellement effacées par la vapeur, le long d’un chemin bordé de cordes." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Ce qui apparaît</span><span>14 / 38</span></figcaption>
+    </figure></div>
+
+      <div class="geysir-copy geysir-pleasure reveal">
+        <p>Je commence à les photographier lorsqu’ils la traversent. Il y a quelque chose de fantomatique dans ces corps à moitié effacés. Le même lieu, les mêmes visiteurs, mais une atmosphère très loin de celle que j’avais ressentie devant le jet.</p>
+        <p>Je reste une bonne heure. Je prends du plaisir.</p>
       </div>
-      <div class="slide landscape" data-idx2="4">
-        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/04f-combinaisons.webp" alt="Groupe de touristes en combinaisons orange fluo entourant des buggies dans le désert de Sólheimasandur"></div></div>
-        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Briefing sur la lune</div></div><div class="caption-right"><span class="caption-index">05</span>Territoire</div></div>
+      <div class="geysir-pair" aria-label="Deux présences dans la vapeur">
+        <figure class="photo photo-vapeur viewport-photo" id="photo-vapeur" style="--photo-ratio:1.50012246">
+      <a class="photo-frame" href="photos/vapeur-2400-v21.webp" data-photo="vapeur" data-title="Dans la vapeur" data-motion="0" aria-label="Voir la photographie : Dans la vapeur">
+        <img src="photos/vapeur-1600-v21.webp" srcset="photos/vapeur-800-v21.webp 800w, photos/vapeur-1600-v21.webp 1600w, photos/vapeur-2400-v21.webp 2400w" sizes="(max-width:700px) 88vw, 56vw" width="6125" height="4083" alt="Une personne en pantalon rouge s’éloigne sur un chemin sombre et courbe, dans la vapeur." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Dans la vapeur</span><span>15 / 38</span></figcaption>
+    </figure>
+        <figure class="photo photo-geysirpassante viewport-photo" id="photo-geysirpassante" style="--photo-ratio:0.80000000">
+      <a class="photo-frame" href="photos/geysirpassante-2400-v21.webp" data-photo="geysirpassante" data-title="Une passante" data-motion="0" aria-label="Voir la photographie : Une passante">
+        <img src="photos/geysirpassante-1600-v21.webp" srcset="photos/geysirpassante-800-v21.webp 640w, photos/geysirpassante-1600-v21.webp 1280w, photos/geysirpassante-2400-v21.webp 1920w" sizes="(max-width:700px) 88vw, 30vw" width="2992" height="3740" alt="Une jeune femme en bonnet et pantalon clair traverse la vapeur, son téléphone baissé dans une main." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Une passante</span><span>16 / 38</span></figcaption>
+    </figure>
       </div>
-      <div class="slide landscape" data-idx2="5">
-        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/04b-dc3-buggies.webp" alt="Buggies touristiques traversant le désert de Sólheimasandur près du DC-3"></div></div>
-        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Paix intérieure</div></div><div class="caption-right"><span class="caption-index">06</span>Territoire</div></div>
+
+      <div class="geysir-finale">
+        <div class="geysir-copy reveal">
+          <p>Je ne sais pas si ces images sont plus originales. D’autres ont sûrement photographié cette vapeur avant moi. Mais je me sens à ma place. J’ai envie de rester, de chercher, de faire des photos.</p>
+          <p class="geysir-ending">J’étais venu photographier le geyser.<br>J’ai trouvé ma propre manière de photographier Geysir.</p>
+        </div>
+        <figure class="photo photo-geysirvisage viewport-photo" id="photo-geysirvisage" style="--photo-ratio:0.66659034">
+      <a class="photo-frame" href="photos/geysirvisage-2400-v21.webp" data-photo="geysirvisage" data-title="Traverser" data-motion="0" aria-label="Voir la photographie : Traverser">
+        <img src="photos/geysirvisage-1600-v21.webp" srcset="photos/geysirvisage-800-v21.webp 533w, photos/geysirvisage-1600-v21.webp 1067w, photos/geysirvisage-2400-v21.webp 1600w" sizes="(max-width:700px) 88vw, 36vw" width="2911" height="4367" alt="Une personne au visage couvert d’une écharpe et de lunettes avance dans la vapeur, un bras écarté ; une seconde silhouette apparaît derrière elle." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Traverser</span><span>17 / 38</span></figcaption>
+    </figure>
       </div>
-      <div class="slide landscape" data-idx2="6">
-        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/T4-camion-solitaire.webp" alt="Silhouette solitaire marchant vers un camion de tourisme posé sur la crête du désert de Sólheimasandur"></div></div>
-        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Sólheimasandur</div><div class="caption-spot">Désertion</div></div><div class="caption-right"><span class="caption-index">08</span>Territoire</div></div>
+      <p class="geysir-label geysir-date">Geysir, mars 2026.</p>
+    </section>
+
+    <section class="inhabited-cluster composition" aria-label="La montagne, les chemins et nos traces">
+      <figure class="photo photo-ferme viewport-photo" id="photo-ferme" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/ferme-3200-v2.webp" data-photo="ferme" data-title="Au pied de la montagne" data-motion=".085" aria-label="Voir la photographie : Au pied de la montagne">
+        <img src="photos/ferme-1800-v2.webp" srcset="photos/ferme-800-v2.webp 800w, photos/ferme-1800-v2.webp 1800w, photos/ferme-3200-v2.webp 3200w" sizes="(max-width: 700px) 96vw, 88vw" width="7008" height="4672" alt="De petits bâtiments sombres au pied d’une immense pente ocre et rocheuse." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Au pied de la montagne</span><span>18 / 38</span></figcaption>
+    </figure>
+      <div class="portrait-pair visitors-pair" aria-label="Visiter et photographier">
+        <figure class="photo photo-chemin viewport-photo" id="photo-chemin" style="--photo-ratio:0.75004013">
+      <a class="photo-frame" href="photos/chemin-3200-v2.webp" data-photo="chemin" data-title="Skógafoss" data-motion=".085" aria-label="Voir la photographie : Skógafoss">
+        <img src="photos/chemin-1800-v2.webp" srcset="photos/chemin-800-v2.webp 600w, photos/chemin-1800-v2.webp 1350w, photos/chemin-3200-v2.webp 2400w" sizes="(max-width:700px) 88vw, 44vw" width="4672" height="6229" alt="Une file de visiteurs suit un escalier sinueux sur une colline dorée." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Skógafoss</span><span>19 / 38</span></figcaption>
+    </figure>
+        <figure class="photo photo-selfie viewport-photo" id="photo-selfie" style="--photo-ratio:0.66661057">
+      <a class="photo-frame" href="photos/selfie-3200-v8.webp" data-photo="selfie" data-title="Faire une image" data-motion=".025" aria-label="Voir la photographie : Faire une image">
+        <img src="photos/selfie-1800-v8.webp" srcset="photos/selfie-800-v8.webp 533w, photos/selfie-1800-v8.webp 1200w, photos/selfie-3200-v8.webp 2133w" sizes="(max-width:700px) 88vw, 44vw" width="3961" height="5942" alt="Une personne tient un smartphone sur une perche devant son visage ; des visiteurs et des cordes se répartissent derrière elle." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Faire une image</span><span>20 / 38</span></figcaption>
+    </figure>
       </div>
-      <div class="slide landscape" data-idx2="7">
-        <div class="slide-photo"><div class="slide-photo-inner" style="width:100%;height:100%"><img loading="lazy" src="photos/T6-phare-dirholaey.webp" alt="Phare de Dyrhólaey avec des silhouettes de touristes au bord de la falaise face à l'océan"></div></div>
-        <div class="slide-caption"><div class="caption-left"><div class="caption-day">Jour 4 · Dyrhólaey</div><div class="caption-spot">La sentinelle</div></div><div class="caption-right"><span class="caption-index">09</span>Territoire</div></div>
+      <figure class="photo photo-parking viewport-photo" id="photo-parking" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/parking-3200-v2.webp" data-photo="parking" data-title="Le bout du chemin" data-motion=".085" aria-label="Voir la photographie : Le bout du chemin">
+        <img src="photos/parking-1800-v2.webp" srcset="photos/parking-800-v2.webp 800w, photos/parking-1800-v2.webp 1800w, photos/parking-3200-v2.webp 3200w" sizes="(max-width: 700px) 96vw, 88vw" width="6510" height="4340" alt="Un chemin noir traverse la neige et conduit à une rangée de véhicules." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Le bout du chemin</span><span>21 / 38</span></figcaption>
+    </figure>
+    </section>
+
+    <section class="new-landscape house-landscape" aria-label="Une maison dans la plaine"><figure class="photo photo-maisonbleue viewport-photo" id="photo-maisonbleue" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/maisonbleue-3200-v8.webp" data-photo="maisonbleue" data-title="Le toit turquoise" data-motion=".035" aria-label="Voir la photographie : Le toit turquoise">
+        <img src="photos/maisonbleue-1800-v8.webp" srcset="photos/maisonbleue-800-v8.webp 800w, photos/maisonbleue-1800-v8.webp 1800w, photos/maisonbleue-3200-v8.webp 3200w" sizes="(max-width:700px) 92vw, 88vw" width="7008" height="4672" alt="Une petite maison au toit turquoise se détache entre une plaine ocre et un vaste ciel nuageux." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Le toit turquoise</span><span>22 / 38</span></figcaption>
+    </figure></section>
+
+    <section id="grindavik" class="grindavik" aria-labelledby="grindavik-title">
+      <div class="grindavik-opening" data-chapter-stage>
+        <div class="grindavik-sticky">
+          <div class="grindavik-heading">
+            <span class="chapter-label">Le soir de mon arrivée</span>
+            <h2 id="grindavik-title">Une nuit<br>à <em>Grindavík.</em></h2>
+            <p>Ma toute première nuit en Islande, j’ai choisi de la passer dans un endroit particulier : Grindavík, évacuée en novembre 2023, quand la terre s’est mise à s’ouvrir sous les rues.</p>
+          </div>
+          <figure class="photo photo-grindavikreflet viewport-photo" id="photo-grindavikreflet" style="--photo-ratio:1.49989037">
+      <a class="photo-frame" href="photos/grindavikreflet-3200-v9.webp" data-photo="grindavikreflet" data-title="Dans la vitre" data-motion=".025" aria-label="Voir la photographie : Dans la vitre">
+        <img src="photos/grindavikreflet-1800-v9.webp" srcset="photos/grindavikreflet-800-v9.webp 800w, photos/grindavikreflet-1800-v9.webp 1800w, photos/grindavikreflet-3200-v9.webp 3200w" sizes="(max-width: 700px) 92vw, 86vw" width="6841" height="4561" alt="Le reflet du photographe et de son appareil se superpose à un intérieur éclairé et à la rue, la nuit." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Dans la vitre</span><span>23 / 38</span></figcaption>
+    </figure>
+        </div>
       </div>
-      <div class="gallery-nav">
-        <button class="gallery-nav-zone nav-left" id="navLeft2" type="button" aria-label="Image precedente"><div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div></button>
-        <button class="gallery-nav-zone nav-right" id="navRight2" type="button" aria-label="Image suivante"><div class="nav-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div></button>
+      <div class="chapter-copy chapter-arrival reveal">
+        <p>À peine mes affaires posées, je n’avais qu’une envie : parcourir la ville armé de mon flash et découvrir ce qu’elle cache.</p>
       </div>
+      <div class="chapter-book">
+        <figure class="book-photo">
+          <img src="photos/livre-800-v9.webp" srcset="photos/livre-800-v9.webp 800w, photos/livre-1600-v9.webp 1600w" sizes="(max-width:700px) 82vw, 48vw" width="6068" height="4045" loading="lazy" decoding="async" alt="Un livre de photographies d’éruptions volcaniques, ouvert dans le salon de mon hôte.">
+          <figcaption>Dans le salon de mon hôte.</figcaption>
+        </figure>
+        <div class="chapter-copy reveal">
+          <p>À la nuit tombée, appareil au cou, prêt à partir, j’ai remarqué un livre de photographies posé sur la table du salon. L’hôte, un géant islandais à la barbe grise, m’a vu le feuilleter et s’est approché.</p>
+          <p>Page après page, il m’a parlé de l’évacuation, des habitants attachés à leurs maisons, du rachat des propriétés proposé par l’État. Beaucoup ont accepté de vendre. Lui a choisi de rester, malgré les risques. Une nouvelle éruption pouvait arriver, disait-il, sans qu’on sache quand.</p>
+          <p>Je regardais les photographies, happé par leur beauté et par la violence de ce qu’elles montraient.</p>
+        </div>
+      </div>
+      <p class="chapter-statement reveal">Puis je suis sorti.</p>
+      <div class="chapter-copy chapter-weather reveal">
+        <p>Le temps est glacial. La neige s’est arrêtée, mais le froid me gèle les mains. Dans la nuit noire, les rafales de vent ressemblent à des cris, au loin.</p>
+      </div>
+      <div class="chapter-streets">
+        <figure class="photo photo-station viewport-photo" id="photo-station" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/station-3200-v9.webp" data-photo="station" data-title="La station-service" data-motion=".025" aria-label="Voir la photographie : La station-service">
+        <img src="photos/station-1800-v9.webp" srcset="photos/station-800-v9.webp 800w, photos/station-1800-v9.webp 1800w, photos/station-3200-v9.webp 3200w" sizes="(max-width: 700px) 92vw, 86vw" width="6900" height="4600" alt="Une borne rouge et des pompes à essence devant une station-service, la nuit à Grindavík." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>La station-service</span><span>24 / 38</span></figcaption>
+    </figure>
+        <div class="chapter-copy chapter-passage reveal">
+          <p>Une station-service éclairée est mon premier refuge. Les traces humaines sont encore là, les pompes, le menu du grill accroché à la porte, mais l’intérieur est vide. Chose rare dans une ville, un peu plus loin, un panneau indique <em>emergency exit</em>.</p>
+        </div>
+        <figure class="photo photo-panneau viewport-photo" id="photo-panneau" style="--photo-ratio:1.50010881">
+      <a class="photo-frame" href="photos/panneau-3200-v9.webp" data-photo="panneau" data-title="Les directions" data-motion=".025" aria-label="Voir la photographie : Les directions">
+        <img src="photos/panneau-1800-v9.webp" srcset="photos/panneau-800-v9.webp 800w, photos/panneau-1800-v9.webp 1800w, photos/panneau-3200-v9.webp 3200w" sizes="(max-width: 700px) 92vw, 86vw" width="6893" height="4595" alt="Un panneau vert EMERGENCY EXIT et des indications jaunes dans la nuit ; une ombre au premier plan et un camion dans la rue." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Les directions</span><span>25 / 38</span></figcaption>
+    </figure>
+      </div>
+      <div class="chapter-copy chapter-passage reveal">
+        <p>Sous un pont, un passage lumineux m’attire. Je le photographie, puis je continue mon chemin, vers un quartier d’habitations. Beaucoup de maisons semblent vides. Derrière certaines fenêtres, je distingue encore des meubles, des objets, des jouets...</p>
+      </div>
+      <figure class="photo photo-tunnel viewport-photo" id="photo-tunnel" style="--photo-ratio:1.50010896">
+      <a class="photo-frame" href="photos/tunnel-3200-v9.webp" data-photo="tunnel" data-title="Sous le pont" data-motion=".025" aria-label="Voir la photographie : Sous le pont">
+        <img src="photos/tunnel-1800-v9.webp" srcset="photos/tunnel-800-v9.webp 800w, photos/tunnel-1800-v9.webp 1800w, photos/tunnel-3200-v9.webp 3200w" sizes="(max-width: 700px) 92vw, 86vw" width="6884" height="4589" alt="Les lumières chaudes se répètent dans un tunnel, jusqu’à une ouverture sombre." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Sous le pont</span><span>26 / 38</span></figcaption>
+    </figure>
+      <div class="chapter-copy chapter-houses reveal">
+        <p>Quelques lumières restent allumées. Éclairages automatiques, ou gens qui ont décidé de continuer leur vie ici malgré tout ? Je ne le saurai pas. Je me surprends à regarder derrière moi. Je photographie vite, sans m’attarder devant la même maison.</p>
+      </div>
+      <figure class="photo photo-maisonrouge viewport-photo" id="photo-maisonrouge" style="--photo-ratio:1.49989142">
+      <a class="photo-frame" href="photos/maisonrouge-3200-v9.webp" data-photo="maisonrouge" data-title="Une maison" data-motion="0" aria-label="Voir la photographie : Une maison">
+        <img src="photos/maisonrouge-1800-v9.webp" srcset="photos/maisonrouge-800-v9.webp 800w, photos/maisonrouge-1800-v9.webp 1800w, photos/maisonrouge-3200-v9.webp 3200w" sizes="(max-width: 700px) 92vw, 86vw" width="6907" height="4605" alt="Une maison rouge éclairée la nuit, avec des panneaux déposés dans le jardin et un treillis." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Une maison</span><span>27 / 38</span></figcaption>
+    </figure>
+      <div class="chapter-distance">
+        <p class="chapter-statement reveal">Je reste<br>à distance.</p>
+        <p class="chapter-copy reveal">Par respect pour ceux qui avaient vécu là et ceux qui y vivent peut-être encore. Mais ce n’est pas tout. J’ai peur, aussi, sans savoir de quoi. De la terre qui peut s’ouvrir ? D’une fenêtre où quelqu’un se tiendrait ?</p>
+      </div>
+      <p class="chapter-statement chapter-flash reveal">Pendant une seconde, mon flash rend le jour à une façade. Puis la nuit revient.</p>
+      <figure class="photo photo-maisonflash viewport-photo" id="photo-maisonflash" style="--photo-ratio:1.53333333">
+      <a class="photo-frame" href="photos/maisonflash-3200-v9.webp" data-photo="maisonflash" data-title="Derrière les fenêtres" data-motion="0" aria-label="Voir la photographie : Derrière les fenêtres">
+        <img src="photos/maisonflash-1800-v9.webp" srcset="photos/maisonflash-800-v9.webp 800w, photos/maisonflash-1800-v9.webp 1800w, photos/maisonflash-3200-v9.webp 3200w" sizes="(max-width: 700px) 92vw, 86vw" width="6141" height="4005" alt="Une façade photographiée de face au flash, aux fenêtres sombres, dans la nuit de Grindavík." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Derrière les fenêtres</span><span>28 / 38</span></figcaption>
+    </figure>
+      <div class="chapter-copy chapter-departure reveal">
+        <p>Au bout d’une heure, peut-être deux, je fais demi-tour. Au loin, je crois distinguer des ombres et des voix, mais le vent est si fort que je ne sais pas si je les invente. Je suis touché par la beauté étrange de cette nuit. Et triste, en pensant à ceux qui ont dû quitter leur maison.</p>
+      </div>
+      <p class="chapter-ending reveal">Pour moi, c’est le début du voyage.<br><em>Pour d’autres, c’était chez eux.</em></p>
+      <p class="chapter-label chapter-date">Grindavík, mars 2026.</p>
+    </section>
+
+    <div class="night-section">
+      <section class="new-landscape yellow-section" aria-label="Deux présences devant la cascade"><figure class="photo photo-jaune viewport-photo" id="photo-jaune" style="--photo-ratio:1.50011168">
+      <a class="photo-frame" href="photos/jaune-3200-v8.webp" data-photo="jaune" data-title="Au pied de la cascade" data-motion=".035" aria-label="Voir la photographie : Au pied de la cascade">
+        <img src="photos/jaune-1800-v8.webp" srcset="photos/jaune-800-v8.webp 800w, photos/jaune-1800-v8.webp 1800w, photos/jaune-3200-v8.webp 3200w" sizes="(max-width:700px) 92vw, 88vw" width="6716" height="4477" alt="Deux personnes, dont une en manteau jaune, marchent derrière des cordes devant une grande cascade." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Au pied de la cascade</span><span>29 / 38</span></figcaption>
+    </figure></section>
+      <section class="cascade-cluster composition portrait-pair" aria-label="Deux regards sur Seljalandsfoss">
+        <figure class="photo photo-cascade viewport-photo" id="photo-cascade" style="--photo-ratio:0.74991453">
+      <a class="photo-frame" href="photos/cascade-3200-v2.webp" data-photo="cascade" data-title="Seljalandsfoss · I" data-motion=".085" aria-label="Voir la photographie : Seljalandsfoss · I">
+        <img src="photos/cascade-1800-v2.webp" srcset="photos/cascade-800-v2.webp 600w, photos/cascade-1800-v2.webp 1350w, photos/cascade-3200-v2.webp 2400w" sizes="(max-width:700px) 88vw, 44vw" width="4387" height="5850" alt="Une cascade soyeuse tombe au pied d’une falaise sombre et enneigée." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Seljalandsfoss · I</span><span>30 / 38</span></figcaption>
+    </figure>
+        <figure class="photo photo-fantomes viewport-photo" id="photo-fantomes" style="--photo-ratio:0.74991817">
+      <a class="photo-frame" href="photos/fantomes-3200-v2.webp" data-photo="fantomes" data-title="Seljalandsfoss · II" data-motion=".085" aria-label="Voir la photographie : Seljalandsfoss · II">
+        <img src="photos/fantomes-1800-v2.webp" srcset="photos/fantomes-800-v2.webp 600w, photos/fantomes-1800-v2.webp 1350w, photos/fantomes-3200-v2.webp 2400w" sizes="(max-width:700px) 88vw, 44vw" width="4582" height="6110" alt="Des silhouettes translucides passent devant la cascade et un panneau CLOSED." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Seljalandsfoss · II</span><span>31 / 38</span></figcaption>
+    </figure>
+      </section>
+      <section class="ice-cluster composition portrait-pair" aria-label="Deux présences devant la mer">
+        <figure class="photo photo-silhouette viewport-photo" id="photo-silhouette" style="--photo-ratio:0.66661435">
+      <a class="photo-frame" href="photos/silhouette-3200-v2.webp" data-photo="silhouette" data-title="Sur la plage" data-motion=".085" aria-label="Voir la photographie : Sur la plage">
+        <img src="photos/silhouette-1800-v2.webp" srcset="photos/silhouette-800-v2.webp 533w, photos/silhouette-1800-v2.webp 1200w, photos/silhouette-3200-v2.webp 2133w" sizes="(max-width:700px) 88vw, 44vw" width="4247" height="6371" alt="Une silhouette lointaine devant les vagues, derrière des fragments de glace sur une plage noire." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Sur la plage</span><span>32 / 38</span></figcaption>
+    </figure>
+        <figure class="photo photo-chevaliere viewport-photo" id="photo-chevaliere" style="--photo-ratio:0.66661773">
+      <a class="photo-frame" href="photos/chevaliere-3200-v2.webp" data-photo="chevaliere" data-title="Le geste" data-motion=".085" aria-label="Voir la photographie : Le geste">
+        <img src="photos/chevaliere-1800-v2.webp" srcset="photos/chevaliere-800-v2.webp 533w, photos/chevaliere-1800-v2.webp 1200w, photos/chevaliere-3200-v2.webp 2133w" sizes="(max-width:700px) 88vw, 44vw" width="4541" height="6812" alt="Une personne en jupe claire marche entre les glaces, un trépied pour smartphone levé au-dessus de sa tête." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Le geste</span><span>33 / 38</span></figcaption>
+    </figure>
+      </section>
+      <section class="portrait-pair reflection-child-pair" aria-label="Le reflet et Une pierre">
+        <figure class="photo photo-reflet viewport-photo" id="photo-reflet" style="--photo-ratio:0.75000000">
+      <a class="photo-frame" href="photos/reflet-3200-v3.webp" data-photo="reflet" data-title="Le reflet" data-motion=".085" aria-label="Voir la photographie : Le reflet">
+        <img src="photos/reflet-1800-v3.webp" srcset="photos/reflet-800-v3.webp 600w, photos/reflet-1800-v3.webp 1350w, photos/reflet-3200-v3.webp 2400w" sizes="(max-width:700px) 88vw, 42vw" width="4650" height="6200" alt="Une personne marche au pied d’une montagne ocre ; son reflet et celui de la montagne se prolongent dans une étendue d’eau." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Le reflet</span><span>34 / 38</span></figcaption>
+    </figure>
+        <figure class="photo photo-enfant viewport-photo" id="photo-enfant" style="--photo-ratio:0.66671909">
+      <a class="photo-frame" href="photos/enfant-3200-v3.webp" data-photo="enfant" data-title="Une pierre" data-motion=".085" aria-label="Voir la photographie : Une pierre">
+        <img src="photos/enfant-1800-v3.webp" srcset="photos/enfant-800-v3.webp 533w, photos/enfant-1800-v3.webp 1200w, photos/enfant-3200-v3.webp 2134w" sizes="(max-width:700px) 88vw, 38vw" width="4239" height="6358" alt="Un enfant, de dos, lève une pierre au-dessus de sa tête pour la lancer vers les morceaux de glace." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Une pierre</span><span>35 / 38</span></figcaption>
+    </figure>
+      </section>
+      <section class="wave-section" aria-label="L’eau et les regards"><figure class="photo photo-vague viewport-photo" id="photo-vague" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/vague-3200-v2.webp" data-photo="vague" data-title="Reynisfjara" data-motion=".065" aria-label="Voir la photographie : Reynisfjara">
+        <img src="photos/vague-1800-v2.webp" srcset="photos/vague-800-v2.webp 800w, photos/vague-1800-v2.webp 1800w, photos/vague-3200-v2.webp 3200w" sizes="100vw" width="7008" height="4672" alt="Une vague immense éclate contre les orgues de basalte ; deux silhouettes regardent le piton marin." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Reynisfjara</span><span>36 / 38</span></figcaption>
+    </figure></section>
     </div>
-    <div class="gallery-progress"><div class="gallery-progress-fill" id="progressFill2" style="width:12.5%"></div></div>
-    <div class="thumbs-strip" id="thumbsStrip2"></div>
-  </section>
 
-<!-- QUOTE -->
- <section class="bq">
- <div class="bq-blob"></div>
- <div class="bq-inner">
- <span class="bq-deco">"</span>
- <p class="bq-text">De Valahnúkamöl à Kleifarvatn. La longue exposition ne cherche pas à arrêter le temps : elle cherche à en révéler la texture. Ce que l'œil rate, le capteur garde.</p>
- <div class="bq-attr">· Note de terrain · Islande, Mars 2026</div>
- </div>
- </section>
+    <section class="horse-section" aria-label="Une rencontre">
+      <div class="return-photo"><figure class="photo photo-cheval viewport-photo" id="photo-cheval" style="--photo-ratio:0.79983000">
+      <a class="photo-frame" href="photos/cheval-3200-v2.webp" data-photo="cheval" data-title="Dans le courant" data-motion=".085" aria-label="Voir la photographie : Dans le courant">
+        <img src="photos/cheval-1800-v2.webp" srcset="photos/cheval-800-v2.webp 640w, photos/cheval-1800-v2.webp 1440w, photos/cheval-3200-v2.webp 1882w" sizes="(max-width: 700px) 86vw, 56vw" width="1882" height="2353" alt="Un cheval à la crinière soulevée traverse une rivière peu profonde, devant une plaine ocre et l’horizon bleu." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Dans le courant</span><span>37 / 38</span></figcaption>
+    </figure></div>
+    </section>
+    <section class="last-image" aria-label="Un dernier regard"><figure class="photo photo-solitude viewport-photo" id="photo-solitude" style="--photo-ratio:1.50000000">
+      <a class="photo-frame" href="photos/solitude-3200-v2.webp" data-photo="solitude" data-title="Valahnúkamöl" data-motion=".085" aria-label="Voir la photographie : Valahnúkamöl">
+        <img src="photos/solitude-1800-v2.webp" srcset="photos/solitude-800-v2.webp 800w, photos/solitude-1800-v2.webp 1800w, photos/solitude-3200-v2.webp 3200w" sizes="96vw" width="7008" height="4672" alt="Une personne seule sur une falaise noire, sous un ciel immense traversé d’oiseaux." loading="lazy" decoding="async">
+        <span class="photo-open" aria-hidden="true">↗</span>
+      </a>
+      <figcaption><span>Valahnúkamöl</span><span>38 / 38</span></figcaption>
+    </figure></section>
 
- <!-- CONTACT -->
- <section class="contact" id="contact">
- <div>
-  <h2>Ce travail vous <span>parle ?</span></h2>
-  <p>Tirages, expositions, publications, je suis ouvert à toute conversation.</p>
- </div>
- <div class="ccard">
- <div class="crow"><span class="clbl">Photographe</span><span class="cval">Quentin</span></div>
- <div class="crow"><span class="clbl">Basé à</span><span class="cval">La Rochelle, France</span></div>
- <div class="crow"><span class="clbl">Style</span><span class="cval">Documentaire · Longue exposition · Kodachrome</span></div>
- <div class="crow"><span class="clbl">Boîtier</span><span class="cval">Sony A7 IV</span></div>
- <div class="crow"><span class="clbl">Voyage</span><span class="cval">Islande · 7–18 Mars 2026 · ~2 500 km</span></div>
- </div>
- </section>
-
-  <!-- CARTE -->
-  <section class="map-section" id="carte">
-    <div class="sh" style="padding:0; margin-bottom:48px;"><span class="sl">Carte du voyage</span><div class="sr"></div></div>
-    <div style="position:relative;">
-      <div id="map"></div>
-      <div class="map-legend">
-        <div class="legend-item"><div class="legend-color" style="background:#A2D2FF;"></div>Cascades</div>
-        <div class="legend-color-item" style="display:none;"></div> <!-- Spacer -->
-        <div class="legend-item"><div class="legend-color" style="background:#FF595E;"></div>Volcanisme</div>
-        <div class="legend-item"><div class="legend-color" style="background:#4B5D16;"></div>Côte & Plage</div>
-        <div class="legend-item"><div class="legend-color" style="background:#F8F9FA;"></div>Glaciers</div>
-        <div class="legend-item"><div class="legend-color" style="background:#FFCA3A;"></div>Présence humaine</div>
+    <section class="return-section" aria-labelledby="return-title">
+      <div class="return-text reveal">
+        <h2 id="return-title">Une fois rentré.</h2>
+        <p>Depuis mon retour, j’ai beaucoup moins photographié. Comme si j’avais trouvé l’endroit où faire des images et que le reste était devenu moins intéressant.</p>
+        <p>Je sais bien que ce n’est pas le cas. Mais comment retrouver l’envie de photographier des choses plus simples, plus proches ?</p>
       </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-title">Entre deux <em>mondes.</em></div>
+    <div class="footer-bottom"><span>Photographies © Quentin Brache</span><button class="text-button" data-index>Revoir les photographies ↗</button><a href="#haut">Revenir au début ↑</a></div>
+  </footer>
+
+  <dialog id="viewer" class="lightbox" aria-label="Lecture des photographies">
+    <div class="lightbox-inner">
+      <div class="viewer-top"><span id="viewer-count"></span><button id="viewer-close" class="close-button" aria-label="Fermer la photographie">Fermer <span aria-hidden="true">×</span></button></div>
+      <div class="viewer-frame"><img id="viewer-image" alt=""></div>
+      <div class="viewer-bottom"><span id="viewer-title" aria-live="polite"></span><div class="viewer-controls"><button id="previous" aria-label="Photographie précédente">←</button><button id="next" aria-label="Photographie suivante">→</button></div></div>
     </div>
-  </section>
-
- <footer>
- <span class="fl">© 2026 · Quentin · Tous droits réservés</span>
- <span class="fr">Entre deux mondes · Islande MMXXVI · 47 spots · 3 000+ photos</span>
- </footer>
-
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-
-    // ── GALERIE 1 ──
-    var v1=document.getElementById('viewer'),sl1=v1.querySelectorAll('.slide'),tot1=sl1.length,cur1=0;
-    var cnt1=document.getElementById('galleryCount'),fill1=document.getElementById('progressFill'),strip1=document.getElementById('thumbsStrip');
-    sl1.forEach(function(s,i){
-      var img=s.querySelector('img'),th=document.createElement('button');
-      var spot=s.querySelector('.caption-spot');
-      var fmt=s.classList.contains('portrait')?' portrait':s.classList.contains('square')?' square':'';
-      th.className='thumb'+fmt+(i===0?' active':'');
-      th.type='button';
-      th.setAttribute('aria-label','Aller a l image '+String(i+1).padStart(2,'0')+(spot?' : '+spot.textContent:''));
-      th.setAttribute('aria-pressed',i===0?'true':'false');
-      if(img){var src=img.getAttribute('src');th.style.backgroundImage='url("'+src+'")';th.style.backgroundSize='cover';th.style.backgroundPosition='center';}
-      th.addEventListener('click',function(){go1(i);}); strip1.appendChild(th);
-    });
-    function preload1(idx){[idx-1,idx+1].forEach(function(i){var s=sl1[(i+tot1)%tot1];if(s){var im=s.querySelector('img');if(im&&im.dataset.src){im.src=im.dataset.src;delete im.dataset.src;}}});}
-    function go1(idx){
-      sl1[cur1].classList.remove('active');strip1.querySelectorAll('.thumb')[cur1].classList.remove('active');
-      strip1.querySelectorAll('.thumb')[cur1].setAttribute('aria-pressed','false');
-      cur1=(idx+tot1)%tot1;
-      sl1[cur1].classList.add('active');strip1.querySelectorAll('.thumb')[cur1].classList.add('active');
-      strip1.querySelectorAll('.thumb')[cur1].setAttribute('aria-pressed','true');
-      cnt1.textContent=String(cur1+1).padStart(2,'0')+' / '+String(tot1).padStart(2,'0');
-      fill1.style.width=((cur1+1)/tot1*100)+'%';
-      var th=strip1.querySelectorAll('.thumb')[cur1];
-      strip1.scrollLeft=th.offsetLeft-strip1.offsetWidth/2+th.offsetWidth/2;
-      preload1(cur1);
-    }
-    document.getElementById('navLeft').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go1(cur1-1);});
-    document.getElementById('navRight').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go1(cur1+1);});
-    document.getElementById('galerie').addEventListener('keydown', function(e) {
-      if (e.key === 'ArrowRight') { e.preventDefault(); go1(cur1 + 1); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); go1(cur1 - 1); }
-    });
-    var tx1=0,ty1=0;
-    v1.addEventListener('touchstart',function(e){tx1=e.touches[0].clientX;ty1=e.touches[0].clientY;},{passive:true});
-    v1.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx1,dy=e.changedTouches[0].clientY-ty1;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go1(dx<0?cur1+1:cur1-1);});
-
-    // ── GALERIE 2 ──
-    var v2=document.getElementById('viewer2');
-    if(v2){
-      var sl2=v2.querySelectorAll('.slide'),tot2=sl2.length,cur2=0;
-      var cnt2=document.getElementById('galleryCount2'),fill2=document.getElementById('progressFill2'),strip2=document.getElementById('thumbsStrip2');
-      sl2.forEach(function(s,i){
-        var img=s.querySelector('img'),th=document.createElement('button');
-        var spot=s.querySelector('.caption-spot');
-        var fmt=s.classList.contains('portrait')?' portrait':s.classList.contains('square')?' square':'';
-        th.className='thumb'+fmt+(i===0?' active':'');
-        th.type='button';
-        th.setAttribute('aria-label','Aller a l image '+String(i+1).padStart(2,'0')+(spot?' : '+spot.textContent:''));
-        th.setAttribute('aria-pressed',i===0?'true':'false');
-        if(img){var src=img.getAttribute('src');th.style.backgroundImage='url("'+src+'")';th.style.backgroundSize='cover';th.style.backgroundPosition='center';}
-        th.addEventListener('click',function(){go2(i);}); strip2.appendChild(th);
-      });
-      function preload2(idx){[idx-1,idx+1].forEach(function(i){var s=sl2[(i+tot2)%tot2];if(s){var im=s.querySelector('img');if(im&&im.dataset.src){im.src=im.dataset.src;delete im.dataset.src;}}});}
-      function go2(idx){
-        sl2[cur2].classList.remove('active');strip2.querySelectorAll('.thumb')[cur2].classList.remove('active');
-        strip2.querySelectorAll('.thumb')[cur2].setAttribute('aria-pressed','false');
-        cur2=(idx+tot2)%tot2;
-        sl2[cur2].classList.add('active');strip2.querySelectorAll('.thumb')[cur2].classList.add('active');
-        strip2.querySelectorAll('.thumb')[cur2].setAttribute('aria-pressed','true');
-        cnt2.textContent=String(cur2+1).padStart(2,'0')+' / '+String(tot2).padStart(2,'0');
-        fill2.style.width=((cur2+1)/tot2*100)+'%';
-        preload2(cur2);
-      }
-      document.getElementById('navLeft2').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go2(cur2-1);});
-      document.getElementById('navRight2').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go2(cur2+1);});
-      document.getElementById('habitee').addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowRight') { e.preventDefault(); go2(cur2 + 1); }
-        if (e.key === 'ArrowLeft') { e.preventDefault(); go2(cur2 - 1); }
-      });
-      var tx2=0,ty2=0;
-      v2.addEventListener('touchstart',function(e){tx2=e.touches[0].clientX;ty2=e.touches[0].clientY;},{passive:true});
-      v2.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx2,dy=e.changedTouches[0].clientY-ty2;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go2(dx<0?cur2+1:cur2-1);});
-    }
-
-    // ── BACKDROP ──
-    document.querySelectorAll('.slide.portrait,.slide.square').forEach(function(slide){
-      var img=slide.querySelector('img'); if(!img)return;
-      var bd=document.createElement('div'); bd.className='slide-backdrop';
-      function applyBg(){bd.style.backgroundImage='url("'+img.getAttribute('src')+'")';}
-      if(img.complete&&img.naturalWidth>0){applyBg();}else{img.addEventListener('load',applyBg);}
-      slide.insertBefore(bd,slide.firstChild);
-    });
-
-    // ── LIGHTBOX ──
-    var lb=document.getElementById('lightbox'),lbImg=document.getElementById('lightboxImg'),lbCap=document.getElementById('lightboxCaption'),lbClose=document.getElementById('lightboxClose');
-    var lastFocusedEl=null;
-    function openLB(src,cap,alt){
-      lastFocusedEl=document.activeElement;
-      lbImg.src=src;
-      lbImg.alt=alt||cap||'';
-      lbCap.textContent=cap;
-      lb.classList.add('open');
-      lb.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-      lbClose.focus();
-    }
-    function closeLB(){
-      if(!lb.classList.contains('open')) return;
-      lb.classList.remove('open');
-      lb.setAttribute('aria-hidden','true');
-      document.body.style.overflow='';
-      if(lastFocusedEl&&typeof lastFocusedEl.focus==='function') lastFocusedEl.focus();
-    }
-    document.querySelectorAll('.slide .slide-photo-inner img').forEach(function(img){
-      var slide=img.closest('.slide'),spot=slide?slide.querySelector('.caption-spot'):null;
-      img.tabIndex=0;
-      img.setAttribute('role','button');
-      img.setAttribute('aria-haspopup','dialog');
-      img.setAttribute('aria-label',(spot?spot.textContent+' · ':'')+'ouvrir l image en grand');
-      img.addEventListener('click',function(e){
-        e.stopPropagation();e.stopImmediatePropagation();
-        openLB(img.src,spot?spot.textContent:'',img.alt);
-      },true);
-      img.addEventListener('keydown',function(e){
-        if(e.key==='Enter'||e.key===' '){
-          e.preventDefault();
-          openLB(img.src,spot?spot.textContent:'',img.alt);
-        }
-      });
-    });
-    lb.addEventListener('click',function(e){ if(e.target===lb) closeLB(); });
-    lbImg.addEventListener('click',function(e){ e.stopPropagation(); });
-    lbClose.addEventListener('click',function(e){ e.stopPropagation(); closeLB(); });
-    document.addEventListener('keydown',function(e){
-      if(!lb.classList.contains('open')) return;
-      if(e.key==='Escape'){ e.preventDefault(); closeLB(); }
-      if(e.key==='Tab'){
-        e.preventDefault();
-        lbClose.focus();
-      }
-    });
-
-    // ── TIMELINE ──
-    var obs=new IntersectionObserver(function(entries){
-      entries.forEach(function(e,i){if(e.isIntersecting)setTimeout(function(){e.target.classList.add('vis');},i*60);});
-    },{threshold:0.05});
-    document.querySelectorAll('.tl-item').forEach(function(el){obs.observe(el);});
-
-    // ── CARTE ──
-    var map = L.map('map', {
-      center: [64.8, -18.5],
-      zoom: 6,
-      zoomControl: true,
-      scrollWheelZoom: false
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
-
-    var locations = [
-      { name: 'Valahnúkamöl', coords: [63.8125, -22.7144], type: 'cote', index: 0 },
-      { name: 'Gunnuhver', coords: [63.8188, -22.6841], type: 'volcan', index: 0 },
-      { name: 'Reykjanesviti', coords: [63.8136, -22.7049], type: 'humain', index: 0 },
-      { name: 'Brimketill', coords: [63.8169, -22.5647], type: 'cote', index: 0 },
-      { name: 'Fagradalsfjall', coords: [63.8931, -22.2693], type: 'volcan', index: 0 },
-      { name: 'Þingvellir', coords: [64.2559, -21.1295], type: 'volcan', index: 9 },
-      { name: 'Geysir', coords: [64.3104, -20.3024], type: 'volcan', index: 9 },
-      { name: 'Gullfoss', coords: [64.3271, -20.1199], type: 'cascade', index: 9 },
-      { name: 'Seljalandsfoss', coords: [63.6156, -19.9886], type: 'cascade', index: 2 },
-      { name: 'Gljúfrabúi', coords: [63.6209, -19.9864], type: 'cascade', index: 2 },
-      { name: 'Skógafoss', coords: [63.5321, -19.5113], type: 'cascade', index: 4 },
-      { name: 'Kvernufoss', coords: [63.5283, -19.4810], type: 'cascade', index: 15 },
-      { name: 'DC-3 Wreck', coords: [63.4591, -19.3647], type: 'humain', index: 7 },
-      { name: 'Dyrhólaey', coords: [63.3996, -19.1269], type: 'cote', index: 17 },
-      { name: 'Reynisfjara', coords: [63.4028, -19.0448], type: 'cote', index: 5 },
-      { name: 'Víkurkirkja', coords: [63.4194, -19.0061], type: 'humain', index: 5 },
-      { name: 'Eldhraun', coords: [63.6761, -18.1404], type: 'cote', index: 21 },
-      { name: 'Jökulsárlón', coords: [64.0484, -16.1794], type: 'glace', index: 10 },
-      { name: 'Diamond Beach', coords: [64.0441, -16.1777], type: 'cote', index: 11 },
-      { name: 'Vök Baths', coords: [65.2341, -14.4533], type: 'humain', index: 19 },
-      { name: 'Seyðisfjörður', coords: [65.2598, -13.9975], type: 'humain', index: 19 },
-      { name: 'Hengifoss', coords: [65.0961, -14.8894], type: 'cascade', index: 12 },
-      { name: 'Svartifoss', coords: [64.0275, -16.9753], type: 'cascade', index: 14 },
-      { name: 'Fjallsárlón', coords: [64.0175, -16.3861], type: 'glace', index: 14 },
-      { name: 'Sólheimajökull', coords: [63.5569, -19.3028], type: 'glace', index: 16 },
-      { name: 'Gígjagjá', coords: [63.4344, -18.7610], type: 'cote', index: 16 },
-      { name: 'Kerið', coords: [64.0413, -20.8851], type: 'volcan', index: 20 },
-      { name: 'Bruarfoss', coords: [64.2643, -20.5157], type: 'cascade', index: 20 },
-      { name: 'Kleifarvatn', coords: [63.9231, -21.9904], type: 'volcan', index: 21 }
-    ];
-
-    var typeColors = {
-      'cascade': '#A2D2FF',
-      'volcan':  '#FF595E',
-      'cote':    '#4B5D16',
-      'glace':   '#F8F9FA',
-      'humain':  '#FFCA3A'
-    };
-
-    locations.forEach(function(loc) {
-      var marker = L.circleMarker(loc.coords, {
-        radius: 6,
-        fillColor: typeColors[loc.type] || '#FFF',
-        color: '#000',
-        weight: 1,
-        fillOpacity: 0.8
-      }).addTo(map);
-      
-      marker.bindTooltip(loc.name, { permanent: false, direction: 'top' });
-      marker.on('click', function() {
-        document.getElementById('galerie').scrollIntoView({ behavior: 'smooth' });
-        go1(loc.index);
-      });
-    });
-
-  });
- </script>
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="lightboxCaption">
-    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Fermer l image agrandie">✕ &nbsp;Fermer</button>
-    <img loading="lazy" id="lightboxImg" src="" alt="">
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
+  </dialog>
+  <dialog id="photo-index" class="photo-index" aria-labelledby="index-title">
+    <div class="dialog-heading"><h2 id="index-title">Les photographies <sup>38</sup></h2><button class="close-button" id="index-close">Fermer <span aria-hidden="true">×</span></button></div>
+    <div class="index-grid"><button class="index-photo" data-open-photo="falaise" aria-label="Ouvrir : Valahnúkamöl">
+      <img src="photos/falaise-800-v2.webp" width="800" height="533" alt="Deux personnes minuscules sur une falaise noire et dorée, des oiseaux devant la paroi et la mer en contrebas." loading="lazy" decoding="async">
+      <span><span>01</span> Valahnúkamöl</span>
+    </button>
+<button class="index-photo" data-open-photo="cote" aria-label="Ouvrir : La côte sud">
+      <img src="photos/cote-800-v2.webp" width="600" height="800" alt="Une plage de sable noir s’étire entre la mer blanche d’écume et la terre ocre." loading="lazy" decoding="async">
+      <span><span>02</span> La côte sud</span>
+    </button>
+<button class="index-photo" data-open-photo="basalte" aria-label="Ouvrir : Reynisfjara">
+      <img src="photos/basalte-800-v2.webp" width="800" height="533" alt="Une immense paroi d’orgues de basalte à gauche, un piton marin à droite ; les vagues et les oiseaux traversent l’espace entre les deux." loading="lazy" decoding="async">
+      <span><span>03</span> Reynisfjara</span>
+    </button>
+<button class="index-photo" data-open-photo="epave" aria-label="Ouvrir : Sólheimasandur">
+      <img src="photos/epave-800-v2.webp" width="800" height="533" alt="Deux personnes traversent une vaste étendue noire ; une épave d’avion apparaît au loin." loading="lazy" decoding="async">
+      <span><span>04</span> Sólheimasandur</span>
+    </button>
+<button class="index-photo" data-open-photo="bus" aria-label="Ouvrir : De passage">
+      <img src="photos/bus-800-v2.webp" width="800" height="533" alt="Une personne en bleu marche sur le sable noir, devant un bus isolé sur la ligne de crête et des montagnes enneigées." loading="lazy" decoding="async">
+      <span><span>05</span> De passage</span>
+    </button>
+<button class="index-photo" data-open-photo="buggies" aria-label="Ouvrir : Face à la mer">
+      <img src="photos/buggies-800-v2.webp" width="800" height="533" alt="Une petite personne en bleu regarde la mer, entre deux buggies sur le sable noir." loading="lazy" decoding="async">
+      <span><span>06</span> Face à la mer</span>
+    </button>
+<button class="index-photo" data-open-photo="neige" aria-label="Ouvrir : Le passage">
+      <img src="photos/neige-800-v8.webp" width="640" height="800" alt="Deux rangées de poteaux bordent un chemin enneigé, face aux sapins et à une montagne blanche." loading="lazy" decoding="async">
+      <span><span>07</span> Le passage</span>
+    </button>
+<button class="index-photo" data-open-photo="pas" aria-label="Ouvrir : Dans la neige">
+      <img src="photos/pas-800-v8.webp" width="533" height="800" alt="Une personne de dos, en veste blanche, avance jambes écartées dans la neige près des cordes du chemin." loading="lazy" decoding="async">
+      <span><span>08</span> Dans la neige</span>
+    </button>
+<button class="index-photo" data-open-photo="geysirparc" aria-label="Ouvrir : Le parc">
+      <img src="photos/geysirparc-800-v21.webp" width="800" height="533" alt="Un chemin vide traverse la neige entre les sources fumantes, les cordes et un petit aménagement en bois." loading="lazy" decoding="async">
+      <span><span>09</span> Le parc</span>
+    </button>
+<button class="index-photo" data-open-photo="geysirsource" aria-label="Ouvrir : Une petite source">
+      <img src="photos/geysirsource-800-v21.webp" width="800" height="533" alt="Une cavité sombre entourée de terre ocre et de roche se découpe dans la neige." loading="lazy" decoding="async">
+      <span><span>10</span> Une petite source</span>
+    </button>
+<button class="index-photo" data-open-photo="geysirfoule" aria-label="Ouvrir : Autour du geyser">
+      <img src="photos/geysirfoule-800-v21.webp" width="800" height="533" alt="Des visiteurs en manteaux colorés attendent derrière une corde ; certains regardent leur téléphone, d’autres le lèvent." loading="lazy" decoding="async">
+      <span><span>11</span> Autour du geyser</span>
+    </button>
+<button class="index-photo" data-open-photo="geysirattente" aria-label="Ouvrir : Parmi les autres">
+      <img src="photos/geysirattente-800-v21.webp" width="533" height="800" alt="Une rangée de visiteurs photographie le geyser ; au premier plan, une grande capuche sombre et des mains tenant des téléphones." loading="lazy" decoding="async">
+      <span><span>12</span> Parmi les autres</span>
+    </button>
+<button class="index-photo" data-open-photo="geysirjet" aria-label="Ouvrir : L’image attendue">
+      <img src="photos/geysirjet-800-v21.webp" width="800" height="533" alt="Un jet d’eau immense jaillit d’un bassin turquoise, avec des visiteurs et des bancs à l’arrière-plan." loading="lazy" decoding="async">
+      <span><span>13</span> L’image attendue</span>
+    </button>
+<button class="index-photo" data-open-photo="geysirvoile" aria-label="Ouvrir : Ce qui apparaît">
+      <img src="photos/geysirvoile-800-v21.webp" width="800" height="533" alt="Une personne marche de profil devant des silhouettes partiellement effacées par la vapeur, le long d’un chemin bordé de cordes." loading="lazy" decoding="async">
+      <span><span>14</span> Ce qui apparaît</span>
+    </button>
+<button class="index-photo" data-open-photo="vapeur" aria-label="Ouvrir : Dans la vapeur">
+      <img src="photos/vapeur-800-v21.webp" width="800" height="533" alt="Une personne en pantalon rouge s’éloigne sur un chemin sombre et courbe, dans la vapeur." loading="lazy" decoding="async">
+      <span><span>15</span> Dans la vapeur</span>
+    </button>
+<button class="index-photo" data-open-photo="geysirpassante" aria-label="Ouvrir : Une passante">
+      <img src="photos/geysirpassante-800-v21.webp" width="640" height="800" alt="Une jeune femme en bonnet et pantalon clair traverse la vapeur, son téléphone baissé dans une main." loading="lazy" decoding="async">
+      <span><span>16</span> Une passante</span>
+    </button>
+<button class="index-photo" data-open-photo="geysirvisage" aria-label="Ouvrir : Traverser">
+      <img src="photos/geysirvisage-800-v21.webp" width="533" height="800" alt="Une personne au visage couvert d’une écharpe et de lunettes avance dans la vapeur, un bras écarté ; une seconde silhouette apparaît derrière elle." loading="lazy" decoding="async">
+      <span><span>17</span> Traverser</span>
+    </button>
+<button class="index-photo" data-open-photo="ferme" aria-label="Ouvrir : Au pied de la montagne">
+      <img src="photos/ferme-800-v2.webp" width="800" height="533" alt="De petits bâtiments sombres au pied d’une immense pente ocre et rocheuse." loading="lazy" decoding="async">
+      <span><span>18</span> Au pied de la montagne</span>
+    </button>
+<button class="index-photo" data-open-photo="chemin" aria-label="Ouvrir : Skógafoss">
+      <img src="photos/chemin-800-v2.webp" width="600" height="800" alt="Une file de visiteurs suit un escalier sinueux sur une colline dorée." loading="lazy" decoding="async">
+      <span><span>19</span> Skógafoss</span>
+    </button>
+<button class="index-photo" data-open-photo="selfie" aria-label="Ouvrir : Faire une image">
+      <img src="photos/selfie-800-v8.webp" width="533" height="800" alt="Une personne tient un smartphone sur une perche devant son visage ; des visiteurs et des cordes se répartissent derrière elle." loading="lazy" decoding="async">
+      <span><span>20</span> Faire une image</span>
+    </button>
+<button class="index-photo" data-open-photo="parking" aria-label="Ouvrir : Le bout du chemin">
+      <img src="photos/parking-800-v2.webp" width="800" height="533" alt="Un chemin noir traverse la neige et conduit à une rangée de véhicules." loading="lazy" decoding="async">
+      <span><span>21</span> Le bout du chemin</span>
+    </button>
+<button class="index-photo" data-open-photo="maisonbleue" aria-label="Ouvrir : Le toit turquoise">
+      <img src="photos/maisonbleue-800-v8.webp" width="800" height="533" alt="Une petite maison au toit turquoise se détache entre une plaine ocre et un vaste ciel nuageux." loading="lazy" decoding="async">
+      <span><span>22</span> Le toit turquoise</span>
+    </button>
+<button class="index-photo" data-open-photo="grindavikreflet" aria-label="Ouvrir : Dans la vitre">
+      <img src="photos/grindavikreflet-800-v9.webp" width="800" height="533" alt="Le reflet du photographe et de son appareil se superpose à un intérieur éclairé et à la rue, la nuit." loading="lazy" decoding="async">
+      <span><span>23</span> Dans la vitre</span>
+    </button>
+<button class="index-photo" data-open-photo="station" aria-label="Ouvrir : La station-service">
+      <img src="photos/station-800-v9.webp" width="800" height="533" alt="Une borne rouge et des pompes à essence devant une station-service, la nuit à Grindavík." loading="lazy" decoding="async">
+      <span><span>24</span> La station-service</span>
+    </button>
+<button class="index-photo" data-open-photo="panneau" aria-label="Ouvrir : Les directions">
+      <img src="photos/panneau-800-v9.webp" width="800" height="533" alt="Un panneau vert EMERGENCY EXIT et des indications jaunes dans la nuit ; une ombre au premier plan et un camion dans la rue." loading="lazy" decoding="async">
+      <span><span>25</span> Les directions</span>
+    </button>
+<button class="index-photo" data-open-photo="tunnel" aria-label="Ouvrir : Sous le pont">
+      <img src="photos/tunnel-800-v9.webp" width="800" height="533" alt="Les lumières chaudes se répètent dans un tunnel, jusqu’à une ouverture sombre." loading="lazy" decoding="async">
+      <span><span>26</span> Sous le pont</span>
+    </button>
+<button class="index-photo" data-open-photo="maisonrouge" aria-label="Ouvrir : Une maison">
+      <img src="photos/maisonrouge-800-v9.webp" width="800" height="533" alt="Une maison rouge éclairée la nuit, avec des panneaux déposés dans le jardin et un treillis." loading="lazy" decoding="async">
+      <span><span>27</span> Une maison</span>
+    </button>
+<button class="index-photo" data-open-photo="maisonflash" aria-label="Ouvrir : Derrière les fenêtres">
+      <img src="photos/maisonflash-800-v9.webp" width="800" height="522" alt="Une façade photographiée de face au flash, aux fenêtres sombres, dans la nuit de Grindavík." loading="lazy" decoding="async">
+      <span><span>28</span> Derrière les fenêtres</span>
+    </button>
+<button class="index-photo" data-open-photo="jaune" aria-label="Ouvrir : Au pied de la cascade">
+      <img src="photos/jaune-800-v8.webp" width="800" height="533" alt="Deux personnes, dont une en manteau jaune, marchent derrière des cordes devant une grande cascade." loading="lazy" decoding="async">
+      <span><span>29</span> Au pied de la cascade</span>
+    </button>
+<button class="index-photo" data-open-photo="cascade" aria-label="Ouvrir : Seljalandsfoss · I">
+      <img src="photos/cascade-800-v2.webp" width="600" height="800" alt="Une cascade soyeuse tombe au pied d’une falaise sombre et enneigée." loading="lazy" decoding="async">
+      <span><span>30</span> Seljalandsfoss · I</span>
+    </button>
+<button class="index-photo" data-open-photo="fantomes" aria-label="Ouvrir : Seljalandsfoss · II">
+      <img src="photos/fantomes-800-v2.webp" width="600" height="800" alt="Des silhouettes translucides passent devant la cascade et un panneau CLOSED." loading="lazy" decoding="async">
+      <span><span>31</span> Seljalandsfoss · II</span>
+    </button>
+<button class="index-photo" data-open-photo="silhouette" aria-label="Ouvrir : Sur la plage">
+      <img src="photos/silhouette-800-v2.webp" width="533" height="800" alt="Une silhouette lointaine devant les vagues, derrière des fragments de glace sur une plage noire." loading="lazy" decoding="async">
+      <span><span>32</span> Sur la plage</span>
+    </button>
+<button class="index-photo" data-open-photo="chevaliere" aria-label="Ouvrir : Le geste">
+      <img src="photos/chevaliere-800-v2.webp" width="533" height="800" alt="Une personne en jupe claire marche entre les glaces, un trépied pour smartphone levé au-dessus de sa tête." loading="lazy" decoding="async">
+      <span><span>33</span> Le geste</span>
+    </button>
+<button class="index-photo" data-open-photo="reflet" aria-label="Ouvrir : Le reflet">
+      <img src="photos/reflet-800-v3.webp" width="600" height="800" alt="Une personne marche au pied d’une montagne ocre ; son reflet et celui de la montagne se prolongent dans une étendue d’eau." loading="lazy" decoding="async">
+      <span><span>34</span> Le reflet</span>
+    </button>
+<button class="index-photo" data-open-photo="enfant" aria-label="Ouvrir : Une pierre">
+      <img src="photos/enfant-800-v3.webp" width="533" height="800" alt="Un enfant, de dos, lève une pierre au-dessus de sa tête pour la lancer vers les morceaux de glace." loading="lazy" decoding="async">
+      <span><span>35</span> Une pierre</span>
+    </button>
+<button class="index-photo" data-open-photo="vague" aria-label="Ouvrir : Reynisfjara">
+      <img src="photos/vague-800-v2.webp" width="800" height="533" alt="Une vague immense éclate contre les orgues de basalte ; deux silhouettes regardent le piton marin." loading="lazy" decoding="async">
+      <span><span>36</span> Reynisfjara</span>
+    </button>
+<button class="index-photo" data-open-photo="cheval" aria-label="Ouvrir : Dans le courant">
+      <img src="photos/cheval-800-v2.webp" width="640" height="800" alt="Un cheval à la crinière soulevée traverse une rivière peu profonde, devant une plaine ocre et l’horizon bleu." loading="lazy" decoding="async">
+      <span><span>37</span> Dans le courant</span>
+    </button>
+<button class="index-photo" data-open-photo="solitude" aria-label="Ouvrir : Valahnúkamöl">
+      <img src="photos/solitude-800-v2.webp" width="800" height="533" alt="Une personne seule sur une falaise noire, sous un ciel immense traversé d’oiseaux." loading="lazy" decoding="async">
+      <span><span>38</span> Valahnúkamöl</span>
+    </button></div>
+  </dialog>
+  <dialog id="about" class="about" aria-labelledby="about-title">
+    <button id="about-close" class="close-button">Fermer <span aria-hidden="true">×</span></button>
+    <span class="small-label">À propos du regard</span>
+    <h2 id="about-title">Être là.<br><em>Et faire une image.</em></h2>
+    <p>Je suis parti en Islande avec l’envie de photographier la puissance des lieux et l’émotion que j’y ressentais. Je cherche des images qui touchent par leur beauté, mais aussi par ce qui s’y passe : un geste, un décalage, plusieurs scènes qui se répondent.</p>
+    <p>Les autres voyageurs font partie de ces paysages. Parfois ils les enrichissent, parfois ils les interrompent. Je suis l’un d’eux, avec mon appareil et mon désir de spectaculaire.</p>
+    <p>Je suis aussi musicien. La musique que j’écoutais pendant ce voyage, notamment celle d’Ólafur Arnalds, accompagnait ma façon de ressentir ces lieux. Je laisse ici les images trouver leur propre rythme.</p>
+    <p>Ce travail continue avec une question plus proche : comment garder cette capacité à s’émerveiller quand le voyage est terminé ?</p>
+    <div class="about-footer"><span>Quentin Brache</span><button id="motion-toggle" class="text-button" aria-pressed="true">Mouvement activé</button></div>
+  </dialog>
 </body>
 </html>
