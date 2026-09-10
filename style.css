@@ -261,8 +261,8 @@ html.motion-off{scroll-behavior:auto}
 .geysir .photo-frame img{transform:none!important}
 .geysir figcaption{color:#59656b;gap:16px}
 .geysir-wide{width:100%;margin:0 auto var(--geysir-space)}
-.geysir-crowd,.geysir-finale{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(40px,7vw,110px);max-width:1120px;width:90%;margin:0 auto var(--geysir-space)}
-.geysir-crowd>.photo,.geysir-finale>.photo{max-width:min(36vw,calc(var(--photo-height) * var(--photo-ratio)))}
+.geysir-crowd,.geysir-passer,.geysir-finale{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(40px,7vw,110px);max-width:1120px;width:90%;margin:0 auto var(--geysir-space)}
+.geysir-crowd>.photo,.geysir-passer>.photo,.geysir-finale>.photo{max-width:min(36vw,calc(var(--photo-height) * var(--photo-ratio)))}
 .geysir-expected{width:100%;margin:0 auto var(--geysir-space)}
 .geysir-expected>.geysir-copy{margin:0 auto 48px}
 .geysir-expected>.photo{width:100%;max-width:calc(var(--photo-height) * var(--photo-ratio))}
@@ -275,9 +275,8 @@ html.motion-off{scroll-behavior:auto}
    the viewport — but claims more of the height available, and stands alone. */
 .geysir-vapor{--photo-height:min(88svh,calc(100svh - 80px));margin:clamp(50px,6vw,96px) auto calc(var(--geysir-space) * 1.5)}
 .geysir-vapor>.photo{width:100%;max-width:calc(var(--photo-height) * var(--photo-ratio));margin-inline:auto}
-/* Then a single face, small and set aside: what the steam gives back. */
-.geysir-passer{margin:0 8vw var(--geysir-space) auto;width:min(27%,calc(var(--photo-height) * .8))}
-.geysir-passer>.photo{width:100%;margin:0}
+/* Then the face the steam gives back, held against what he makes of it. */
+.geysir-passer>.photo{justify-self:start;margin:0}
 .geysir-finale{margin-bottom:0}
 .geysir-copy .geysir-ending{font-family:var(--serif);font-size:clamp(24px,2.3vw,32px);line-height:1.45;margin-top:32px}
 .geysir-date{text-align:right;width:90%;max-width:1120px;margin:64px auto 0}
@@ -287,14 +286,14 @@ html.motion-off{scroll-behavior:auto}
  .geysir-heading h2{margin-top:22px}
  .geysir-copy{max-width:45ch}
  .geysir-arrival{margin:0 auto 36px}
- .geysir-crowd,.geysir-expected,.geysir-finale{grid-template-columns:minmax(0,1fr);width:100%;gap:36px}
- .geysir-crowd>.photo,.geysir-finale>.photo{max-width:calc(var(--photo-height) * var(--photo-ratio))}
+ .geysir-crowd,.geysir-passer,.geysir-expected,.geysir-finale{grid-template-columns:minmax(0,1fr);width:100%;gap:36px}
+ .geysir-crowd>.photo,.geysir-passer>.photo,.geysir-finale>.photo{max-width:calc(var(--photo-height) * var(--photo-ratio))}
  .geysir-expected>.photo{width:100%;max-width:calc(var(--photo-height) * var(--photo-ratio))}
  .geysir-turn{width:100%;padding-top:0;margin-bottom:36px}
  .geysir-threshold{width:100%}
  .geysir-vapor{--photo-height:min(80svh,calc(100svh - 120px));margin:36px auto 44px;width:96%}
  .geysir-vapor>.photo{width:100%}
- .geysir-passer{width:62%;margin:0 4vw 36px auto}
+ .geysir-passer>.photo{width:88%;justify-self:center}
  .geysir-date{width:100%;margin-top:48px}
 }
 
