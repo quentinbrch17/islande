@@ -271,8 +271,13 @@ html.motion-off{scroll-behavior:auto}
 .geysir-turn-copy{max-width:42ch;font-size:clamp(24px,2.5vw,36px);line-height:1.45;letter-spacing:-.015em}
 .geysir-threshold{width:76%;margin:0 0 var(--geysir-space)}
 .geysir-pleasure{margin:0 auto 48px}
-.geysir-pair{--geysir-pair-height:min(var(--photo-height),37vw);display:flex;justify-content:center;gap:3vw;align-items:start;margin:0 auto var(--geysir-space)}
-.geysir-pair>.photo{flex:0 0 auto;width:calc(var(--geysir-pair-height) * var(--photo-ratio));margin:0}
+/* The chapter's turning point. It keeps the rule — the whole frame stays inside
+   the viewport — but claims more of the height available, and stands alone. */
+.geysir-vapor{--photo-height:min(88svh,calc(100svh - 80px));margin:clamp(50px,6vw,96px) auto calc(var(--geysir-space) * 1.5)}
+.geysir-vapor>.photo{width:100%;max-width:calc(var(--photo-height) * var(--photo-ratio));margin-inline:auto}
+/* Then a single face, small and set aside: what the steam gives back. */
+.geysir-passer{margin:0 8vw var(--geysir-space) auto;width:min(27%,calc(var(--photo-height) * .8))}
+.geysir-passer>.photo{width:100%;margin:0}
 .geysir-finale{margin-bottom:0}
 .geysir-copy .geysir-ending{font-family:var(--serif);font-size:clamp(24px,2.3vw,32px);line-height:1.45;margin-top:32px}
 .geysir-date{text-align:right;width:90%;max-width:1120px;margin:64px auto 0}
@@ -287,8 +292,9 @@ html.motion-off{scroll-behavior:auto}
  .geysir-expected>.photo{width:100%;max-width:calc(var(--photo-height) * var(--photo-ratio))}
  .geysir-turn{width:100%;padding-top:0;margin-bottom:36px}
  .geysir-threshold{width:100%}
- .geysir-pair{flex-direction:column;align-items:center;gap:28px}
- .geysir-pair>.photo{width:100%;max-width:calc(var(--photo-height) * var(--photo-ratio))}
+ .geysir-vapor{--photo-height:min(80svh,calc(100svh - 120px));margin:36px auto 44px;width:96%}
+ .geysir-vapor>.photo{width:100%}
+ .geysir-passer{width:62%;margin:0 4vw 36px auto}
  .geysir-date{width:100%;margin-top:48px}
 }
 
