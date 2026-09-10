@@ -23,7 +23,7 @@ em{font-weight:400}
 .text-button{font-size:12px;line-height:1.5;padding:8px 0;position:relative}
 .text-button::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
 .text-button:hover::after,.text-button:focus-visible::after{transform:scaleX(1)}
-.nav-count{font-size:9px;vertical-align:super;margin-left:3px;opacity:.7}
+
 .masthead{position:relative;padding:115px 3vw 0}
 .masthead-note{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:0 .5vw}
 .masthead h1{font-family:var(--serif);font-size:clamp(110px,23vw,470px);letter-spacing:-.07em;line-height:.99;margin-left:-.035em;margin-top:1.2vw}
@@ -299,17 +299,17 @@ html.motion-off{scroll-behavior:auto}
 .geysir-park-reveal .photo-frame{background:#f2f4f3}
 .geysir-park-reveal .photo-frame::after{content:"";position:absolute;inset:0;background:#f2f4f3;opacity:0;pointer-events:none}
 @media(prefers-reduced-motion:no-preference){
- .chapter-motion .geysir-park-reveal .photo-frame::after{opacity:var(--geysir-white,1)}
+ .chapter-motion .geysir-park-reveal .photo-frame::after{opacity:var(--geysir-white,0)}
  .chapter-motion .geysir-park-reveal:focus-within .photo-frame::after{opacity:0}
 }
 .geysir-opening>.geysir-arrival{margin:0 auto 40px;max-width:52ch}
-.geysir-expected>.photo{width:calc(100% + 10vw);max-width:none;margin-left:-5vw;margin-right:-5vw}
-.geysir-expected>.photo figcaption{padding-inline:5vw}
+.geysir-expected>.photo{width:60%;max-width:calc(var(--photo-height) * var(--photo-ratio));margin-inline:auto}
+.geysir-expected>.photo figcaption{padding-inline:0}
 .geysir-source-scene{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:6vw;align-items:center;width:86%;max-width:1100px;margin:0 auto var(--geysir-space)}
 @media(max-width:700px){
  .geysir-heading{padding-block:12px;margin-bottom:32px}
  .geysir-source-scene{width:100%;grid-template-columns:minmax(0,1fr);gap:28px}
  .geysir-source-scene>.photo{width:88%}
- .geysir-expected>.photo{width:calc(100% + 12vw);margin-left:-6vw;margin-right:-6vw}
- .geysir-expected>.photo figcaption{padding-inline:6vw}
+ .geysir-expected>.photo{width:78%;margin-inline:auto}
+ .geysir-expected>.photo figcaption{padding-inline:0}
 }

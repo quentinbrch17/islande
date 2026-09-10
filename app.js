@@ -8,6 +8,22 @@ const viewerTitle = document.getElementById('viewer-title');
 const viewerCount = document.getElementById('viewer-count');
 const photoIndex = document.getElementById('photo-index');
 const about = document.getElementById('about');
+// Every count shown follows the sequence itself, never a hand-written number.
+// The markup keeps readable values so the page stays correct without scripting.
+const pad = value => String(value).padStart(2, '0');
+document.querySelectorAll('[data-photo-count]').forEach(node => { node.textContent = photos.length; });
+photos.forEach((link, index) => {
+  const caption = link.closest('figure')?.querySelector('figcaption span:last-child');
+  if (caption && /^\d+\s*\/\s*\d+$/.test(caption.textContent.trim())) {
+    caption.textContent = `${pad(index + 1)} / ${photos.length}`;
+  }
+});
+document.querySelectorAll('[data-open-photo]').forEach(button => {
+  const rank = photos.findIndex(photo => photo.dataset.photo === button.dataset.openPhoto);
+  const number = button.querySelector('span > span');
+  if (rank >= 0 && number) number.textContent = pad(rank + 1);
+});
+
 let current = 0;
 let returnFocus = null;
 
@@ -118,7 +134,8 @@ const geysirStage = document.querySelector('[data-geysir-stage]');
 function updateGeysir() {
   if (!geysirStage || !motionEnabled) return;
   const rect = geysirStage.getBoundingClientRect();
-  if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+  // The value is always written, even off-screen: landing straight on #geysir
+  // must not leave the veil at its opaque fallback.
   // Native scrolling: the park emerges from the page's white as it enters.
   // The title stays above the photograph, never over it.
   const p = clamp((window.innerHeight * .95 - rect.top) / (window.innerHeight * .45), 0, 1);
@@ -128,7 +145,6 @@ function updateGeysir() {
 function updateChapter() {
   if (!chapterStage || !motionEnabled) return;
   const rect = chapterStage.getBoundingClientRect();
-  if (rect.bottom < 0 || rect.top > window.innerHeight) return;
   const travel = Math.max(1, rect.height - window.innerHeight);
   const p = clamp(-rect.top / travel, 0, 1);
   // The title clears early, leaving over half of the held frame unobstructed.
@@ -213,6 +229,10 @@ reduced.addEventListener('change', () => {
   syncMotion();
 });
 window.addEventListener('scroll', schedule, { passive: true });
+// A fragment jump can land before the first frame is measured, and emits no
+// scroll event of its own. Recompute once the page has settled on its anchor.
+window.addEventListener('load', schedule);
+window.addEventListener('hashchange', schedule);
 window.addEventListener('resize', () => { pageHeight = document.documentElement.scrollHeight; schedule(); }, { passive: true });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { cancelAnimationFrame(animationFrame); animationFrame = 0; }
