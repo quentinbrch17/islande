@@ -324,11 +324,17 @@ html.motion-off{scroll-behavior:auto}
 .opening-story{max-width:46ch;font-size:17px;line-height:1.85}
 .opening-story p+p{margin-top:1.4em}
 .valahnukamol{padding:clamp(70px,8vw,140px) 0 0;scroll-margin-top:90px}
-.valahnukamol-intro{margin:0 12vw clamp(55px,7vw,110px);max-width:850px}
+.valahnukamol-intro{margin:0 12vw clamp(55px,7vw,110px);display:grid;grid-template-columns:minmax(0,850px) minmax(0,175px);gap:5vw;align-items:end}
+.valahnukamol-intro-text{min-width:0}
 .valahnukamol .small-label{font-size:12px}
 .valahnukamol h2{font-family:var(--serif);font-size:clamp(44px,7vw,100px);font-weight:400;letter-spacing:-.04em;line-height:1.06;margin:0 0 48px}
-.valahnukamol-intro>p{max-width:52ch;font-size:17px;line-height:1.85}
+.valahnukamol-intro p{max-width:52ch;font-size:17px;line-height:1.85}
 .valahnukamol-intro .valahnukamol-lead{font-family:var(--serif);font-size:clamp(25px,2.6vw,38px);line-height:1.4;max-width:34ch;margin-bottom:32px}
+.valahnukamol-recall{display:block;width:100%;text-align:left;color:var(--muted)}
+.valahnukamol-recall img{width:100%;height:auto;opacity:.78;transition:opacity .45s var(--ease)}
+.valahnukamol-recall:hover img,.valahnukamol-recall:focus-visible img{opacity:1}
+.valahnukamol-recall .text-button{display:inline-block;font-size:11px;letter-spacing:.04em;padding-top:11px;white-space:nowrap}
+.valahnukamol-recall:hover .text-button::after{transform:scaleX(1)}
 .valahnukamol .last-image{width:92%;margin:0 auto}
 .valahnukamol-discovery{padding:clamp(65px,9vw,135px) 12vw;display:grid;grid-template-columns:1fr 1fr;gap:9vw;align-items:start}
 .valahnukamol-turn,.valahnukamol-ending{font-family:var(--serif);font-size:clamp(30px,3.5vw,52px);line-height:1.25;letter-spacing:-.025em}
@@ -341,7 +347,10 @@ html.motion-off{scroll-behavior:auto}
 .valahnukamol-ending{max-width:28ch;margin:clamp(70px,10vw,160px) auto 0;padding:0 24px}
 @media(max-width:700px){
  .editorial-opening .opening-story{margin-top:32px;font-size:16px}
- .valahnukamol-intro{margin:0 8vw 50px}
+ .valahnukamol-intro{margin:0 8vw 50px;display:block}
+ .valahnukamol-recall{width:auto;margin-top:34px}
+ .valahnukamol-recall img{width:132px}
+ .valahnukamol-recall .text-button{font-size:10px}
  .valahnukamol h2{margin-bottom:30px}
  .valahnukamol-intro>p,.valahnukamol-copy{font-size:16px}
  .valahnukamol-discovery{display:block;padding:65px 8vw}

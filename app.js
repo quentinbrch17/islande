@@ -95,7 +95,8 @@ wireDialog(about, document.querySelectorAll('[data-about]'), 'about-close');
 document.querySelectorAll('[data-open-photo]').forEach(button => button.addEventListener('click', () => {
   const index = photos.findIndex(photo => photo.dataset.photo === button.dataset.openPhoto);
   photoIndex.close();
-  openPhoto(index, document.querySelector('[data-index]'));
+  // Focus returns to whatever opened the viewer; the index dialog is gone by then.
+  openPhoto(index, photoIndex.contains(button) ? document.querySelector('[data-index]') : button);
 }));
 
 // Progressive text entrances. Photographs are never hidden while loading.
