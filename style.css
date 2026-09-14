@@ -318,3 +318,35 @@ html.motion-off{scroll-behavior:auto}
  .geysir-expected>.photo{width:78%;margin-inline:auto}
  .geysir-expected>.photo figcaption{padding-inline:0}
 }
+
+/* Valahnúkamöl: an opening desire, a final return to the same image. */
+.editorial-opening{align-items:start;grid-template-columns:1.15fr 1fr;gap:9vw}
+.opening-story{max-width:46ch;font-size:17px;line-height:1.85}
+.opening-story p+p{margin-top:1.4em}
+.valahnukamol{padding:clamp(70px,8vw,140px) 0 0;scroll-margin-top:90px}
+.valahnukamol-intro{margin:0 12vw clamp(55px,7vw,110px);max-width:850px}
+.valahnukamol .small-label{font-size:12px}
+.valahnukamol h2{font-family:var(--serif);font-size:clamp(44px,7vw,100px);font-weight:400;letter-spacing:-.04em;line-height:1.06;margin:0 0 48px}
+.valahnukamol-intro>p{max-width:52ch;font-size:17px;line-height:1.85}
+.valahnukamol-intro .valahnukamol-lead{font-family:var(--serif);font-size:clamp(25px,2.6vw,38px);line-height:1.4;max-width:34ch;margin-bottom:32px}
+.valahnukamol .last-image{width:92%;margin:0 auto}
+.valahnukamol-discovery{padding:clamp(65px,9vw,135px) 12vw;display:grid;grid-template-columns:1fr 1fr;gap:9vw;align-items:start}
+.valahnukamol-turn,.valahnukamol-ending{font-family:var(--serif);font-size:clamp(30px,3.5vw,52px);line-height:1.25;letter-spacing:-.025em}
+.valahnukamol-copy{font-size:17px;line-height:1.85;max-width:46ch}
+.valahnukamol-copy p+p{margin-top:1.5em}
+.valahnukamol-presence{margin:0 12vw;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9vw;align-items:center}
+.valahnukamol-film{margin:0;width:100%;max-width:390px}
+.valahnukamol-film video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#151d1e}
+.valahnukamol-film figcaption{font-size:12px;line-height:1.6;padding-top:14px;color:var(--muted)}
+.valahnukamol-ending{max-width:28ch;margin:clamp(70px,10vw,160px) auto 0;padding:0 24px}
+@media(max-width:700px){
+ .editorial-opening .opening-story{margin-top:32px;font-size:16px}
+ .valahnukamol-intro{margin:0 8vw 50px}
+ .valahnukamol h2{margin-bottom:30px}
+ .valahnukamol-intro>p,.valahnukamol-copy{font-size:16px}
+ .valahnukamol-discovery{display:block;padding:65px 8vw}
+ .valahnukamol-turn{margin-bottom:32px}
+ .valahnukamol-presence{display:flex;flex-direction:column;margin:0 8vw;gap:38px;align-items:start}
+ .valahnukamol-film{width:58%;max-width:230px}
+ .valahnukamol-ending{margin-top:75px;font-size:30px;padding:0 8vw}
+}
