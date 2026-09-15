@@ -1,0 +1,31 @@
+/* An imagined passage, never a geographic map. */
+.sketch-story{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:7vw;position:relative;align-items:start}
+.sketch-story>.valahnukamol-approach,.sketch-story>.valahnukamol-turn,.sketch-story>.valahnukamol-copy{grid-column:1;max-width:46ch}
+.sketch-story>.valahnukamol-approach{grid-row:1}
+.sketch-story>.valahnukamol-turn{grid-row:2;max-width:19ch}
+.sketch-story>.valahnukamol-copy:last-child{grid-row:3}
+.passage-sketch{grid-column:2;grid-row:1/4;position:sticky;top:100px;width:100%;max-width:420px;margin:0;justify-self:center;color:#46534b;pointer-events:none;align-self:start}
+.passage-sketch svg{display:block;width:100%;height:auto;max-height:calc(100svh - 140px);overflow:visible}
+.pencil{stroke-width:1.4}
+.sketch-land{opacity:.55}
+.faint{stroke-width:1.05}
+.shade{opacity:.4;stroke-width:.8}
+.sketch-trail{opacity:.58;stroke-width:1.15}
+.sketch-steps{opacity:.77}
+.sketch-return{color:#7b8175;opacity:.65}
+.sketch-ready [data-ink]{stroke-dasharray:1;stroke-dashoffset:1}
+.sketch-ready [data-step],.sketch-ready [data-return]{opacity:0}
+.motion-off .passage-sketch [data-ink]{stroke-dashoffset:0!important}
+.motion-off .passage-sketch [data-step],.motion-off .passage-sketch [data-return]{opacity:1!important}
+@media(max-width:700px){
+ .sketch-story{display:grid;grid-template-columns:minmax(0,1fr);gap:34px;padding-top:55px}
+ .sketch-story>.valahnukamol-approach{grid-column:1;grid-row:1;margin:0}
+ .passage-sketch{grid-column:1;grid-row:2;position:relative;top:auto;width:100%;max-width:330px;margin:0 auto 12px}
+ .passage-sketch svg{max-height:none}
+ .sketch-story>.valahnukamol-turn{grid-column:1;grid-row:3;margin:0;max-width:23ch}
+ .sketch-story>.valahnukamol-copy:last-child{grid-column:1;grid-row:4}
+}
+@media(prefers-reduced-motion:reduce){
+ .passage-sketch [data-ink]{stroke-dashoffset:0!important}
+ .passage-sketch [data-step],.passage-sketch [data-return]{opacity:1!important}
+}
