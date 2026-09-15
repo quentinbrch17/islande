@@ -83,6 +83,10 @@ figcaption span:last-child{font-variant-numeric:tabular-nums;opacity:.75}
 .return-photo{min-width:0}
 .return-photo figcaption{padding-left:3vw}
 .return-text{padding-right:1vw}
+/* A personal note inside the epilogue, outside the sequence of 38. */
+.return-keepsake{margin:clamp(34px,3.6vw,46px) 0 clamp(18px,2vw,26px);width:100%;max-width:360px}
+.return-keepsake img{display:block;width:100%;height:auto}
+.return-keepsake figcaption{font-size:12px;line-height:1.6;padding-top:12px;color:var(--muted)}
 .small-label{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:30px}
 .return-text h2{max-width:9ch;font-family:var(--serif);font-size:clamp(35px,4.4vw,90px);line-height:1.08;letter-spacing:-.04em;margin-bottom:36px}
 .return-text p{font-size:clamp(16px,1.1vw,18px);line-height:1.85;max-width:52ch;margin-top:18px}
@@ -323,7 +327,8 @@ html.motion-off{scroll-behavior:auto}
 .editorial-opening{align-items:start;grid-template-columns:1.15fr 1fr;gap:9vw}
 .opening-story{max-width:46ch;font-size:17px;line-height:1.85}
 .opening-story p+p{margin-top:1.4em}
-.valahnukamol{padding:clamp(70px,8vw,140px) 0 0;scroll-margin-top:90px}
+/* A mineral grey-green holds the final chapter; the epilogue returns to the cream. */
+.valahnukamol{--muted:#515a56;background:#d9dfd8;color:#28312e;padding:clamp(70px,8vw,140px) 0 clamp(95px,11vw,180px);scroll-margin-top:90px}
 .valahnukamol-intro{margin:0 12vw clamp(55px,7vw,110px);display:grid;grid-template-columns:minmax(0,850px) minmax(0,175px);gap:5vw;align-items:end}
 .valahnukamol-intro-text{min-width:0}
 .valahnukamol .small-label{font-size:12px}
@@ -340,10 +345,17 @@ html.motion-off{scroll-behavior:auto}
 .valahnukamol-turn,.valahnukamol-ending{font-family:var(--serif);font-size:clamp(30px,3.5vw,52px);line-height:1.25;letter-spacing:-.025em}
 .valahnukamol-copy{font-size:17px;line-height:1.85;max-width:46ch}
 .valahnukamol-copy p+p{margin-top:1.5em}
-.valahnukamol-presence{margin:0 12vw;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9vw;align-items:center}
-.valahnukamol-film{margin:0;width:100%;max-width:390px}
+/* The film is a listening pause inside the reading column, not a second column. */
+.valahnukamol-presence{margin:0 12vw;display:flex;flex-direction:column;align-items:center}
+.valahnukamol-presence .valahnukamol-copy{width:100%;max-width:46ch}
+.valahnukamol-film{margin:clamp(52px,6vw,86px) 0;width:100%;max-width:320px}
+.valahnukamol-film .film-cue{margin:0 0 15px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .valahnukamol-film video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#151d1e}
 .valahnukamol-film figcaption{font-size:12px;line-height:1.6;padding-top:14px;color:var(--muted)}
+@media(prefers-reduced-motion:no-preference){
+ .motion-ready .reveal-film{transform:translateY(16px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+ .motion-ready .reveal-film.visible{transform:translateY(0)}
+}
 .valahnukamol-ending{max-width:28ch;margin:clamp(70px,10vw,160px) auto 0;padding:0 24px}
 @media(max-width:700px){
  .editorial-opening .opening-story{margin-top:32px;font-size:16px}
@@ -355,7 +367,7 @@ html.motion-off{scroll-behavior:auto}
  .valahnukamol-intro>p,.valahnukamol-copy{font-size:16px}
  .valahnukamol-discovery{display:block;padding:65px 8vw}
  .valahnukamol-turn{margin-bottom:32px}
- .valahnukamol-presence{display:flex;flex-direction:column;margin:0 8vw;gap:38px;align-items:start}
- .valahnukamol-film{width:58%;max-width:230px}
+ .valahnukamol-presence{margin:0 8vw;align-items:center}
+ .valahnukamol-film{width:100%;max-width:220px;margin:44px 0}
  .valahnukamol-ending{margin-top:75px;font-size:30px;padding:0 8vw}
 }
