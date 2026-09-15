@@ -11,12 +11,8 @@
 .faint{stroke-width:1.05}
 .shade{opacity:.4;stroke-width:.8}
 .sketch-trail{opacity:.58;stroke-width:1.15}
-.sketch-steps{opacity:.77}
-.sketch-return{color:#7b8175;opacity:.65}
 .sketch-ready [data-ink]{stroke-dasharray:1;stroke-dashoffset:1}
-.sketch-ready [data-step],.sketch-ready [data-return]{opacity:0}
 .motion-off .passage-sketch [data-ink]{stroke-dashoffset:0!important}
-.motion-off .passage-sketch [data-step],.motion-off .passage-sketch [data-return]{opacity:1!important}
 @media(max-width:700px){
  .sketch-story{display:grid;grid-template-columns:minmax(0,1fr);gap:34px;padding-top:55px}
  .sketch-story>.valahnukamol-approach{grid-column:1;grid-row:1;margin:0}
@@ -27,5 +23,4 @@
 }
 @media(prefers-reduced-motion:reduce){
  .passage-sketch [data-ink]{stroke-dashoffset:0!important}
- .passage-sketch [data-step],.passage-sketch [data-return]{opacity:1!important}
 }
