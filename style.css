@@ -340,7 +340,11 @@ html.motion-off{scroll-behavior:auto}
 .valahnukamol-recall:hover img,.valahnukamol-recall:focus-visible img{opacity:1}
 .valahnukamol-recall .text-button{display:inline-block;font-size:11px;letter-spacing:.04em;padding-top:11px;white-space:nowrap}
 .valahnukamol-recall:hover .text-button::after{transform:scaleX(1)}
-.valahnukamol .last-image{width:92%;margin:0 auto}
+/* The second Valahnúkamöl photograph is the one place where a frame outgrows
+   the viewport rule: the same cliff, returned to at full page width. */
+.valahnukamol .last-image{width:100%;margin:clamp(20px,3vw,48px) 0 0}
+.valahnukamol .last-image>.photo{max-width:none;width:100%;margin:0}
+.valahnukamol .last-image figcaption{padding:14px 3.2vw 0}
 .valahnukamol-discovery{padding:clamp(65px,9vw,135px) 12vw;display:grid;grid-template-columns:1fr 1fr;gap:9vw;align-items:start}
 .valahnukamol-turn,.valahnukamol-ending{font-family:var(--serif);font-size:clamp(30px,3.5vw,52px);line-height:1.25;letter-spacing:-.025em}
 .valahnukamol-copy{font-size:17px;line-height:1.85;max-width:46ch}
@@ -369,5 +373,6 @@ html.motion-off{scroll-behavior:auto}
  .valahnukamol-turn{margin-bottom:32px}
  .valahnukamol-presence{margin:0 8vw;align-items:center}
  .valahnukamol-film{width:100%;max-width:220px;margin:44px 0}
+ .valahnukamol .last-image figcaption{padding:11px 4vw 0}
  .valahnukamol-ending{margin-top:75px;font-size:30px;padding:0 8vw}
 }
