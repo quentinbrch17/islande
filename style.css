@@ -345,9 +345,11 @@ html.motion-off{scroll-behavior:auto}
 .valahnukamol .last-image{width:100%;margin:clamp(20px,3vw,48px) 0 0}
 .valahnukamol .last-image>.photo{max-width:none;width:100%;margin:0}
 .valahnukamol .last-image figcaption{padding:14px 3.2vw 0}
-.valahnukamol-discovery{padding:clamp(65px,9vw,135px) 12vw;display:grid;grid-template-columns:1fr 1fr;gap:9vw;align-items:start}
+.valahnukamol-discovery{padding:clamp(65px,9vw,135px) 12vw;display:grid;grid-template-columns:1fr 1fr;gap:9vw;align-items:start;row-gap:clamp(46px,5vw,90px)}
 .valahnukamol-turn,.valahnukamol-ending{font-family:var(--serif);font-size:clamp(30px,3.5vw,52px);line-height:1.25;letter-spacing:-.025em}
 .valahnukamol-copy{font-size:17px;line-height:1.85;max-width:46ch}
+/* The approach that reveals the rope runs the full width above the pivot. */
+.valahnukamol-approach{grid-column:1/-1}
 .valahnukamol-copy p+p{margin-top:1.5em}
 /* The film is a listening pause inside the reading column, not a second column. */
 .valahnukamol-presence{margin:0 12vw;display:flex;flex-direction:column;align-items:center}
@@ -370,6 +372,7 @@ html.motion-off{scroll-behavior:auto}
  .valahnukamol h2{margin-bottom:30px}
  .valahnukamol-intro>p,.valahnukamol-copy{font-size:16px}
  .valahnukamol-discovery{display:block;padding:65px 8vw}
+ .valahnukamol-approach{margin-bottom:34px}
  .valahnukamol-turn{margin-bottom:32px}
  .valahnukamol-presence{margin:0 8vw;align-items:center}
  .valahnukamol-film{width:100%;max-width:220px;margin:44px 0}
